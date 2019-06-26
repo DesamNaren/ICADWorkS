@@ -26,19 +26,6 @@ stages:
   - build
   - test
 
-#Test
-build_qa_job:
-  stage: build
-  environment: Test
-  when: manual
-  script:
-    - ./gradlew assembleQa
-  tags:
-    - win105
-  artifacts:
-    paths:
-    - app/build/outputs/apk/qa/app-qa.apk
-
 #Prod
 build_release_job:
   stage: build
@@ -51,32 +38,6 @@ build_release_job:
   artifacts:
     paths:
     - app/build/outputs/apk/release/app-release.apk
-
-#Stage
-build_stage_job:
-  stage: build
-  environment: Stage
-  when: manual
-  script:
-    - ./gradlew assembleStage
-  tags:
-    - win105
-  artifacts:
-    paths:
-    - app/build/outputs/apk/stage/app-stage.apk
-
-#UAT
-build_uat_job:
-  stage: build
-  environment: UAT
-  when: manual
-  script:
-    - ./gradlew assembleUat
-  tags:
-    - win105
-  artifacts:
-    paths:
-    - app/build/outputs/apk/uat/app-uat.apk      
 
 #Debug
 build_debug_job:
