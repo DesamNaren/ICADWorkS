@@ -256,7 +256,42 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
         final ArrayList<String> desArrayList = new ArrayList<>();
 
         for (int z = 0; z < employeeDetailss.getEmployeeDetail().size(); z++) {
-            desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation());
+            if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("CE")){
+                desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
+                +" ("
+                +employeeDetailss.getEmployeeDetail().get(z).getUnit()
+                +")");
+            }
+
+            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("SE")){
+                desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
+                        +" ("
+                        +employeeDetailss.getEmployeeDetail().get(z).getCircle()
+                        +")");
+            }
+
+            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("EE")){
+                desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
+                        +" ("
+                        +employeeDetailss.getEmployeeDetail().get(z).getDivision()
+                        +")");
+            }
+
+            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DE")
+            || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")){
+                desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
+                        +" ("
+                        +employeeDetailss.getEmployeeDetail().get(z).getSubdivision()
+                        +")");
+            }
+
+            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("AE")
+                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("AEE")){
+                desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
+                        +" ("
+                        +employeeDetailss.getEmployeeDetail().get(z).getSection()
+                        +")");
+            }
         }
 
         if (desArrayList.size() > 0) {
