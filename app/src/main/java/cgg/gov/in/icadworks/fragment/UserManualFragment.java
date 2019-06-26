@@ -6,6 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
@@ -28,6 +31,7 @@ public class UserManualFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_manual_fragment, container, false);
+        setHasOptionsMenu(true);
         webView = view.findViewById(R.id.webview);
         progressBar = view.findViewById(R.id.progress);
         if (ConnectionDetector.isConnectedToInternet(getActivity())) {
@@ -38,6 +42,28 @@ public class UserManualFragment extends Fragment {
         }
         return view;
     }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onPrepareOptionsMenu(menu);
+        inflater.inflate(R.menu.search_menu, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                Utilities.showCustomNetworkAlertLogout(getActivity(), "Do you want logout from app?");
+                return true;
+            default:
+                break;
+        }
+
+        return false;
+    }
+
 
     @Override
     public void onResume() {
