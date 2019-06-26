@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.DashboardActivity">
+
+
+    <android.support.design.widget.TabLayout
+        android:layout_marginLeft="@dimen/dimen_8dp"
+        android:layout_marginRight="@dimen/dimen_8dp"
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@id/tab_layout"
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:indeterminateTint="@color/orange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <cgg.gov.in.icadworks.custom.CustomFontTextView
+        android:id="@+id/emptyTV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header_ll"
+        android:layout_marginTop="@dimen/dimen_8dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="No data found"
+        android:textColor="@color/white_new"
+        android:visibility="gone"
+        tools:listitem="@layout/dashboard_item" />
+
+
+</RelativeLayout>

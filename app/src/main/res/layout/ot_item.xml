@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@android:drawable/ic_menu_manage" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_8dp"
+            android:orientation="vertical">
+
+            <cgg.gov.in.icadworks.custom.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Agreement 1" />
+
+            <cgg.gov.in.icadworks.custom.CustomFontTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:text="Date 1" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

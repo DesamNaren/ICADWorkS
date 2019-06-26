@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:padding="@dimen/dimen_10dp"
+    android:background="@color/gray_light_bg"
+    android:layout_height="wrap_content">
+
+    <cgg.gov.in.icadworks.custom.CustomFontTextView
+        android:textSize="18sp"
+        android:textColor="@color/black_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:autoLink="all"
+        android:id="@+id/dialog_message_tv" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/dimen_12dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_below="@+id/dialog_message_tv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content">
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:paddingLeft="@dimen/dimen_15dp"
+            android:paddingTop="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            android:paddingRight="@dimen/dimen_15dp"
+            android:text="Close"
+            android:textAllCaps="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
+            android:id="@+id/cancel_btn" />
+
+      <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:paddingLeft="@dimen/dimen_15dp"
+            android:paddingTop="@dimen/dimen_5dp"
+            android:paddingBottom="@dimen/dimen_5dp"
+            android:paddingRight="@dimen/dimen_15dp"
+            android:textAllCaps="true"
+            android:background="@color/btn_color"
+            android:text="@string/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textColor="@android:color/white"
+            android:id="@+id/ok_btn" />
+    </TableRow>
+</RelativeLayout>

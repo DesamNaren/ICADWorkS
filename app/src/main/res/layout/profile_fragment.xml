@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context=".view.DashboardActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/profile_db" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="@dimen/dimen_20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <cgg.gov.in.icadworks.custom.CustomFontTextView
+                android:id="@+id/empNameTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:padding="@dimen/dimen_2dp"
+                android:textColor="@color/white_new" />
+
+            <cgg.gov.in.icadworks.custom.CustomFontTextView
+                android:id="@+id/desTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="@dimen/dimen_3dp"
+                android:padding="@dimen/dimen_2dp"
+                android:textColor="@color/white_new" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:background="@drawable/shape"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Username"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/userNameTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Post"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/postTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Contact"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/contactTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Email"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/emailTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:background="@drawable/shape"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_10dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Unit"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/unitTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Circle"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/circleTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Division"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/divTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Sub Division"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/subDivTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Section"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/secTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:paddingLeft="5dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context=".view.DashboardActivity">
+
+    <LinearLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/profile_db" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginLeft="@dimen/dimen_20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <cgg.gov.in.icadworks.custom.CustomFontTextView
+                android:id="@+id/empNameTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:padding="@dimen/dimen_2dp"
+                android:textColor="@color/white_new" />
+
+            <cgg.gov.in.icadworks.custom.CustomFontTextView
+                android:id="@+id/desTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="@dimen/dimen_3dp"
+                android:padding="@dimen/dimen_2dp"
+                android:textColor="@color/white_new" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white_new"
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dimen_4dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/white_new"
+            android:text="@string/tag_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:paddingTop="@dimen/dimen_12dp"
+            android:paddingBottom="@dimen/dimen_12dp"
+            android:paddingLeft="@dimen/dimen_8dp"
+            android:paddingRight="@dimen/dimen_8dp"
+            android:background="@drawable/shape"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/app_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white_new"
+            android:text="@string/app_abb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_8dp"
+        android:layout_marginRight="@dimen/dimen_8dp"
+        android:background="@drawable/shape"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_10dp">
+        
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="AC"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Assembly Constituency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Agmt"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Agreements"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cum."
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Cumulative"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="E2EA"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Entrusted to Existing Agency"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimen_16sp"
+                android:layout_weight="3"
+                 />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="E/T"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Tanks Entered / Tanks to be Fed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimen_16sp"
+                android:layout_weight="3"
+                />
+
+        </LinearLayout>
+
+
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="mcft"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Million Cubic Feet"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="mm"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="millimeter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="OTs"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Off Take Sluices"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp" />
+
+        </LinearLayout>
+
+        <include layout="@layout/view_layout"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TS"
+                android:textSize="@dimen/dimen_16sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:text="Technical Sanction"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/dimen_16sp"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
