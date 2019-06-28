@@ -34,7 +34,7 @@ build_release_job:
   script:
     - ./gradlew assembleRelease
   tags:
-    - win105
+    - android105
   artifacts:
     paths:
     - app/build/outputs/apk/release/app-release.apk
@@ -47,7 +47,7 @@ build_debug_job:
   script:
     - ./gradlew assembleDebug
   tags:
-    - win105
+    - android105
   artifacts:
     paths:
     - app/build/outputs/apk/debug/app-debug.apk      
