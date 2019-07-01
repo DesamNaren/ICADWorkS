@@ -106,7 +106,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             String string = sharedPreferences.getString("LOGIN_DATA", "");
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
 
-             employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
+            employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
             if (defSelection >= 0 && employeeDetailss != null && employeeDetailss.getEmployeeDetail() != null) {
                 if (employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() != null) {
                     if (employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AEE")
@@ -116,7 +116,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                         fab.setVisibility(View.GONE);
                     }
                 }
-            }else {
+            } else {
                 Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
             }
 
@@ -215,7 +215,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
 
             if (distance > 100) {
                 if (otData.getRadiusMsg() != null)
-                    Utilities.showCustomNetworkAlert(this, otData.getAgmtMsg(), false);
+                    Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
                 else
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
             } else if (distance > 0 && distance <= 100) {
@@ -251,9 +251,9 @@ public class OTDetailActivityLoc extends LocBaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(otData!=null && otData.getPhotoPath() != null && !TextUtils.isEmpty(otData.getPhotoPath().trim())){
+        if (otData != null && otData.getPhotoPath() != null && !TextUtils.isEmpty(otData.getPhotoPath().trim())) {
             menu.findItem(R.id.image_view).setVisible(true);
-        }else {
+        } else {
             menu.findItem(R.id.image_view).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -272,7 +272,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             case R.id.image_share:
                 try {
                     ScrollView abstractView = getWindow().getDecorView().findViewById(R.id.scrlView);
-                    Utilities.takeSCImage(this, abstractView ,
+                    Utilities.takeSCImage(this, abstractView,
                             employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName() + "OT Data");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -281,7 +281,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             case R.id.nav_map:
                 if (!(otLat > 0 && otLng > 0)) {
                     Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
-                }else {
+                } else {
 
                     SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();

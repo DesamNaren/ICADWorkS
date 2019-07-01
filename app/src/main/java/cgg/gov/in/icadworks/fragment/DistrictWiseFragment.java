@@ -36,7 +36,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.adapter.DashboardAdapter;
 import cgg.gov.in.icadworks.adapter.DistrictReportAdapter;
 import cgg.gov.in.icadworks.adapter.ProjectReportAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;

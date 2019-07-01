@@ -232,12 +232,9 @@ public class LocBaseActivity extends AppCompatActivity {
                         updateLocationUI();
                     }
                 });
-
-
     }
 
     public void stopLocationUpdates() {
-
         mFusedLocationClient.removeLocationUpdates(mLocationCallback)
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -246,8 +243,6 @@ public class LocBaseActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -308,7 +303,6 @@ public class LocBaseActivity extends AppCompatActivity {
             stopLocationUpdates();
         }
     }
-
 
     public void updateLocationUI() {
 
