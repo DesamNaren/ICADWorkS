@@ -75,13 +75,11 @@ public class LoginPresenter implements BasePresenter<LoginView> {
                     .subscribe(new Subscriber<ItemStatusResponse>() {
                         @Override
                         public void onCompleted() {
-//                            loginView.showProgressIndicator(false);
                             loginView.getItemStatusResponse(itemStatusResponse);
                         }
 
                         @Override
                         public void onError(Throwable error) {
-//                            loginView.showProgressIndicator(false);
                             loginView.getItemStatusResponse(itemStatusResponse);
                         }
 
