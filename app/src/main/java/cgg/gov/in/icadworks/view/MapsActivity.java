@@ -159,14 +159,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         if (latitude.contains("-")) {
                             String[] strings = otData.getLatitude().split("-");
                             lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        }else {
+                        } else {
                             lat = Double.valueOf(latitude);
                         }
 
                         if (longitude.contains("-")) {
                             String[] strings = otData.getLongitude().split("-");
                             lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        }else {
+                        } else {
                             lng = Double.valueOf(longitude);
                         }
 
@@ -191,62 +191,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                         if (otResponse.getData().get(i).getGetItemStatusData() != null && otResponse.getData().get(i).getGetItemStatusData().size() > 0) {
-                            for (int x = 0; x < otResponse.getData().get(i).getGetItemStatusData().size(); x++) {
+                                int statusId = 0;
 
-                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
+                                for (int y = 0; y < otResponse.getData().get(i).getGetItemStatusData().size(); y++) {
+                                    statusId += Integer.valueOf(otResponse.getData().get(i).getGetItemStatusData().get(y).getStatusId());
                                 }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
+                                if (statusId > 0 && statusId == 3) {
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                                 }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
+                                if (statusId > 3 && statusId <= 8) {
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                                 }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
+                                if (statusId == 9) {
                                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                                 }
 
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                }
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+//                                }
+//
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+//                                }
+//
+//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
+//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
+//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+//                                }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                                }
-
-                            }
                         }
 
 
                         markername = mMap.addMarker(markerOptions);
+
                         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                             @Override
                             public void onInfoWindowClick(Marker marker) {
@@ -413,7 +428,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mGoogleApiClient.connect();
     }
-
 
 
     @Override

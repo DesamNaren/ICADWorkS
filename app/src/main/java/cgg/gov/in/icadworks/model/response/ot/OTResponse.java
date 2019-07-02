@@ -75,7 +75,7 @@ public class OTResponse implements Parcelable {
         dest.writeList(this.abstractReport);
     }
 
-    protected OTResponse(Parcel in) {
+    public OTResponse(Parcel in) {
         this.data = in.createTypedArrayList(OTData.CREATOR);
         this.statusCode = (Integer) in.readValue(Integer.class.getClassLoader());
         this.tag = in.readString();

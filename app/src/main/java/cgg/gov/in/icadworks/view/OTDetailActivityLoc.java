@@ -38,6 +38,8 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
+import cgg.gov.in.icadworks.util.ConnectionDetector;
+import cgg.gov.in.icadworks.util.GPSTracker;
 import cgg.gov.in.icadworks.util.Utilities;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -198,66 +200,71 @@ public class OTDetailActivityLoc extends LocBaseActivity {
     @OnClick(R.id.fab)
     public void onViewClicked() {
 
-        if (otData.getAgmtStatus() == null) {
-            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
-            return;
-        }
 
-        if (otData.getAgmtStatus().equalsIgnoreCase("NO")) {
-            Utilities.showCustomNetworkAlert(this, otData.getAgmtMsg(), false);
-            return;
-        }
+        if (ConnectionDetector.isConnectedToInternet(this)) {
 
+            if (otData.getAgmtStatus() == null) {
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
+                return;
+            }
 
-        distance = 0.0;
-        if (mCurrentLocation != null) {
-            if (mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
-                Location src = new Location("Src");
-                src.setLatitude(mCurrentLocation.getLatitude());
-                src.setLongitude(mCurrentLocation.getLongitude());
+            if (otData.getAgmtStatus().equalsIgnoreCase("NO")) {
+                Utilities.showCustomNetworkAlert(this, otData.getAgmtMsg(), false);
+                return;
+            }
 
-                Location dest = new Location("Dest");
-                String otLatStr = roundDecimal(otLat, 7);
-                dest.setLatitude(Double.parseDouble(otLatStr));
-                String otLngStr = roundDecimal(otLng, 7);
-                dest.setLongitude(Double.parseDouble(otLngStr));
+            distance = 0.0;
+            if (mCurrentLocation != null) {
+                if (mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
+                    Location src = new Location("Src");
+                    src.setLatitude(mCurrentLocation.getLatitude());
+                    src.setLongitude(mCurrentLocation.getLongitude());
 
-                distance = calcDistanceKm(src, dest);
-                if(distance>0){
-                    String finalDistance = roundDecimal(distance, 7);
-                    distance = Double.parseDouble(finalDistance);
-                    Log.i("DISTANCE", "onViewClicked: "+distance);
+                    Location dest = new Location("Dest");
+                    String otLatStr = roundDecimal(otLat, 7);
+                    dest.setLatitude(Double.parseDouble(otLatStr));
+                    String otLngStr = roundDecimal(otLng, 7);
+                    dest.setLongitude(Double.parseDouble(otLngStr));
+
+                    distance = calcDistanceKm(src, dest);
+                    if (distance > 0) {
+                        String finalDistance = roundDecimal(distance, 7);
+                        distance = Double.parseDouble(finalDistance);
+                        Log.i("DISTANCE", "onViewClicked: " + distance);
+                    }
+
                 }
 
-            }
+                if (distance > 100) {
+                    if (TextUtils.isEmpty(otData.getRadiusMsg()) || otData.getRadiusMsg() == null)
+                        Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
+                    else
+                        Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
-            if (distance > 100) {
-                if (TextUtils.isEmpty(otData.getRadiusMsg()) || otData.getRadiusMsg() == null)
-                    Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
-                else
-                    Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
+                } else if (distance > 0 && distance <= 100) {
 
-            } else if (distance > 0 && distance <= 100) {
+                    SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    String otDataStr = gson.toJson(otData);
 
-                SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                Gson gson = new Gson();
-                String otDataStr = gson.toJson(otData);
-
-                editor.putString("ITEM_DATA_FIN", otDataStr);
-                editor.putString("FOUNDATION_VAL", foundationVal);
-                editor.putString("SUPER_STR_VAL", superStrVal);
-                editor.putString("SHUTTER_VAL", shutterVal);
-                editor.putString("FOUNDATION_TEXT_VAL", foundationTextVal);
-                editor.putString("SUPER_TEXT_VAL", superTextVal);
-                editor.putString("SHUTTER_TEXT_VAL", shutterTextVal);
-                editor.commit();
-                startActivity(new Intent(OTDetailActivityLoc.this, UploadDetailActivityLoc.class));
+                    editor.putString("ITEM_DATA_FIN", otDataStr);
+                    editor.putString("FOUNDATION_VAL", foundationVal);
+                    editor.putString("SUPER_STR_VAL", superStrVal);
+                    editor.putString("SHUTTER_VAL", shutterVal);
+                    editor.putString("FOUNDATION_TEXT_VAL", foundationTextVal);
+                    editor.putString("SUPER_TEXT_VAL", superTextVal);
+                    editor.putString("SHUTTER_TEXT_VAL", shutterTextVal);
+                    editor.commit();
+                    startActivity(new Intent(OTDetailActivityLoc.this, UploadDetailActivityLoc.class));
+                } else {
+                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+                }
             } else {
-                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
             }
         } else {
-            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.no_internet), false);
         }
     }
 
@@ -401,7 +408,6 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             }
         }
     };
-
 
 
     public static String roundDecimal(double value, int places) {

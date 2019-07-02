@@ -21,6 +21,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -97,8 +98,10 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.view.DashboardActivity;
 import cgg.gov.in.icadworks.view.LoginActivity;
+import cgg.gov.in.icadworks.view.UploadDetailActivityLoc;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.WIFI_SERVICE;
 
 public class Utilities {
     final static String dirPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/ICAD";
@@ -464,7 +467,6 @@ public class Utilities {
     }
 
 
-
     public static void showToastCenter(String msg, Context ctx) {
         if (!TextUtils.isEmpty(msg)) {
             Toast toast = Toast.makeText(ctx, msg, Toast.LENGTH_SHORT);
@@ -794,6 +796,7 @@ public class Utilities {
         activity.startActivity(intent);
         activity.finish();
     }
+
     public static void showCustomNetworkAlertSuccess(final Activity activity, String str) {
         new TTFancyGifDialog.Builder(activity)
                 .setTitle(activity.getResources().getString(R.string.app_name))
@@ -812,11 +815,29 @@ public class Utilities {
                 .build();
     }
 
+    public static void showOfflineAlert(final Activity activity, String str) {
+        new TTFancyGifDialog.Builder(activity)
+                .setTitle(activity.getResources().getString(R.string.app_name))
+                .setMessage(str)
+                .setPositiveBtnText("Ok")
+                .setPositiveBtnBackground("#22b573")
+                .setGifResource(R.drawable.hello)      //pass your gif, png or jpg
+                .isCancellable(false)
+                .OnPositiveClicked(new TTFancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        activity.startActivity(new Intent(activity, UploadDetailActivityLoc.class));
+                        activity.finish();
+                    }
+                })
+                .build();
+    }
+
     public static void takeSCImageAbstarct(Activity activity, RecyclerView recyclerView, String typeData) {
         try {
             fileUri = getOutputMediaFileUri(activity, MEDIA_TYPE_IMAGE, typeData);
             Bitmap bitmap1 = loadRV(recyclerView, recyclerView.getWidth(), 100);
-            if(bitmap1!=null){
+            if (bitmap1 != null) {
                 store(bitmap1, activity);
             }
         } catch (Exception e) {
@@ -829,7 +850,7 @@ public class Utilities {
         try {
             fileUri = getOutputMediaFileUri(activity, MEDIA_TYPE_IMAGE, typeData);
             Bitmap bitmap = getScreenShot(view);
-            if(bitmap!=null){
+            if (bitmap != null) {
                 store(bitmap, activity);
             }
         } catch (Exception e) {
@@ -874,8 +895,8 @@ public class Utilities {
         return bigBitmap;
     }
 
-    public static Bitmap  loadRV(View v, int width, int height) {
-        Bitmap b = Bitmap.createBitmap(width , height, Bitmap.Config.ARGB_8888);
+    public static Bitmap loadRV(View v, int width, int height) {
+        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
         v.draw(c);
@@ -890,7 +911,7 @@ public class Utilities {
             int height = 0;
             Paint paint = new Paint();
             int iHeight = 0;
-            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024*4);
+            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024 * 4);
 
             // Use 1/8th of the available memory for this memory cache.
             final int cacheSize = maxMemory / 8;
@@ -928,7 +949,7 @@ public class Utilities {
         return bigBitmap;
     }
 
-    private static void shareImage(Activity activity, Uri fileUri){
+    private static void shareImage(Activity activity, Uri fileUri) {
         try {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
@@ -937,7 +958,7 @@ public class Utilities {
             intent.putExtra(Intent.EXTRA_SUBJECT, activity.getResources().getString(R.string.app_name));
             intent.putExtra(Intent.EXTRA_STREAM, fileUri);
             try {
-                activity. startActivity(Intent.createChooser(intent, "Project Data"));
+                activity.startActivity(Intent.createChooser(intent, "Project Data"));
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(activity, "No App Available", Toast.LENGTH_SHORT).show();
             }
@@ -952,7 +973,7 @@ public class Utilities {
         return Bitmap.createBitmap(ll.getDrawingCache());
     }
 
-    private static void store(Bitmap bm, Activity activity){
+    private static void store(Bitmap bm, Activity activity) {
         try {
             FileOutputStream fOut = new FileOutputStream(mediaFile);
             bm.compress(Bitmap.CompressFormat.PNG, 100, fOut);
@@ -990,7 +1011,7 @@ public class Utilities {
         return mediaFile;
     }
 
-    private static String getTimeStamp(){
+    private static String getTimeStamp() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss");
         return simpleDateFormat.format(new Date());
     }
@@ -1028,7 +1049,7 @@ public class Utilities {
                     progressBar.setVisibility(View.GONE);
                 }
                 try {
-                    Utilities.showAlertDialog(activity, getString(R.string.app_name), getString(R.string.something),true, false, true);
+                    Utilities.showAlertDialog(activity, getString(R.string.app_name), getString(R.string.something), true, false, true);
                 } catch (Resources.NotFoundException e) {
                     e.printStackTrace();
                 }
@@ -1036,6 +1057,44 @@ public class Utilities {
             }
         });
         webView.loadUrl(url);
+    }
+
+
+    public boolean checkNetworkSignal() {
+        Process p1 = null;
+        try {
+            p1 = Runtime.getRuntime().exec("ping -c 1 www.google.com");
+            int returnVal = p1.waitFor();
+            boolean reachable = (returnVal == 0);
+            if (reachable) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (p1 != null) {
+                p1.destroy();
+            }
+        }
+        return false;
+    }
+
+    public static void checkStrength(Context context){
+        try {
+            WifiManager wifiManager = (WifiManager)context.getSystemService(WIFI_SERVICE);
+            int rssi = wifiManager.getConnectionInfo().getRssi();
+            int level = WifiManager.calculateSignalLevel(rssi, 5);
+            System.out.println("Level is " + level + " out of 5");
+
+            Toast.makeText(context, "Signal Strength"+level, Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

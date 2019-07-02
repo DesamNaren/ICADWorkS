@@ -102,6 +102,9 @@ public class LoginPresenter implements BasePresenter<LoginView> {
             ICADApplication application = ICADApplication.get(loginView.getContext());
             ICADService gitHubService = application.getDBService(2);
 
+
+
+
             subscription = gitHubService.getWorkItemRes(userName, password)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(application.defaultSubscribeScheduler())

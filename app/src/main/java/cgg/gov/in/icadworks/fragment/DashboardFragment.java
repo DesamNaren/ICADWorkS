@@ -5,8 +5,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -94,7 +97,7 @@ public class DashboardFragment extends Fragment implements OTView {
     private int pos;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout mainRL;
-    private LinearLayout liner_ll;
+    private LinearLayout notStartedL, inProL, comL, totalLayout;
     private ImageView shareIV;
 
     @Nullable
@@ -114,7 +117,10 @@ public class DashboardFragment extends Fragment implements OTView {
         notStCount = view.findViewById(R.id.notStCount);
         inProCount = view.findViewById(R.id.inProCount);
         comCount = view.findViewById(R.id.comCount);
-        liner_ll = view.findViewById(R.id.liner_ll);
+        notStartedL = view.findViewById(R.id.notStartedLayout);
+        inProL = view.findViewById(R.id.inProLayout);
+        comL = view.findViewById(R.id.comLayout);
+        totalLayout = view.findViewById(R.id.totalLayout);
 
         tanksCount = view.findViewById(R.id.tanksCount);
         tsCount = view.findViewById(R.id.tsCount);
@@ -195,6 +201,12 @@ public class DashboardFragment extends Fragment implements OTView {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+
+                notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                inProL.setBackgroundColor(Color.TRANSPARENT);
+                comL.setBackgroundColor(Color.TRANSPARENT);
+
                 searchView.setQuery("", false);
                 searchView.clearFocus();
                 searchView.setIconified(true);
@@ -220,7 +232,6 @@ public class DashboardFragment extends Fragment implements OTView {
             }
         });
 
-
         shareIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,7 +244,187 @@ public class DashboardFragment extends Fragment implements OTView {
         });
 
 
+        notStartedL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    notStartedL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+
+                    if(!TextUtils.isEmpty(notStCount.getText().toString()) && Integer.valueOf(notStCount.getText().toString())>0){
+                        clearRV();
+
+                        getFilterData();
+                    }else {
+                        switchView.setVisibility(View.GONE);
+                        dashboardAdapter.setFilteredData(null);
+                        dashboardRV.setAdapter(null);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        inProL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    inProL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    if(!TextUtils.isEmpty(inProCount.getText().toString()) && Integer.valueOf(inProCount.getText().toString())>0){
+                        clearRV();
+
+                        getFilterDataInPro();
+                    }else {
+                        switchView.setVisibility(View.GONE);
+                        dashboardAdapter.setFilteredData(null);
+                        dashboardRV.setAdapter(null);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        comL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    comL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    if(!TextUtils.isEmpty(comCount.getText().toString()) && Integer.valueOf(comCount.getText().toString())>0){
+                        clearRV();
+                        getFilterDataCom();
+                    }else {
+                        switchView.setVisibility(View.GONE);
+                        dashboardAdapter.setFilteredData(null);
+                        dashboardRV.setAdapter(null);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        totalLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    totalLayout.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+                    if(!TextUtils.isEmpty(totalCount.getText().toString()) && Integer.valueOf(totalCount.getText().toString())>0){
+                        clearRV();
+                        setDataAdapter(otResponse);
+                    }else {
+                        dashboardRV.setAdapter(null);
+                        switchView.setVisibility(View.GONE);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void clearRV() {
+        progressBar.setVisibility(View.VISIBLE);
+        dashboardRV.setAdapter(null);
+        dashboardRV.setVisibility(View.GONE);
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                dashboardRV.setVisibility(View.VISIBLE);
+                switchView.setVisibility(View.VISIBLE);
+            }
+
+        }, 2000);
+    }
+
+    private void getFilterData() {
+        ArrayList<OTData> otData = new ArrayList<>(otResponse.getData());
+        ArrayList<OTData> tempData = new ArrayList<>();
+
+
+        if(otData.size()>0){
+            dashboardRV.setAdapter(null);
+            for(int z=0;z<otData.size();z++){
+                int statusId=0;
+                for(int y=0;y<otData.get(z).getGetItemStatusData().size();y++){
+                    statusId +=Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
+                }
+
+                if(statusId>0 && statusId==3){
+                    tempData.add(otData.get(z));
+                }
+            }
+        }
+        if(otData.size()>0){
+            setDataAdapterOT(tempData);
+        }
+
+    }
+
+    private void getFilterDataInPro() {
+        ArrayList<OTData> otData = new ArrayList<>(otResponse.getData());
+        ArrayList<OTData> tempData = new ArrayList<>();
+        if(otData.size()>0){
+            dashboardRV.setAdapter(null);
+            for(int z=0;z<otData.size();z++){
+                int statusId=0;
+                for(int y=0;y<otData.get(z).getGetItemStatusData().size();y++){
+                    statusId +=Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
+                }
+
+                if(statusId>3 && statusId<=8){
+                    tempData.add(otData.get(z));
+                }
+            }
+        }
+        if(otData.size()>0) {
+            setDataAdapterOT(tempData);
+        }
+    }
+
+    private void getFilterDataCom() {
+        ArrayList<OTData> otData = new ArrayList<>(otResponse.getData());
+        ArrayList<OTData> tempData = new ArrayList<>();
+        if(otData.size()>0){
+            dashboardRV.setAdapter(null);
+            for(int z=0;z<otData.size();z++){
+                int statusId=0;
+                for(int y=0;y<otData.get(z).getGetItemStatusData().size();y++){
+                    statusId +=Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
+                }
+
+                if(statusId==9){
+                    tempData.add(otData.get(z));
+                }
+            }
+        }
+        if(otData.size()>0){
+            setDataAdapterOT(tempData);
+        }
     }
 
     @Override
@@ -301,6 +492,7 @@ public class DashboardFragment extends Fragment implements OTView {
         try {
             if (otResponse != null) {
                 if (otResponse.getStatusCode() != null && otResponse.getStatusCode() == 200) {
+                    this.otResponse = otResponse;
                     if (otResponse.getAbstractReport() != null && otResponse.getAbstractReport().size() > 0) {
                         totalCount.setText(otResponse.getAbstractReport().get(0).getTotal());
                         notStCount.setText(otResponse.getAbstractReport().get(0).getNotStarted());
@@ -416,6 +608,17 @@ public class DashboardFragment extends Fragment implements OTView {
         dashboardAdapter = new DashboardAdapter(otResponse.getData(), getActivity());
         dashboardRV.setLayoutManager(new LinearLayoutManager(getActivity()));
         dashboardRV.setAdapter(dashboardAdapter);
+    }
+
+    void setDataAdapterOT(ArrayList<OTData> otData) {
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+        searchView.setIconified(true);
+        flagSwitch = "list";
+        dashboardAdapter = new DashboardAdapter(otData, getActivity());
+        dashboardRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        dashboardRV.setAdapter(dashboardAdapter);
+        dashboardAdapter.setFilteredData(otData);
     }
 
     @Override
@@ -611,6 +814,7 @@ public class DashboardFragment extends Fragment implements OTView {
 
         switchView.setVisibility(View.GONE);
     }
+
 
     private void sortDataByPro(ArrayList<OTData> otData) {
         Collections.sort(otData, new Comparator<OTData>() {

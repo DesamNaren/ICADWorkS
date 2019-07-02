@@ -327,6 +327,8 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
                         if (mCurrentLocation != null && mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
                             takePicture();
                         }
+
+                        //add another condition with low network -TODO (else)
                     } else {
                         Utilities.showCustomNetworkAlert(this, "Please update the status to capture photo", false);
                     }

@@ -10,6 +10,16 @@ import java.util.List;
 
 public class OTData implements Parcelable {
 
+    private int statusId;
+
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
     @SerializedName("structure_no")
     @Expose
     private String structureNo;

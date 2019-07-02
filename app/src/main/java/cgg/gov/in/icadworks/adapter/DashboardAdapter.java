@@ -142,6 +142,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Item
        return mFilteredList;
     }
 
+    public void  setFilteredData(ArrayList<OTData> otData) {
+        mFilteredList = otData;
+    }
+
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.projectData)
