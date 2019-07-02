@@ -49,7 +49,7 @@ public class OTData implements Parcelable {
     @SerializedName("districtname")
     @Expose
     private String districtname;
-    @SerializedName("structurename")
+    @SerializedName("structure_name")
     @Expose
     private String structurename;
     @SerializedName("reservoirname")
@@ -100,49 +100,6 @@ public class OTData implements Parcelable {
 
     public OTData() {
     }
-
-    protected OTData(Parcel in) {
-        structureNo = in.readString();
-        projectname = in.readString();
-        ventDiaInMm = in.readString();
-        assemblyname = in.readString();
-        tanksToBeFedCount = in.readString();
-        latitude = in.readString();
-        canalname = in.readString();
-        structureId = in.readString();
-        mandalname = in.readString();
-        mandalid = in.readString();
-        getItemStatusData = in.createTypedArrayList(OTStatusData.CREATOR);
-        districtid = in.readString();
-        districtname = in.readString();
-        structurename = in.readString();
-        reservoirname = in.readString();
-        cumulativeCapacityOfTankInMcft = in.readString();
-        assemblycode = in.readString();
-        canalid = in.readString();
-        villageid = in.readString();
-        projectid = in.readString();
-        villagename = in.readString();
-        dischargeInCusecs = in.readString();
-        longitude = in.readString();
-        reservoirid = in.readString();
-        photoPath = in.readString();
-        agmtMsg = in.readString();
-        agmtStatus = in.readString();
-        radiusMsg = in.readString();
-    }
-
-    public static final Creator<OTData> CREATOR = new Creator<OTData>() {
-        @Override
-        public OTData createFromParcel(Parcel in) {
-            return new OTData(in);
-        }
-
-        @Override
-        public OTData[] newArray(int size) {
-            return new OTData[size];
-        }
-    };
 
     public String getStructureNo() {
         return structureNo;
@@ -344,40 +301,6 @@ public class OTData implements Parcelable {
         this.photoPath = photoPath;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(structureNo);
-        parcel.writeString(projectname);
-        parcel.writeString(ventDiaInMm);
-        parcel.writeString(assemblyname);
-        parcel.writeString(tanksToBeFedCount);
-        parcel.writeString(latitude);
-        parcel.writeString(canalname);
-        parcel.writeString(structureId);
-        parcel.writeString(mandalname);
-        parcel.writeString(mandalid);
-        parcel.writeTypedList(getItemStatusData);
-        parcel.writeString(districtid);
-        parcel.writeString(districtname);
-        parcel.writeString(structurename);
-        parcel.writeString(reservoirname);
-        parcel.writeString(cumulativeCapacityOfTankInMcft);
-        parcel.writeString(assemblycode);
-        parcel.writeString(canalid);
-        parcel.writeString(villageid);
-        parcel.writeString(projectid);
-        parcel.writeString(villagename);
-        parcel.writeString(dischargeInCusecs);
-        parcel.writeString(longitude);
-        parcel.writeString(reservoirid);
-        parcel.writeString(photoPath);
-    }
-
     public String getAgmtMsg() {
         return agmtMsg;
     }
@@ -401,4 +324,84 @@ public class OTData implements Parcelable {
     public void setRadiusMsg(String radiusMsg) {
         this.radiusMsg = radiusMsg;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.structureNo);
+        dest.writeString(this.projectname);
+        dest.writeString(this.ventDiaInMm);
+        dest.writeString(this.assemblyname);
+        dest.writeString(this.tanksToBeFedCount);
+        dest.writeString(this.latitude);
+        dest.writeString(this.canalname);
+        dest.writeString(this.structureId);
+        dest.writeString(this.mandalname);
+        dest.writeString(this.mandalid);
+        dest.writeTypedList(this.getItemStatusData);
+        dest.writeString(this.districtid);
+        dest.writeString(this.districtname);
+        dest.writeString(this.structurename);
+        dest.writeString(this.reservoirname);
+        dest.writeString(this.cumulativeCapacityOfTankInMcft);
+        dest.writeString(this.assemblycode);
+        dest.writeString(this.canalid);
+        dest.writeString(this.villageid);
+        dest.writeString(this.projectid);
+        dest.writeString(this.villagename);
+        dest.writeString(this.dischargeInCusecs);
+        dest.writeString(this.longitude);
+        dest.writeString(this.reservoirid);
+        dest.writeString(this.photoPath);
+        dest.writeString(this.agmtMsg);
+        dest.writeString(this.agmtStatus);
+        dest.writeString(this.radiusMsg);
+    }
+
+    protected OTData(Parcel in) {
+        this.structureNo = in.readString();
+        this.projectname = in.readString();
+        this.ventDiaInMm = in.readString();
+        this.assemblyname = in.readString();
+        this.tanksToBeFedCount = in.readString();
+        this.latitude = in.readString();
+        this.canalname = in.readString();
+        this.structureId = in.readString();
+        this.mandalname = in.readString();
+        this.mandalid = in.readString();
+        this.getItemStatusData = in.createTypedArrayList(OTStatusData.CREATOR);
+        this.districtid = in.readString();
+        this.districtname = in.readString();
+        this.structurename = in.readString();
+        this.reservoirname = in.readString();
+        this.cumulativeCapacityOfTankInMcft = in.readString();
+        this.assemblycode = in.readString();
+        this.canalid = in.readString();
+        this.villageid = in.readString();
+        this.projectid = in.readString();
+        this.villagename = in.readString();
+        this.dischargeInCusecs = in.readString();
+        this.longitude = in.readString();
+        this.reservoirid = in.readString();
+        this.photoPath = in.readString();
+        this.agmtMsg = in.readString();
+        this.agmtStatus = in.readString();
+        this.radiusMsg = in.readString();
+    }
+
+    public static final Creator<OTData> CREATOR = new Creator<OTData>() {
+        @Override
+        public OTData createFromParcel(Parcel source) {
+            return new OTData(source);
+        }
+
+        @Override
+        public OTData[] newArray(int size) {
+            return new OTData[size];
+        }
+    };
 }

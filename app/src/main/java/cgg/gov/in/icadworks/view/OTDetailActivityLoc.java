@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -210,14 +212,31 @@ public class OTDetailActivityLoc extends LocBaseActivity {
         distance = 0.0;
         if (mCurrentLocation != null) {
             if (mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
-                distance = distanceCalc(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), otLat, otLng);
+                Location src = new Location("Src");
+                src.setLatitude(mCurrentLocation.getLatitude());
+                src.setLongitude(mCurrentLocation.getLongitude());
+
+                Location dest = new Location("Dest");
+                String otLatStr = roundDecimal(otLat, 7);
+                dest.setLatitude(Double.parseDouble(otLatStr));
+                String otLngStr = roundDecimal(otLng, 7);
+                dest.setLongitude(Double.parseDouble(otLngStr));
+
+                distance = calcDistanceKm(src, dest);
+                if(distance>0){
+                    String finalDistance = roundDecimal(distance, 7);
+                    distance = Double.parseDouble(finalDistance);
+                    Log.i("DISTANCE", "onViewClicked: "+distance);
+                }
+
             }
 
             if (distance > 100) {
-                if (otData.getRadiusMsg() != null)
-                    Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
-                else
+                if (TextUtils.isEmpty(otData.getRadiusMsg()) || otData.getRadiusMsg() == null)
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
+                else
+                    Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
+
             } else if (distance > 0 && distance <= 100) {
 
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
@@ -225,7 +244,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 Gson gson = new Gson();
                 String otDataStr = gson.toJson(otData);
 
-                editor.putString("ITEM_DATA", otDataStr);
+                editor.putString("ITEM_DATA_FIN", otDataStr);
                 editor.putString("FOUNDATION_VAL", foundationVal);
                 editor.putString("SUPER_STR_VAL", superStrVal);
                 editor.putString("SHUTTER_VAL", shutterVal);
@@ -343,26 +362,11 @@ public class OTDetailActivityLoc extends LocBaseActivity {
 
     }
 
-    private double distanceCalc(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1))
-                * Math.sin(deg2rad(lat2))
-                + Math.cos(deg2rad(lat1))
-                * Math.cos(deg2rad(lat2))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
+
+    private double calcDistanceKm(Location src, Location dest) {
+        return src.distanceTo(dest);
     }
 
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-    }
 
     @Override
     protected void onResume() {
@@ -398,5 +402,11 @@ public class OTDetailActivityLoc extends LocBaseActivity {
         }
     };
 
+
+
+    public static String roundDecimal(double value, int places) {
+        String format = "%." + places + "f";
+        return String.format(format, value);
+    }
 
 }

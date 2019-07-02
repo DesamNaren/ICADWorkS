@@ -126,7 +126,7 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
             defUsername = sharedPreferences.getString("DEFAULT_USER_NAME", "");
             defUserPwd = sharedPreferences.getString("DEFAULT_USER_PWD", "");
 
-            String otDataStr = sharedPreferences.getString("ITEM_DATA", "");
+            String otDataStr = sharedPreferences.getString("ITEM_DATA_FIN", "");
             otData = gson.fromJson(otDataStr, OTData.class);
 
             otIDTV.setText(otData.getStructureId());

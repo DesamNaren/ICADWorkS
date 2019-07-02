@@ -147,7 +147,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
 
     @Override
     public void getItemStatusResponse(ItemStatusResponse itemStatusResponse) {
-
+        progress.setVisibility(View.GONE);
         try {
             if (itemStatusResponse != null) {
                 if (itemStatusResponse.getData() != null && itemStatusResponse.getStatusCode() == 200 && itemStatusResponse.getData().size() > 0) {
