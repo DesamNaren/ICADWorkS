@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="cgg.gov.in.icadworks">
-
-
-    <!--<uses-sdk tools:overrideLibrary="com.shashank.sony.fancydialoglib" />-->
-    <uses-sdk tools:overrideLibrary="com.bestsoft32.tt_fancy_gif_dialog_lib"/>
-
+    package="cgg.gov.in.icadworks"> <!-- <uses-sdk tools:overrideLibrary="com.shashank.sony.fancydialoglib" /> -->
+    <uses-sdk tools:overrideLibrary="com.bestsoft32.tt_fancy_gif_dialog_lib" />
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
-
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -24,20 +19,17 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-
     <application
-        android:largeHeap="true"
         android:name=".application.ICADApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/icad_logo"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/icad_logo"
         android:supportsRtl="true"
-        android:hardwareAccelerated="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -55,13 +47,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <!--<meta-data-->
-            <!--android:name="com.google.android.geo.API_KEY"-->
-            <!--android:value="@string/google_maps_key" />-->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.android.geo.API_KEY" -->
+        <!-- android:value="@string/google_maps_key" /> -->
 
         <activity
             android:name=".view.OTMapActivity"
-            android:label="@string/title_activity_otmap"></activity>
+            android:label="@string/title_activity_otmap" />
         <activity
             android:name=".view.DashboardActivity"
             android:label="@string/title_activity_dashboard"
@@ -92,6 +84,7 @@
         <activity
             android:name=".view.UserManualActivity"
             android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="cgg.gov.in.icadworks.provider"
@@ -101,6 +94,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".view.LocalDBActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

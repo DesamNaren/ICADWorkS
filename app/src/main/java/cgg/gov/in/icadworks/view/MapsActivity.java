@@ -198,64 +198,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
 
                                 if (statusId > 0 && statusId == 3) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
                                 }
 
                                 if (statusId > 3 && statusId <= 8) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_ot));
                                 }
 
                                 if (statusId == 9) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_ot));
                                 }
-
-
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-//
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-//                                }
-//
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-//                                }
-//
-//                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-//                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-//                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-//                                }
 
                         }
 

@@ -57,6 +57,7 @@ import android.widget.Toast;
 
 import com.bestsoft32.tt_fancy_gif_dialog_lib.TTFancyGifDialog;
 import com.bestsoft32.tt_fancy_gif_dialog_lib.TTFancyGifDialogListener;
+import com.google.gson.Gson;
 //import com.shashank.sony.fancydialoglib.Animation;
 //import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 //import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
@@ -763,6 +764,44 @@ public class Utilities {
                         if (flag) {
                             activity.finish();
                         }
+                    }
+                })
+                .build();
+    }
+
+    public static void showOfflineNetworkAlert(final Activity activity, String str, final String otDataStr, final String foundationVal,
+                                               final String superStrVal, final String shutterVal, final String foundationTextVal,
+                                               final String superTextVal, final String  shutterTextVal,  boolean flag) {
+        new TTFancyGifDialog.Builder(activity)
+                .setTitle(activity.getResources().getString(R.string.app_name))
+                .setMessage(str)
+                .setNegativeBtnText("Cancel")
+                .setNegativeBtnBackground("#c1272d")
+                .setPositiveBtnText("Proceed")
+                .setPositiveBtnBackground("#22b573")
+                .setGifResource(R.drawable.hello)      //pass your gif, png or jpg
+                .isCancellable(true)
+                .OnPositiveClicked(new TTFancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
+                        SharedPreferences sharedPreferences =activity.getSharedPreferences("APP_PREF", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("ITEM_DATA_FIN", otDataStr);
+                        editor.putString("FOUNDATION_VAL", foundationVal);
+                        editor.putString("SUPER_STR_VAL", superStrVal);
+                        editor.putString("SHUTTER_VAL", shutterVal);
+                        editor.putString("FOUNDATION_TEXT_VAL", foundationTextVal);
+                        editor.putString("SUPER_TEXT_VAL", superTextVal);
+                        editor.putString("SHUTTER_TEXT_VAL", shutterTextVal);
+                        editor.putString("STO_TYPE", "offline");
+                        editor.commit();
+
+                        activity.startActivity(new Intent(activity, UploadDetailActivityLoc.class));
+                    }
+                })
+                .OnNegativeClicked(new TTFancyGifDialogListener() {
+                    @Override
+                    public void OnClick() {
                     }
                 })
                 .build();
