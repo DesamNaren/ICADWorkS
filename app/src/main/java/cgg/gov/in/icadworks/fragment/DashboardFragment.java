@@ -379,7 +379,7 @@ public class DashboardFragment extends Fragment implements OTView {
                 }
             }
         }
-        if(otData.size()>0){
+        if(tempData.size()>0){
             setDataAdapterOT(tempData);
         }
 
@@ -401,7 +401,7 @@ public class DashboardFragment extends Fragment implements OTView {
                 }
             }
         }
-        if(otData.size()>0) {
+        if(tempData.size()>0) {
             setDataAdapterOT(tempData);
         }
     }
@@ -422,7 +422,7 @@ public class DashboardFragment extends Fragment implements OTView {
                 }
             }
         }
-        if(otData.size()>0){
+        if(tempData.size()>0){
             setDataAdapterOT(tempData);
         }
     }

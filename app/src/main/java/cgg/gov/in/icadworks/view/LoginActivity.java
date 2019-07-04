@@ -59,7 +59,6 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
 
         }
 
-
         loginPresenter = new LoginPresenter();
         loginPresenter.attachView(this);
 
