@@ -29,6 +29,7 @@ import cgg.gov.in.icadworks.model.response.items.WorkItemsResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.presenter.LoginPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
+import cgg.gov.in.icadworks.util.CustomProgressDialog;
 import cgg.gov.in.icadworks.util.Utilities;
 
 public class LoginActivity extends LocBaseActivity implements LoginView {
@@ -41,16 +42,17 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
     CustomFontEditText pwdET;
     @BindView(R.id.loginBtn)
     CustomFontTextView loginBtn;
-    @BindView(R.id.progress)
-    ProgressBar progress;
     private LoginPresenter loginPresenter;
 
+    public CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        progressDialog = CustomProgressDialog.getInstance();
 
         try {
             getSupportActionBar().hide();
@@ -70,7 +72,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
             String defUserPwd = sharedPreferences.getString("DEFAULT_USER_PWD", "");
             itemStatusResponse = gson.fromJson(statusMasterData, ItemStatusResponse.class);
             if (itemStatusResponse == null) {
-                progress.setVisibility(View.VISIBLE);
+                progressDialog.showProgress(LoginActivity.this);
                 loginPresenter.getItemStatus(defUsername, defUserPwd);
             }
         } else {
@@ -113,7 +115,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
 
     @Override
     public void getLoginResponseSuccess(EmployeeDetailss employeeDetailss) {
-        progress.setVisibility(View.GONE);
+        progressDialog.hideProgress();
         try {
             if (employeeDetailss != null) {
                 if (employeeDetailss.getEmployeeDetail() != null) {
@@ -146,7 +148,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
 
     @Override
     public void getItemStatusResponse(ItemStatusResponse itemStatusResponse) {
-        progress.setVisibility(View.GONE);
+        progressDialog.hideProgress();
         try {
             if (itemStatusResponse != null) {
                 if (itemStatusResponse.getData() != null && itemStatusResponse.getStatusCode() == 200 && itemStatusResponse.getData().size() > 0) {
@@ -163,7 +165,6 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
 //                    }
                 }
             } else {
-//                Utilities.showFancyErrorAlert(this, getResources().getString(R.string.server));
                 Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.server), false);
             }
         } catch (Exception e) {
@@ -177,7 +178,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
 
     @Override
     public void getWorkItemsResponse(WorkItemsResponse workItemsResponse) {
-        progress.setVisibility(View.GONE);
+        progressDialog.hideProgress();
         try {
             if (workItemsResponse != null) {
                 if (workItemsResponse.getData() != null && workItemsResponse.getStatusCode() == 200 && workItemsResponse.getData().size() > 0) {
@@ -189,9 +190,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
                     editor.commit();
                 }
             } else {
-                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.server), false);
-//                Utilities.showFancyErrorAlert(this, getResources().getString(R.string.server));
-            }
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.server), false); }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -219,7 +218,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
         if (itemStatusResponse != null
                 && itemStatusResponse.getData() != null && itemStatusResponse.getData().size() > 0) {
             if (ConnectionDetector.isConnectedToInternet(this)) {
-                progress.setVisibility(View.VISIBLE);
+                progressDialog.showProgress(LoginActivity.this);
                 loginPresenter.submitLogin(userName, md5Pwd);
             } else {
                 Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.please_check_internet), false);
@@ -244,13 +243,6 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
                 mCurrentLocation = locationResult.getLastLocation();
             }
         };
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (progress.getVisibility() != View.VISIBLE) {
-            super.onBackPressed();
-        }
     }
 
     @Override

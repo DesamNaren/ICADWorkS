@@ -209,6 +209,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_ot));
                                 }
 
+
+                            if (statusId > 0 && statusId < 3) {
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
+                            }
+
                         }
 
 

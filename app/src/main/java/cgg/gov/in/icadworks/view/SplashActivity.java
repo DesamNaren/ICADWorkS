@@ -21,6 +21,7 @@ import cgg.gov.in.icadworks.interfaces.SplashView;
 import cgg.gov.in.icadworks.model.response.version.VersionResponse;
 import cgg.gov.in.icadworks.presenter.SplashPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
+import cgg.gov.in.icadworks.util.CustomProgressDialog;
 import cgg.gov.in.icadworks.util.Utilities;
 
 public class SplashActivity extends BaseActivity implements SplashView {
