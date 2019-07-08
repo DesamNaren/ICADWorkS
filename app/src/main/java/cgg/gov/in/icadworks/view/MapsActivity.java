@@ -253,6 +253,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setInfoWindowAdapter((GoogleMap.InfoWindowAdapter) customInfoWindow);
 
             if (fromClass.equalsIgnoreCase("OT")) {
+                mMap.getUiSettings().setMapToolbarEnabled(true);
                 markername.showInfoWindow();
             }
 
@@ -354,6 +355,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

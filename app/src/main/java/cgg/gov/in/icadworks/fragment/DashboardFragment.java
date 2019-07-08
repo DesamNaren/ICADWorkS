@@ -258,6 +258,7 @@ public class DashboardFragment extends Fragment implements OTView {
 
                         getFilterData();
                     }else {
+                        emptyTV.setVisibility(View.VISIBLE);
                         switchView.setVisibility(View.GONE);
                         dashboardAdapter.setFilteredData(null);
                         dashboardRV.setAdapter(null);
@@ -283,6 +284,7 @@ public class DashboardFragment extends Fragment implements OTView {
 
                         getFilterDataInPro();
                     }else {
+                        emptyTV.setVisibility(View.VISIBLE);
                         switchView.setVisibility(View.GONE);
                         dashboardAdapter.setFilteredData(null);
                         dashboardRV.setAdapter(null);
@@ -307,6 +309,7 @@ public class DashboardFragment extends Fragment implements OTView {
                         clearRV();
                         getFilterDataCom();
                     }else {
+                        emptyTV.setVisibility(View.VISIBLE);
                         switchView.setVisibility(View.GONE);
                         dashboardAdapter.setFilteredData(null);
                         dashboardRV.setAdapter(null);
@@ -331,6 +334,7 @@ public class DashboardFragment extends Fragment implements OTView {
                         clearRV();
                         setDataAdapter(otResponse);
                     }else {
+                        emptyTV.setVisibility(View.VISIBLE);
                         dashboardRV.setAdapter(null);
                         switchView.setVisibility(View.GONE);
                     }
@@ -346,6 +350,7 @@ public class DashboardFragment extends Fragment implements OTView {
     }
 
     private void clearRV() {
+        emptyTV.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         dashboardRV.setAdapter(null);
         dashboardRV.setVisibility(View.GONE);
@@ -356,6 +361,7 @@ public class DashboardFragment extends Fragment implements OTView {
                 progressBar.setVisibility(View.GONE);
                 dashboardRV.setVisibility(View.VISIBLE);
                 switchView.setVisibility(View.VISIBLE);
+
             }
 
         }, 2000);
