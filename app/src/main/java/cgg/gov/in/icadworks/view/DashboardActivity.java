@@ -110,7 +110,7 @@ public class DashboardActivity extends AppCompatActivity
                     fragmentTag = "Profile";
                     navigationView.setCheckedItem(R.id.nav_home);
                     displayFragment(selectedFragment, fragmentTag);
-                } else if (fragment instanceof DashboardFragment) {
+                } else if (fragment instanceof VPDashboardFragment) {
                     fragmentTag = "Report";
                     navigationView.setCheckedItem(R.id.nav_home);
                     displayFragment(selectedFragment, fragmentTag);
@@ -150,7 +150,7 @@ public class DashboardActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_reports) {
             fragmentTag = "Reports";
-            selectedFragment = new DashboardFragment();
+            selectedFragment = new VPDashboardFragment();
             displayFragment(selectedFragment, fragmentTag);
         } else if (id == R.id.nav_info) {
             fragmentTag = "Info";

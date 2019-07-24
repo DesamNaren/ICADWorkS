@@ -53,6 +53,7 @@ import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.presenter.OTPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
+import cgg.gov.in.icadworks.view.CDMapsActivity;
 import cgg.gov.in.icadworks.view.DashboardActivity;
 import cgg.gov.in.icadworks.view.MapsActivity;
 
@@ -143,11 +144,11 @@ public class CheckDamFragment extends Fragment implements OTView {
                     List<CheckDamData> checkDamData = checkDamAdapter.getFilteredData();
                     CheckDamResponse checkDamResponse = new CheckDamResponse();
                     checkDamResponse.setData(checkDamData);
-                    editor.putString("OT_DATA", gson.toJson(checkDamResponse));
+                    editor.putString("CD_DATA", gson.toJson(checkDamResponse));
                     editor.putString("FROM_CLASS", "DASH");
                     editor.commit();
 
-                    startActivity(new Intent(getContext(), MapsActivity.class));
+                    startActivity(new Intent(getContext(), CDMapsActivity.class));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -669,9 +670,7 @@ public class CheckDamFragment extends Fragment implements OTView {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (defSelection != pos && defSelection >= 0) {
-
                         defSelection = pos;
-
 //                        String selectedItem = Arrays.asList(str).get(pos);
 //                        for (int z = 0; z < employeeDetailss.getEmployeeDetail().size(); z++) {
 //                            if (selectedItem.equalsIgnoreCase(employeeDetailss.getEmployeeDetail().get(z).getDesignation())) {
@@ -679,7 +678,6 @@ public class CheckDamFragment extends Fragment implements OTView {
 //                                break;
 //                            }
 //                        }
-
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("DEFAULT_SELECTION", defSelection);
                         editor.commit();
@@ -739,7 +737,7 @@ public class CheckDamFragment extends Fragment implements OTView {
             for(int z=0;z<checkDamData.size();z++){
                 int statusId=0;
                 for(int y=0;y<checkDamData.get(z).getGetItemStatusData().size();y++){
-                    statusId += checkDamData.get(z).getGetItemStatusData().get(y).getStatusId();
+                    statusId += Integer.valueOf(checkDamData.get(z).getGetItemStatusData().get(y).getStatusId());
                 }
 
                 if(statusId>0 && statusId==3){
@@ -761,7 +759,7 @@ public class CheckDamFragment extends Fragment implements OTView {
             for(int z=0;z<checkDamData.size();z++){
                 int statusId=0;
                 for(int y=0;y<checkDamData.get(z).getGetItemStatusData().size();y++){
-                    statusId += checkDamData.get(z).getGetItemStatusData().get(y).getStatusId();
+                    statusId += Integer.valueOf(checkDamData.get(z).getGetItemStatusData().get(y).getStatusId());
                 }
 
                 if(statusId>3 && statusId<=8){
@@ -782,7 +780,7 @@ public class CheckDamFragment extends Fragment implements OTView {
             for(int z=0;z<checkDamData.size();z++){
                 int statusId=0;
                 for(int y=0;y<checkDamData.get(z).getGetItemStatusData().size();y++){
-                    statusId += checkDamData.get(z).getGetItemStatusData().get(y).getStatusId();
+                    statusId += Integer.valueOf(checkDamData.get(z).getGetItemStatusData().get(y).getStatusId());
                 }
 
                 if(statusId==9){

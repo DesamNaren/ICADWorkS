@@ -1,8 +1,10 @@
 package cgg.gov.in.icadworks.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamItemStatusData;
+import cgg.gov.in.icadworks.view.CheckDamDetailActivityLoc;
 
 public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemViewHolder> implements Filterable {
 
@@ -44,30 +47,21 @@ public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, final int position) {
         try {
-            itemViewHolder.projectData.setText(mFilteredList.get(position).getTankName());
-//            itemViewHolder.resData.setText(mFilteredList.get(position).getReservoirname());
-//            itemViewHolder.canalData.setText(mFilteredList.get(position).getCanalname());
-//            itemViewHolder.otID.setText(mFilteredList.get(position).getStructureId());
-//            itemViewHolder.otName.setText(mFilteredList.get(position).getStructurename());
-//            itemViewHolder.otVillage.setText(mFilteredList.get(position).getVillagename()
-//                    + "(v),"
-//                    + mFilteredList.get(position).getMandalname()
-//                    + "(m),"
-//                    + mFilteredList.get(position).getDistrictname());
+            itemViewHolder.cdCode.setText(String.valueOf(mFilteredList.get(position).getTankCode()));
+            itemViewHolder.cdName.setText(mFilteredList.get(position).getTankName());
+            CheckDamSubAdapter checkDamSubAdapter = new CheckDamSubAdapter(mFilteredList.get(position), context);
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
+            itemViewHolder.extradetailsRv.setAdapter(checkDamSubAdapter);
 
-//            DashboardSubAdapter dashboardSubAdapter = new DashboardSubAdapter(mFilteredList.get(position), context);
-//            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-//            itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
-//            itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);
-
-//            itemViewHolder.cardItem.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    context.startActivity(new Intent(context, OTDetailActivityLoc.class)
-//                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                            .putExtra("ITEM_DATA", mFilteredList.get(position)));
-//                }
-//            });
+            itemViewHolder.cardItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    context.startActivity(new Intent(context, CheckDamDetailActivityLoc.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            .putExtra("CD_ITEM_DATA", mFilteredList.get(position)));
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,18 +144,10 @@ public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemVi
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.projectData)
-        CustomFontTextView projectData;
-        @BindView(R.id.resData)
-        CustomFontTextView resData;
-        @BindView(R.id.canalData)
-        CustomFontTextView canalData;
-        @BindView(R.id.otID)
-        CustomFontTextView otID;
-        @BindView(R.id.otName)
-        CustomFontTextView otName;
-        @BindView(R.id.otVillage)
-        CustomFontTextView otVillage;
+        @BindView(R.id.cdCode)
+        CustomFontTextView cdCode;
+        @BindView(R.id.cdName)
+        CustomFontTextView cdName;
         @BindView(R.id.cardItem)
         CardView cardItem;
         @BindView(R.id.extradetails_rv)

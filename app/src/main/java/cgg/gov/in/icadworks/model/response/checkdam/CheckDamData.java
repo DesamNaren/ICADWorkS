@@ -1,10 +1,14 @@
 package cgg.gov.in.icadworks.model.response.checkdam;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CheckDamData {
+public class CheckDamData implements Parcelable {
 
     @SerializedName("tank_name")
     @Expose
@@ -348,4 +352,93 @@ public class CheckDamData {
         this.mandal = mandal;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.tankName);
+        dest.writeString(this.latitude);
+        dest.writeValue(this.tankId);
+        dest.writeString(this.acode);
+        dest.writeValue(this.bundlength);
+        dest.writeString(this.vcode);
+        dest.writeValue(this.geoId);
+        dest.writeValue(this.division);
+        dest.writeList(this.getItemStatusData);
+        dest.writeValue(this.sectionId);
+        dest.writeString(this.assembly);
+        dest.writeValue(this.preworkcapacity);
+        dest.writeString(this.village);
+        dest.writeString(this.circleName);
+        dest.writeValue(this.subDivision);
+        dest.writeValue(this.postworkcapacity);
+        dest.writeString(this.longitude);
+        dest.writeLong(this.tankCode);
+        dest.writeString(this.habitation);
+        dest.writeValue(this.ayacut);
+        dest.writeString(this.sectionName);
+        dest.writeString(this.unitName);
+        dest.writeValue(this.unit);
+        dest.writeString(this.mcode);
+        dest.writeString(this.subDivisionName);
+        dest.writeString(this.district);
+        dest.writeString(this.divisionName);
+        dest.writeValue(this.circle);
+        dest.writeString(this.hcode);
+        dest.writeString(this.dcode);
+        dest.writeString(this.mandal);
+    }
+
+    public CheckDamData() {
+    }
+
+    protected CheckDamData(Parcel in) {
+        this.tankName = in.readString();
+        this.latitude = in.readString();
+        this.tankId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.acode = in.readString();
+        this.bundlength = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.vcode = in.readString();
+        this.geoId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.division = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.getItemStatusData = new ArrayList<CheckDamItemStatusData>();
+        in.readList(this.getItemStatusData, CheckDamItemStatusData.class.getClassLoader());
+        this.sectionId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.assembly = in.readString();
+        this.preworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.village = in.readString();
+        this.circleName = in.readString();
+        this.subDivision = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.postworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.longitude = in.readString();
+        this.tankCode = in.readLong();
+        this.habitation = in.readString();
+        this.ayacut = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.sectionName = in.readString();
+        this.unitName = in.readString();
+        this.unit = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mcode = in.readString();
+        this.subDivisionName = in.readString();
+        this.district = in.readString();
+        this.divisionName = in.readString();
+        this.circle = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.hcode = in.readString();
+        this.dcode = in.readString();
+        this.mandal = in.readString();
+    }
+
+    public static final Parcelable.Creator<CheckDamData> CREATOR = new Parcelable.Creator<CheckDamData>() {
+        @Override
+        public CheckDamData createFromParcel(Parcel source) {
+            return new CheckDamData(source);
+        }
+
+        @Override
+        public CheckDamData[] newArray(int size) {
+            return new CheckDamData[size];
+        }
+    };
 }

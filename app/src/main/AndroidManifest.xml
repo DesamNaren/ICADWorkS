@@ -70,13 +70,22 @@
             android:name=".view.OTDetailActivityLoc"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.CheckDamDetailActivityLoc"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.UploadDetailActivityLoc"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.CDUploadDetailActivityLoc"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.MapsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.CDMapsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.LocBaseActivity"
