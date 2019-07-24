@@ -1,10 +1,8 @@
 package cgg.gov.in.icadworks.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +12,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,16 +20,15 @@ import butterknife.OnClick;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
-import cgg.gov.in.icadworks.model.response.ot.OTData;
-import cgg.gov.in.icadworks.view.OTDetailActivityLoc;
+import cgg.gov.in.icadworks.model.response.checkdam.CheckDamItemStatusData;
 
 public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemViewHolder> implements Filterable {
 
-    private ArrayList<CheckDamData> checkDamData;
-    private ArrayList<CheckDamData> mFilteredList;
+    private List<CheckDamData> checkDamData;
+    private List<CheckDamData> mFilteredList;
     private Context context;
 
-    public CheckDamAdapter(ArrayList<CheckDamData> checkDamData, Context context) {
+    public CheckDamAdapter(List<CheckDamData> checkDamData, Context context) {
         this.checkDamData = checkDamData;
         mFilteredList = checkDamData;
         this.context = context;
@@ -95,31 +93,37 @@ public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemVi
                 if (charString.isEmpty()) {
                     mFilteredList = checkDamData;
                 } else {
-//                    try {
-//                        ArrayList<CheckDamData> filteredList = new ArrayList<>();
-//                        for (CheckDamData checkDamData : checkDamData) {
-//                            if (!TextUtils.isEmpty(checkDamData.getProjectname()) && checkDamData.getProjectname().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getReservoirname()) && checkDamData.getReservoirname().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getCanalname()) && checkDamData.getCanalname().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getStructureId()) && checkDamData.getStructureId().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getStructurename()) && checkDamData.getStructurename().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getDistrictname()) && checkDamData.getDistrictname().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getMandalname()) && checkDamData.getMandalname().toLowerCase().contains(charString.toLowerCase())
-//                                    ||
-//                                    !TextUtils.isEmpty(checkDamData.getVillagename()) && checkDamData.getVillagename().toLowerCase().contains(charString.toLowerCase())) {
-//                                filteredList.add(checkDamData);
-//                            }
-//                        }
-//                        mFilteredList = filteredList;
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        ArrayList<CheckDamData> filteredList = new ArrayList<>();
+                        for (CheckDamData checkDamData : checkDamData) {
+                            if (!TextUtils.isEmpty(checkDamData.getTankName()) && checkDamData.getTankName().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(String.valueOf(checkDamData.getTankId())) && String.valueOf(checkDamData.getTankId()).toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(String.valueOf(checkDamData.getTankCode())) && String.valueOf(checkDamData.getTankCode()).toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getCircleName()) && checkDamData.getCircleName().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getSectionName()) && checkDamData.getSectionName().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getUnitName()) && checkDamData.getUnitName().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getVillage()) && checkDamData.getVillage().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getMandal()) && checkDamData.getMandal().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getDistrict()) && checkDamData.getDistrict().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getSubDivisionName()) && checkDamData.getSubDivisionName().toLowerCase().contains(charString.toLowerCase())
+                                    ||
+                                    !TextUtils.isEmpty(checkDamData.getDivisionName()) && checkDamData.getDivisionName().toLowerCase().contains(charString.toLowerCase())) {
+                                filteredList.add(checkDamData);
+                            }
+                        }
+                        mFilteredList = filteredList;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mFilteredList;
@@ -136,10 +140,14 @@ public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemVi
         };
     }
 
-    public ArrayList<CheckDamData> getFilteredData() {
-       return mFilteredList;
+    public List<CheckDamData> getFilteredData() {
+        return mFilteredList;
     }
 
+
+    public void  setFilteredData(ArrayList<CheckDamData> checkDamData) {
+        mFilteredList = checkDamData;
+    }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.projectData)

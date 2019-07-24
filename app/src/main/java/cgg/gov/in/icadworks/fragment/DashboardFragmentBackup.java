@@ -41,6 +41,7 @@ import cgg.gov.in.icadworks.adapter.DashboardAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CheckDamOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
@@ -397,6 +398,11 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
 
     }
 
+    @Override
+    public void getCheckDamOfficeResponse(CheckDamOfficeResponse checkDamOfficeResponse) {
+
+    }
+
     private void showItemCount(int count) {
         Snackbar snackbar;
         snackbar = Snackbar.make(mainRL, "Found " + count + " Records", Snackbar.LENGTH_SHORT);
@@ -429,7 +435,7 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
         inflater.inflate(R.menu.search_menu, menu);
         mMenu = menu;
 
-        MenuItem menuItem = mMenu.getItem(1);
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("Search by Chain ID or OT Name or location");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

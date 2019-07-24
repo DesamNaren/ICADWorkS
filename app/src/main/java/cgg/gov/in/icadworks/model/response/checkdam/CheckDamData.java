@@ -1,9 +1,11 @@
 package cgg.gov.in.icadworks.model.response.checkdam;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class CheckDamData {
+
     @SerializedName("tank_name")
     @Expose
     private String tankName;
@@ -28,6 +30,9 @@ public class CheckDamData {
     @SerializedName("division")
     @Expose
     private Integer division;
+    @SerializedName("getItemStatusData")
+    @Expose
+    private List<CheckDamItemStatusData> getItemStatusData = null;
     @SerializedName("section_id")
     @Expose
     private Integer sectionId;
@@ -36,7 +41,7 @@ public class CheckDamData {
     private String assembly;
     @SerializedName("preworkcapacity")
     @Expose
-    private Double preworkcapacity;
+    private Integer preworkcapacity;
     @SerializedName("village")
     @Expose
     private String village;
@@ -54,7 +59,7 @@ public class CheckDamData {
     private String longitude;
     @SerializedName("tank_code")
     @Expose
-    private Long tankCode;
+    private long tankCode;
     @SerializedName("habitation")
     @Expose
     private String habitation;
@@ -159,6 +164,14 @@ public class CheckDamData {
         this.division = division;
     }
 
+    public List<CheckDamItemStatusData> getGetItemStatusData() {
+        return getItemStatusData;
+    }
+
+    public void setGetItemStatusData(List<CheckDamItemStatusData> getItemStatusData) {
+        this.getItemStatusData = getItemStatusData;
+    }
+
     public Integer getSectionId() {
         return sectionId;
     }
@@ -175,11 +188,11 @@ public class CheckDamData {
         this.assembly = assembly;
     }
 
-    public Double getPreworkcapacity() {
+    public Integer getPreworkcapacity() {
         return preworkcapacity;
     }
 
-    public void setPreworkcapacity(Double preworkcapacity) {
+    public void setPreworkcapacity(Integer preworkcapacity) {
         this.preworkcapacity = preworkcapacity;
     }
 
@@ -223,11 +236,11 @@ public class CheckDamData {
         this.longitude = longitude;
     }
 
-    public Long getTankCode() {
+    public long getTankCode() {
         return tankCode;
     }
 
-    public void setTankCode(Long tankCode) {
+    public void setTankCode(long tankCode) {
         this.tankCode = tankCode;
     }
 
@@ -334,4 +347,5 @@ public class CheckDamData {
     public void setMandal(String mandal) {
         this.mandal = mandal;
     }
+
 }

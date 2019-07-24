@@ -133,7 +133,6 @@ public class CEWiseFragment extends Fragment {
         shareIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 LinearLayout abstractView = getActivity().getWindow().getDecorView().findViewById(R.id.data_ll);
                 Utilities.takeSCImage(getActivity(), abstractView ,
                         employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName()
@@ -302,7 +301,7 @@ public class CEWiseFragment extends Fragment {
         mMenu.findItem(R.id.action_logout).setVisible(false);
         mMenu.findItem(R.id.action_search).setVisible(true);
 
-        MenuItem menuItem = mMenu.getItem(2);
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
 
         searchView.setQueryHint("Search by project");
@@ -343,17 +342,17 @@ public class CEWiseFragment extends Fragment {
         });
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            try {
-                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    @Override
+////    public void setUserVisibleHint(boolean isVisibleToUser) {
+////        super.setUserVisibleHint(isVisibleToUser);
+////        if (isVisibleToUser) {
+////            try {
+////                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+////            } catch (Exception e) {
+////                e.printStackTrace();
+////            }
+////        }
+////    }
 
 
     @Override

@@ -120,6 +120,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/totalLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -148,6 +149,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/notStartedLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -175,6 +177,7 @@
                         android:background="@color/gray" />
 
                     <LinearLayout
+                        android:id="@+id/inProLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -201,6 +204,7 @@
                         android:background="@color/gray" />
 
                     <LinearLayout
+                        android:id="@+id/comLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -265,10 +269,10 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tanks E/T" />
+                            android:text="Checkdams" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:id="@+id/tanksCount"
+                            android:id="@+id/cdsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_4dp"
@@ -292,7 +296,7 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="TS [OTs]" />
+                            android:text="TS" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/tsCount"
@@ -320,7 +324,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Tenders [E2EA]" />
+                            android:text="Tenders" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/tenCount"
@@ -400,18 +404,6 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <cgg.gov.in.icadworks.custom.CustomFontTextView
-        android:id="@+id/emptyTV"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/header_ll"
-        android:layout_marginTop="@dimen/dimen_8dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="No data found"
-        android:textColor="@color/white_new"
-        android:visibility="gone"
-        tools:listitem="@layout/dashboard_item" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/switchView"
@@ -433,5 +425,15 @@
         android:layout_centerVertical="true"
         android:indeterminateTint="@color/orange"
         android:visibility="gone" />
+
+    <cgg.gov.in.icadworks.custom.CustomFontTextView
+        android:id="@+id/emptyTV"
+        android:text="No checkdam records found"
+        android:textColor="@color/white_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible" />
 
 </RelativeLayout>

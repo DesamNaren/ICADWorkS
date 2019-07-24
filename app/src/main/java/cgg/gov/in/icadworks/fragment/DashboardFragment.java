@@ -1,7 +1,6 @@
 package cgg.gov.in.icadworks.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,11 +17,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,8 +44,8 @@ import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.DashboardAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.OTView;
-import cgg.gov.in.icadworks.model.ProjectReportData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CheckDamOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
@@ -470,7 +467,6 @@ public class DashboardFragment extends Fragment implements OTView {
         });
     }
 
-
     @Override
     public void showMessage(int stringId) {
 
@@ -598,6 +594,11 @@ public class DashboardFragment extends Fragment implements OTView {
 
     }
 
+    @Override
+    public void getCheckDamOfficeResponse(CheckDamOfficeResponse checkDamOfficeResponse) {
+
+    }
+
     private void showItemCount(int count) {
         Snackbar snackbar;
         snackbar = Snackbar.make(mainRL, "Found " + count + " Records", Snackbar.LENGTH_SHORT);
@@ -641,7 +642,13 @@ public class DashboardFragment extends Fragment implements OTView {
         inflater.inflate(R.menu.search_menu, menu);
         mMenu = menu;
 
-        MenuItem menuItem = mMenu.getItem(1);
+
+        mMenu.findItem(R.id.action_view).setVisible(false);
+        mMenu.findItem(R.id.action_logout).setVisible(false);
+        mMenu.findItem(R.id.action_search).setVisible(true);
+
+
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("Search by Chain ID or OT Name or location");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -937,5 +944,18 @@ public class DashboardFragment extends Fragment implements OTView {
             progressBar.setVisibility(View.VISIBLE);
         }
     }
+
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            try {
+//                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 }

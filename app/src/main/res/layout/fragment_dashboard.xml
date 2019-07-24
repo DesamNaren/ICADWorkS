@@ -426,7 +426,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="gone"
+        android:visibility="visible"
         app:srcCompat="@android:drawable/ic_dialog_map" />
 
     <ProgressBar
@@ -440,7 +440,7 @@
 
     <cgg.gov.in.icadworks.custom.CustomFontTextView
         android:id="@+id/emptyTV"
-        android:text="No data found"
+        android:text="No OT records found"
         android:textColor="@color/white_new"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

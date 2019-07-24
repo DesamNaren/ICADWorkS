@@ -1,11 +1,12 @@
 package cgg.gov.in.icadworks.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,8 +35,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.List;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.CheckDamAdapter;
@@ -42,7 +43,9 @@ import cgg.gov.in.icadworks.adapter.DashboardAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
+import cgg.gov.in.icadworks.model.response.checkdam.CheckDamItemStatusData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CheckDamOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
@@ -66,8 +69,9 @@ public class CheckDamFragment extends Fragment implements OTView {
     CustomFontTextView notStCount;
     CustomFontTextView inProCount;
     CustomFontTextView comCount;
+    private LinearLayout notStartedL, inProL, comL, totalLayout;
 
-    CustomFontTextView tanksCount;
+    CustomFontTextView cdsCount;
     CustomFontTextView tsCount;
     CustomFontTextView tenCount;
     CustomFontTextView aggCount;
@@ -112,7 +116,7 @@ public class CheckDamFragment extends Fragment implements OTView {
         comCount = view.findViewById(R.id.comCount);
         liner_ll = view.findViewById(R.id.liner_ll);
 
-        tanksCount = view.findViewById(R.id.tanksCount);
+        cdsCount = view.findViewById(R.id.cdsCount);
         tsCount = view.findViewById(R.id.tsCount);
         tenCount = view.findViewById(R.id.tenCount);
         aggCount = view.findViewById(R.id.aggCount);
@@ -124,6 +128,11 @@ public class CheckDamFragment extends Fragment implements OTView {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.simpleSwipeRefreshLayout);
 
 
+        notStartedL = view.findViewById(R.id.notStartedLayout);
+        inProL = view.findViewById(R.id.inProLayout);
+        comL = view.findViewById(R.id.comLayout);
+        totalLayout = view.findViewById(R.id.totalLayout);
+
         switchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,7 +140,7 @@ public class CheckDamFragment extends Fragment implements OTView {
                     sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     Gson gson = new Gson();
-                    ArrayList<CheckDamData> checkDamData = checkDamAdapter.getFilteredData();
+                    List<CheckDamData> checkDamData = checkDamAdapter.getFilteredData();
                     CheckDamResponse checkDamResponse = new CheckDamResponse();
                     checkDamResponse.setData(checkDamData);
                     editor.putString("OT_DATA", gson.toJson(checkDamResponse));
@@ -226,8 +235,129 @@ public class CheckDamFragment extends Fragment implements OTView {
         });
 
 
+        notStartedL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    notStartedL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+
+                    if(!TextUtils.isEmpty(notStCount.getText().toString()) && Integer.valueOf(notStCount.getText().toString())>0){
+                        clearRV();
+
+                        getFilterData();
+                    }else {
+                        emptyTV.setVisibility(View.VISIBLE);
+                        switchView.setVisibility(View.GONE);
+                        checkDamAdapter.setFilteredData(null);
+                        dashboardRV.setAdapter(null);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        inProL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    inProL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    if(!TextUtils.isEmpty(inProCount.getText().toString()) && Integer.valueOf(inProCount.getText().toString())>0){
+                        clearRV();
+
+                        getFilterDataInPro();
+                    }else {
+                        emptyTV.setVisibility(View.VISIBLE);
+                        switchView.setVisibility(View.GONE);
+                        checkDamAdapter.setFilteredData(null);
+                        dashboardRV.setAdapter(null);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        comL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    comL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    if(!TextUtils.isEmpty(comCount.getText().toString()) && Integer.valueOf(comCount.getText().toString())>0){
+                        clearRV();
+                        getFilterDataCom();
+                    }else {
+                        emptyTV.setVisibility(View.VISIBLE);
+                        switchView.setVisibility(View.GONE);
+                        checkDamAdapter.setFilteredData(null);
+                        dashboardRV.setAdapter(null);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        totalLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    totalLayout.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+                    if(!TextUtils.isEmpty(totalCount.getText().toString()) && Integer.valueOf(totalCount.getText().toString())>0){
+                        clearRV();
+                        setDataAdapter(checkDamResponse);
+                    }else {
+                        emptyTV.setVisibility(View.VISIBLE);
+                        dashboardRV.setAdapter(null);
+                        switchView.setVisibility(View.GONE);
+                    }
+                } catch (Resources.NotFoundException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         return view;
     }
+
+    private void clearRV() {
+        emptyTV.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+        dashboardRV.setAdapter(null);
+        dashboardRV.setVisibility(View.GONE);
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                progressBar.setVisibility(View.GONE);
+                dashboardRV.setVisibility(View.VISIBLE);
+                switchView.setVisibility(View.VISIBLE);
+
+            }
+
+        }, 2000);
+    }
+
 
     @Override
     public void onResume() {
@@ -255,7 +385,7 @@ public class CheckDamFragment extends Fragment implements OTView {
                 try {
                     if (checkDamAdapter != null) {
                         checkDamAdapter.getFilter().filter(newText);
-                        ArrayList<CheckDamData> checkDamData = checkDamAdapter.getFilteredData();
+                        List<CheckDamData> checkDamData = checkDamAdapter.getFilteredData();
                         showItemCount(checkDamData.size());
                     }
                 } catch (Exception e) {
@@ -297,7 +427,7 @@ public class CheckDamFragment extends Fragment implements OTView {
         if (ConnectionDetector.isConnectedToInternet(getActivity())) {
             progressBar.setVisibility(View.VISIBLE);
             if (employeeDetailss != null) {
-                otPresenter.getDashboardReport(employeeDetailss.getEmployeeDetail().get(defSelection).getSectionId(),
+                otPresenter.getCDOfficeData(employeeDetailss.getEmployeeDetail().get(defSelection).getSectionId(),
                         employeeDetailss.getEmployeeDetail().get(defSelection).getSubdivisionId(),
                         employeeDetailss.getEmployeeDetail().get(defSelection).getDivisionId(),
                         employeeDetailss.getEmployeeDetail().get(defSelection).getCircleId(),
@@ -314,39 +444,7 @@ public class CheckDamFragment extends Fragment implements OTView {
 
     @Override
     public void getReportResponse(ReportResponse reportResponse) {
-        progressBar.setVisibility(View.GONE);
-        try {
-            if (reportResponse != null) {
-                if (reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
-                    int tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nominations = 0;
-                    for (int x = 0; x < reportResponse.getData().size(); x++) {
-                        tanks = tanks + reportResponse.getData().get(x).getTanks();
-                        tanksTobeFed = tanksTobeFed + reportResponse.getData().get(x).getTanks_to_be_fed();
-                        tsCnt = tsCnt + reportResponse.getData().get(x).getTechsanctions();
-                        techSanOts = techSanOts + reportResponse.getData().get(x).getTechsancots();
-                        tenders = tenders + reportResponse.getData().get(x).getTenders();
-                        nominations = nominations + reportResponse.getData().get(x).getNominations();
-                        agreements = agreements + reportResponse.getData().get(x).getAgreements();
-                    }
 
-                    tanksCount.setText(String.valueOf(tanks) + "/" + String.valueOf(tanksTobeFed));
-                    tsCount.setText(String.valueOf(tsCnt) +
-                            " [ " + String.valueOf(techSanOts) + " ]");
-                    tenCount.setText(String.valueOf(tenders) + " [ " + String.valueOf(nominations) + " ]");
-                    aggCount.setText(String.valueOf(agreements));
-
-
-                } else if (reportResponse.getStatus() != null && reportResponse.getStatus() == 404) {
-                    Utilities.showCustomNetworkAlert(getActivity(), reportResponse.getTag(), false);
-                } else {
-                    Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
-                }
-            } else {
-                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     CheckDamResponse checkDamResponse;
@@ -358,10 +456,10 @@ public class CheckDamFragment extends Fragment implements OTView {
             if (checkDamResponse != null) {
                 if (checkDamResponse.getStatusCode() != null && checkDamResponse.getStatusCode() == 200) {
                     if (checkDamResponse.getAbstractReport() != null && checkDamResponse.getAbstractReport().size() > 0) {
-                        totalCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getTotalCheckdams()));
-//                        notStCount.setText(checkDamResponse.getAbstractReport().get(0).getNotStarted());
-//                        inProCount.setText(checkDamResponse.getAbstractReport().get(0).getInProgress());
-//                        comCount.setText(checkDamResponse.getAbstractReport().get(0).getCompleted());
+                        totalCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getTotal()));
+                        notStCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getNotStarted()));
+                        inProCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getInProgress()));
+                        comCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getCompleted()));
                     }
                     this.checkDamResponse = checkDamResponse;
                     emptyTV.setVisibility(View.GONE);
@@ -387,6 +485,29 @@ public class CheckDamFragment extends Fragment implements OTView {
             }
         } catch (Exception e) {
             Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void getCheckDamOfficeResponse(CheckDamOfficeResponse checkDamOfficeResponse) {
+        progressBar.setVisibility(View.GONE);
+        try {
+            if (checkDamOfficeResponse != null) {
+                if (checkDamOfficeResponse.getStatusCode() == 200 && checkDamOfficeResponse.getData() != null && checkDamOfficeResponse.getData().size() > 0) {
+                    cdsCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getCheckDams()));
+                    tsCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getTechSanctions()));
+                    tenCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getTendersPublish()));
+                    aggCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getAgreements()));
+                } else if (checkDamOfficeResponse.getStatus() != null && checkDamOfficeResponse.getStatus() == 404) {
+                    Utilities.showCustomNetworkAlert(getActivity(), checkDamOfficeResponse.getTag(), false);
+                } else {
+                    Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
+                }
+            } else {
+                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -423,7 +544,11 @@ public class CheckDamFragment extends Fragment implements OTView {
         inflater.inflate(R.menu.search_menu, menu);
         mMenu = menu;
 
-        MenuItem menuItem = mMenu.getItem(1);
+        mMenu.findItem(R.id.action_view).setVisible(false);
+        mMenu.findItem(R.id.action_logout).setVisible(false);
+        mMenu.findItem(R.id.action_search).setVisible(true);
+
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("Search by Chain ID or OT Name or location");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -595,12 +720,102 @@ public class CheckDamFragment extends Fragment implements OTView {
         comCount.setText("");
 
 
-        tanksCount.setText("");
+        cdsCount.setText("");
         tsCount.setText("");
         tenCount.setText("");
         aggCount.setText("");
 
         switchView.setVisibility(View.GONE);
     }
+
+
+    private void getFilterData() {
+        ArrayList<CheckDamData> checkDamData = new ArrayList<>(checkDamResponse.getData());
+        ArrayList<CheckDamData> tempData = new ArrayList<>();
+
+
+        if(checkDamData.size()>0){
+            dashboardRV.setAdapter(null);
+            for(int z=0;z<checkDamData.size();z++){
+                int statusId=0;
+                for(int y=0;y<checkDamData.get(z).getGetItemStatusData().size();y++){
+                    statusId += checkDamData.get(z).getGetItemStatusData().get(y).getStatusId();
+                }
+
+                if(statusId>0 && statusId==3){
+                    tempData.add(checkDamData.get(z));
+                }
+            }
+        }
+        if(tempData.size()>0){
+            setDataAdapterOT(tempData);
+        }
+
+    }
+
+    private void getFilterDataInPro() {
+        ArrayList<CheckDamData> checkDamData = new ArrayList<>(checkDamResponse.getData());
+        ArrayList<CheckDamData> tempData = new ArrayList<>();
+        if(checkDamData.size()>0){
+            dashboardRV.setAdapter(null);
+            for(int z=0;z<checkDamData.size();z++){
+                int statusId=0;
+                for(int y=0;y<checkDamData.get(z).getGetItemStatusData().size();y++){
+                    statusId += checkDamData.get(z).getGetItemStatusData().get(y).getStatusId();
+                }
+
+                if(statusId>3 && statusId<=8){
+                    tempData.add(checkDamData.get(z));
+                }
+            }
+        }
+        if(tempData.size()>0) {
+            setDataAdapterOT(tempData);
+        }
+    }
+
+    private void getFilterDataCom() {
+        ArrayList<CheckDamData> checkDamData = new ArrayList<>(checkDamResponse.getData());
+        ArrayList<CheckDamData> tempData = new ArrayList<>();
+        if(checkDamData.size()>0){
+            dashboardRV.setAdapter(null);
+            for(int z=0;z<checkDamData.size();z++){
+                int statusId=0;
+                for(int y=0;y<checkDamData.get(z).getGetItemStatusData().size();y++){
+                    statusId += checkDamData.get(z).getGetItemStatusData().get(y).getStatusId();
+                }
+
+                if(statusId==9){
+                    tempData.add(checkDamData.get(z));
+                }
+            }
+        }
+        if(tempData.size()>0){
+            setDataAdapterOT(tempData);
+        }
+    }
+
+    void setDataAdapterOT(ArrayList<CheckDamData> checkDamData) {
+        searchView.setQuery("", false);
+        searchView.clearFocus();
+        searchView.setIconified(true);
+        flagSwitch = "list";
+        checkDamAdapter = new CheckDamAdapter(checkDamData, getActivity());
+        dashboardRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+        dashboardRV.setAdapter(checkDamAdapter);
+        checkDamAdapter.setFilteredData(checkDamData);
+    }
+
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            try {
+//                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 }

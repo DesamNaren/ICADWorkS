@@ -248,8 +248,6 @@ public class ProjectWiseFragment extends Fragment {
 
                     }
                     projectReportData.add(reportData);
-
-
                 }
 
                 if (projectReportData.size() > 0) {
@@ -289,7 +287,7 @@ public class ProjectWiseFragment extends Fragment {
         mMenu.findItem(R.id.action_logout).setVisible(false);
         mMenu.findItem(R.id.action_search).setVisible(true);
 
-        MenuItem menuItem = mMenu.getItem(2);
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
 
         searchView.setQueryHint("Search by project");
@@ -330,16 +328,16 @@ public class ProjectWiseFragment extends Fragment {
         });
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            try {
-                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    public void setUserVisibleHint(boolean isVisibleToUser) {
+//        super.setUserVisibleHint(isVisibleToUser);
+//        if (isVisibleToUser) {
+//            try {
+//                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 }

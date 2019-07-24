@@ -1,17 +1,19 @@
-package cgg.gov.in.icadworks.model.response.checkdam;
+package cgg.gov.in.icadworks.model.response.checkdam.office;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CheckDamResponse {
+import java.util.List;
 
+import cgg.gov.in.icadworks.model.response.ot.AbstractReport;
+
+public class CheckDamOfficeResponse {
     @SerializedName("data")
     @Expose
-    private List<CheckDamData> data = null;
+    private List<CheckDamOfficeDataItem> data = null;
     @SerializedName("abstractReport")
     @Expose
-    private List<CheckDamAbstractReport> abstractReport = null;
+    private List<CheckDamOfficeAbstractReport> abstractReport = null;
     @SerializedName("statusCode")
     @Expose
     private Integer statusCode;
@@ -22,10 +24,6 @@ public class CheckDamResponse {
     @SerializedName("status")
     @Expose
     private Integer status;
-
-    public String getTag() {
-        return tag;
-    }
 
     public void setTag(String tag) {
         this.tag = tag;
@@ -39,19 +37,23 @@ public class CheckDamResponse {
         this.status = status;
     }
 
-    public List<CheckDamData> getData() {
+    public String getTag() {
+        return tag;
+    }
+
+    public List<CheckDamOfficeDataItem> getData() {
         return data;
     }
 
-    public void setData(List<CheckDamData> data) {
+    public void setData(List<CheckDamOfficeDataItem> data) {
         this.data = data;
     }
 
-    public List<CheckDamAbstractReport> getAbstractReport() {
+    public List<CheckDamOfficeAbstractReport> getAbstractReport() {
         return abstractReport;
     }
 
-    public void setAbstractReport(List<CheckDamAbstractReport> abstractReport) {
+    public void setAbstractReport(List<CheckDamOfficeAbstractReport> abstractReport) {
         this.abstractReport = abstractReport;
     }
 

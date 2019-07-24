@@ -44,7 +44,7 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
     CustomFontTextView loginBtn;
     private LoginPresenter loginPresenter;
 
-    public CustomProgressDialog progressDialog;
+        public CustomProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,11 +158,6 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
                     Gson gson = new Gson();
                     editor.putString("STATUS_MASTER_DATA", gson.toJson(itemStatusResponse));
                     editor.commit();
-//                    if (ConnectionDetector.isConnectedToInternet(this)) {
-//                        loginPresenter.getWorkItems("irrigationts","irrigationts");
-//                    }else {
-//                        Utilities.showFancyErrorAlert(this,getResources().getString(R.string.please_check_internet));
-//                    }
                 }
             } else {
                 Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.server), false);
