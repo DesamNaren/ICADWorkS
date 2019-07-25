@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -36,12 +34,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.adapter.CEReportAdapter;
-import cgg.gov.in.icadworks.adapter.DistrictReportAdapter;
+import cgg.gov.in.icadworks.adapter.CDCEReportAdapter;
+import cgg.gov.in.icadworks.adapter.CDDistrictReportAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
-import cgg.gov.in.icadworks.model.ProjectReportData;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeData;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.util.Utilities;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -51,7 +49,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by lenovo on 03-06-2019.
  */
 
-public class CEWiseFragment extends Fragment {
+public class CDDistrictWiseFragment extends Fragment {
 
     @BindView(R.id.projectRV)
     RecyclerView projectRV;
@@ -91,14 +89,14 @@ public class CEWiseFragment extends Fragment {
     @BindView(R.id.shareIV)
     ImageView shareIV;
     SharedPreferences sharedPreferences;
-    ReportResponse reportResponse;
+    CDOfficeResponse cdOfficeResponse;
     private int defSelection;
     private EmployeeDetailss employeeDetailss = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ce_wise, container, false);
+        View view = inflater.inflate(R.layout.cd_fragment_district_wise, container, false);
         setHasOptionsMenu(true);
         unbinder = ButterKnife.bind(this, view);
 
@@ -121,10 +119,10 @@ public class CEWiseFragment extends Fragment {
         try {
             Gson gson = new Gson();
             sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
-            String string = sharedPreferences.getString("REPORT_DATA", "");
-            reportResponse = gson.fromJson(string, ReportResponse.class);
+            String string = sharedPreferences.getString("CD_REPORT_DATA", "");
+            cdOfficeResponse = gson.fromJson(string, CDOfficeResponse.class);
 
-            setCEData(reportResponse);
+            setCEData(cdOfficeResponse);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,50 +143,43 @@ public class CEWiseFragment extends Fragment {
     }
 
 
-    private void setCEData(ReportResponse reportResponse) {
+    private void setCEData(CDOfficeResponse cdOfficeResponse) {
         try {
-            if (reportResponse != null) {
-                if (reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
+            if (cdOfficeResponse != null) {
+                if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null && cdOfficeResponse.getCdOfficeData().size() > 0) {
 
-                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,
-                            nominations =0, agreements = 0;
+                    int cds = 0,tsCnt = 0, tenders = 0, agreements = 0;
                     int notSta = 0, inPro = 0, completed = 0, total = 0;
 
-                    for (int x = 0; x < reportResponse.getData().size(); x++) {
-                        tanks = tanks + reportResponse.getData().get(x).getTanks();
-                        tanksTobeFed = tanksTobeFed + reportResponse.getData().get(x).getTanks_to_be_fed();
-                        tsCnt = tsCnt + reportResponse.getData().get(x).getTechsanctions();
-                        techSanOts = techSanOts + reportResponse.getData().get(x).getTechsancots();
-                        tenders = tenders + reportResponse.getData().get(x).getTenders();
-                        nominations = nominations + reportResponse.getData().get(x).getNominations();
-                        agreements = agreements + reportResponse.getData().get(x).getAgreements();
+                    for (int x = 0; x < cdOfficeResponse.getCdOfficeData().size(); x++) {
+                        cds = cds + cdOfficeResponse.getCdOfficeData().get(x).getCheckDams();
+                        tsCnt = tsCnt + cdOfficeResponse.getCdOfficeData().get(x).getTechSanctions();
+                        tenders = tenders + cdOfficeResponse.getCdOfficeData().get(x).getTendersAward();
+                        agreements = agreements + cdOfficeResponse.getCdOfficeData().get(x).getAgreements();
 
-
-                        notSta = notSta + reportResponse.getData().get(x).getNotStarted();
-                        inPro = inPro + reportResponse.getData().get(x).getInProgress();
-                        completed = completed + reportResponse.getData().get(x).getCompleted();
-
-                        total = total + reportResponse.getData().get(x).getOts();
+//                        notSta = notSta + checkDamOfficeResponse.getData().get(x).getNotStarted();
+//                        inPro = inPro + checkDamOfficeResponse.getData().get(x).getInProgress();
+//                        completed = completed + checkDamOfficeResponse.getData().get(x).getCompleted();
+//                        total = total + checkDamOfficeResponse.getData().get(x).getOts();
 
                     }
 
-                    totalCount.setText(String.valueOf(total));
-                    notStCount.setText(String.valueOf(notSta));
-                    inProCount.setText(String.valueOf(inPro));
-                    comCount.setText(String.valueOf(completed));
+//                    totalCount.setText(String.valueOf(total));
+//                    notStCount.setText(String.valueOf(notSta));
+//                    inProCount.setText(String.valueOf(inPro));
+//                    comCount.setText(String.valueOf(completed));
 
-                    tanksCount.setText(String.valueOf(tanks) + "/" + String.valueOf(tanksTobeFed));
-                    tsCount.setText(String.valueOf(tsCnt) +
-                            " [ " + String.valueOf(techSanOts) + " ]");
-                    tenCount.setText(String.valueOf(tenders)+ " [ " + String.valueOf(nominations) + " ]");
+                    tanksCount.setText(String.valueOf(cds));
+                    tsCount.setText(String.valueOf(tsCnt));
+                    tenCount.setText(String.valueOf(tenders));
                     aggCount.setText(String.valueOf(agreements));
 
 
-                    prepareAdapter(reportResponse);
+                    prepareAdapter(cdOfficeResponse);
 
 
-                } else if (reportResponse.getStatus() != null && reportResponse.getStatus() == 404) {
-                    Utilities.showCustomNetworkAlert(getActivity(), reportResponse.getTag(), false);
+                } else if (cdOfficeResponse.getStatus() != null && cdOfficeResponse.getStatus() == 404) {
+                    Utilities.showCustomNetworkAlert(getActivity(), cdOfficeResponse.getTag(), false);
                 } else {
                     Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
                 }
@@ -200,73 +191,63 @@ public class CEWiseFragment extends Fragment {
         }
     }
 
-    CEReportAdapter ceReportAdapter;
+    CDDistrictReportAdapter cdDistrictReportAdapter;
 
-    private void prepareAdapter(ReportResponse reportResponse) {
+    private void prepareAdapter(CDOfficeResponse cdOfficeResponse) {
 
         try {
             Set<Integer> hashSet = new HashSet<>();
-            for (int x = 0; x < reportResponse.getData().size(); x++) {
-                hashSet.add(reportResponse.getData().get(x).getUnitId());
+            for (int x = 0; x < cdOfficeResponse.getCdOfficeData().size(); x++) {
+                hashSet.add(Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(x).getDcode()));
             }
 
-            if (reportResponse.getData().size() > 0) {
-                ArrayList<ProjectReportData> projectReportData = new ArrayList<>();
+            if (cdOfficeResponse.getCdOfficeData().size() > 0) {
+                ArrayList<CDOfficeData> cdOfficeDataArrayList = new ArrayList<>();
                 Iterator<Integer> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,nominations=0, agreements = 0;
+                    int cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
                     int notSta = 0, inPro = 0, completed = 0, total = 0;
-                    int unitID = iterator.next();
-                    ProjectReportData reportData = new ProjectReportData();
-                    for (int z = 0; z < reportResponse.getData().size(); z++) {
+                    int dCode = iterator.next();
+                    CDOfficeData cdOfficeData = new CDOfficeData();
+                    for (int z = 0; z < cdOfficeResponse.getCdOfficeData().size(); z++) {
 
-                        if (unitID == reportResponse.getData().get(z).getUnitId()) {
+                        if (dCode == Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(z).getDcode())){
 
-                            tanks = tanks + reportResponse.getData().get(z).getTanks();
-                            tanksTobeFed = tanksTobeFed + reportResponse.getData().get(z).getTanks_to_be_fed();
-                            tsCnt = tsCnt + reportResponse.getData().get(z).getTechsanctions();
-                            techSanOts = techSanOts + reportResponse.getData().get(z).getTechsancots();
-                            tenders = tenders + reportResponse.getData().get(z).getTenders();
-                            nominations = nominations + reportResponse.getData().get(z).getNominations();
-                            agreements = agreements + reportResponse.getData().get(z).getAgreements();
+                            cds = cds + cdOfficeResponse.getCdOfficeData().get(z).getCheckDams();
+                            tsCnt = tsCnt +  cdOfficeResponse.getCdOfficeData().get(z).getTechSanctions();
+                            tenders = tenders + cdOfficeResponse.getCdOfficeData().get(z).getTendersAward();
+                            agreements = agreements +  cdOfficeResponse.getCdOfficeData().get(z).getAgreements();
 
-                            notSta = notSta + reportResponse.getData().get(z).getNotStarted();
-                            inPro = inPro + reportResponse.getData().get(z).getInProgress();
-                            completed = completed + reportResponse.getData().get(z).getCompleted();
+//                            notSta = notSta + checkDamOfficeResponse.getData().get(z).getNotStarted();
+//                            inPro = inPro + checkDamOfficeResponse.getData().get(z).getInProgress();
+//                            completed = completed + checkDamOfficeResponse.getData().get(z).getCompleted();
+//                            total = total + checkDamOfficeResponse.getData().get(z).getOts();
 
-                            total = total + reportResponse.getData().get(z).getOts();
+//                            reportData.setDcode(Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(z).getDcode()));
+//                            reportData.setDname(checkDamOfficeResponse.getData().get(z).getDname());
+//                            reportData.setProjectId(checkDamOfficeResponse.getData().get(z).getProjectId());
+//                            reportData.setProjectName(checkDamOfficeResponse.getData().get(z).getProjectName());
 
-                            reportData.setDcode(reportResponse.getData().get(z).getDcode());
-                            reportData.setDname(reportResponse.getData().get(z).getDname());
-                            reportData.setProjectId(reportResponse.getData().get(z).getProjectId());
-                            reportData.setProjectName(reportResponse.getData().get(z).getProjectName());
-                            reportData.setUnitId(reportResponse.getData().get(z).getUnitId());
-                            reportData.setUnitName(reportResponse.getData().get(z).getUnitName());
+
+                            cdOfficeData.setDcode(cdOfficeResponse.getCdOfficeData().get(z).getDcode());
+                            cdOfficeData.setDname(cdOfficeResponse.getCdOfficeData().get(z).getDname());
                         }
 
-                        reportData.setTanks(tanks);
-                        reportData.setTanksTobeFed(tanksTobeFed);
-                        reportData.setTechsanctions(tsCnt);
-                        reportData.setTechsancots(techSanOts);
-                        reportData.setTenders(tenders);
-                        reportData.setAgreements(agreements);
-                        reportData.setNotStarted(notSta);
-                        reportData.setInProgress(inPro);
-                        reportData.setCompleted(completed);
-                        reportData.setTotal(total);
-                        reportData.setNominations(nominations);
-
+                        cdOfficeData.setCheckDams(cds);
+                        cdOfficeData.setTechSanctions(tsCnt);
+                        cdOfficeData.setTendersAward(tenders);
+                        cdOfficeData.setAgreements(agreements);
                     }
-                    projectReportData.add(reportData);
+                    cdOfficeDataArrayList.add(cdOfficeData);
                 }
 
-                if (projectReportData.size() > 0) {
-                    sortData(projectReportData);
-                    ceReportAdapter = new CEReportAdapter(reportResponse, projectReportData, getActivity(), getActivity());
+                if (cdOfficeDataArrayList.size() > 0) {
+                    sortData(cdOfficeDataArrayList);
+                    cdDistrictReportAdapter = new CDDistrictReportAdapter(cdOfficeResponse, cdOfficeDataArrayList, getActivity(), getActivity());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                     projectRV.setLayoutManager(mLayoutManager);
-                    projectRV.setAdapter(ceReportAdapter);
+                    projectRV.setAdapter(cdDistrictReportAdapter);
                 }
 
             }
@@ -320,8 +301,8 @@ public class CEWiseFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 try {
-                    if (ceReportAdapter != null) {
-                        ceReportAdapter.getFilter().filter(newText);
+                    if (cdDistrictReportAdapter != null) {
+                        cdDistrictReportAdapter.getFilter().filter(newText);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -350,10 +331,10 @@ public class CEWiseFragment extends Fragment {
         unbinder.unbind();
     }
 
-    private void sortData(ArrayList<ProjectReportData> projectReportData) {
-        Collections.sort(projectReportData, new Comparator<ProjectReportData>() {
-            public int compare(ProjectReportData lhs, ProjectReportData rhs) {
-                return (lhs.getUnitName().compareTo(rhs.getUnitName()));
+    private void sortData(ArrayList<CDOfficeData> cdOfficeDataArrayList) {
+        Collections.sort(cdOfficeDataArrayList, new Comparator<CDOfficeData>() {
+            public int compare(CDOfficeData lhs, CDOfficeData rhs) {
+                return (lhs.getDname().compareTo(rhs.getDname()));
             }
         });
     }

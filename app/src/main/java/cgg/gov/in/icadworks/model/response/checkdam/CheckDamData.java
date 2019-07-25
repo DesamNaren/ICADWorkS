@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CheckDamData implements Parcelable {
+public class  CheckDamData implements Parcelable {
 
     @SerializedName("tank_name")
     @Expose
@@ -22,6 +22,9 @@ public class CheckDamData implements Parcelable {
     @SerializedName("acode")
     @Expose
     private String acode;
+    @SerializedName("agmt_msg")
+    @Expose
+    private String agmtMsg;
     @SerializedName("bundlength")
     @Expose
     private Integer bundlength;
@@ -103,6 +106,38 @@ public class CheckDamData implements Parcelable {
     @SerializedName("mandal")
     @Expose
     private String mandal;
+
+    @SerializedName("agmt_status")
+    @Expose
+    private String agmt_status;
+
+    @SerializedName("radius_msg")
+    @Expose
+    private String radius_msg;
+
+    public String getAgmtMsg() {
+        return agmtMsg;
+    }
+
+    public void setAgmtMsg(String agmtMsg) {
+        this.agmtMsg = agmtMsg;
+    }
+
+    public String getAgmt_status() {
+        return agmt_status;
+    }
+
+    public void setAgmt_status(String agmt_status) {
+        this.agmt_status = agmt_status;
+    }
+
+    public String getRadius_msg() {
+        return radius_msg;
+    }
+
+    public void setRadius_msg(String radius_msg) {
+        this.radius_msg = radius_msg;
+    }
 
     public String getTankName() {
         return tankName;
@@ -352,6 +387,7 @@ public class CheckDamData implements Parcelable {
         this.mandal = mandal;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -363,11 +399,12 @@ public class CheckDamData implements Parcelable {
         dest.writeString(this.latitude);
         dest.writeValue(this.tankId);
         dest.writeString(this.acode);
+        dest.writeString(this.agmtMsg);
         dest.writeValue(this.bundlength);
         dest.writeString(this.vcode);
         dest.writeValue(this.geoId);
         dest.writeValue(this.division);
-        dest.writeList(this.getItemStatusData);
+        dest.writeTypedList(this.getItemStatusData);
         dest.writeValue(this.sectionId);
         dest.writeString(this.assembly);
         dest.writeValue(this.preworkcapacity);
@@ -390,6 +427,8 @@ public class CheckDamData implements Parcelable {
         dest.writeString(this.hcode);
         dest.writeString(this.dcode);
         dest.writeString(this.mandal);
+        dest.writeString(this.agmt_status);
+        dest.writeString(this.radius_msg);
     }
 
     public CheckDamData() {
@@ -400,12 +439,12 @@ public class CheckDamData implements Parcelable {
         this.latitude = in.readString();
         this.tankId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.acode = in.readString();
+        this.agmtMsg = in.readString();
         this.bundlength = (Integer) in.readValue(Integer.class.getClassLoader());
         this.vcode = in.readString();
         this.geoId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.division = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.getItemStatusData = new ArrayList<CheckDamItemStatusData>();
-        in.readList(this.getItemStatusData, CheckDamItemStatusData.class.getClassLoader());
+        this.getItemStatusData = in.createTypedArrayList(CheckDamItemStatusData.CREATOR);
         this.sectionId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.assembly = in.readString();
         this.preworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
@@ -428,6 +467,8 @@ public class CheckDamData implements Parcelable {
         this.hcode = in.readString();
         this.dcode = in.readString();
         this.mandal = in.readString();
+        this.agmt_status = in.readString();
+        this.radius_msg = in.readString();
     }
 
     public static final Parcelable.Creator<CheckDamData> CREATOR = new Parcelable.Creator<CheckDamData>() {

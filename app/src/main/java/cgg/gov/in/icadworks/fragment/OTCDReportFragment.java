@@ -12,7 +12,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.google.gson.Gson;
 
@@ -33,73 +31,76 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.interfaces.OTView;
-import cgg.gov.in.icadworks.interfaces.ReportView;
+import cgg.gov.in.icadworks.custom.CustomFontTextView;
+import cgg.gov.in.icadworks.interfaces.CDReportView;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.ot.OTResponse;
-import cgg.gov.in.icadworks.model.response.report.ReportResponse;
-import cgg.gov.in.icadworks.presenter.OTPresenter;
-import cgg.gov.in.icadworks.presenter.ReportPresenter;
+import cgg.gov.in.icadworks.presenter.CDReportPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.DashboardActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class VPDashboardFragment extends Fragment {
+public class OTCDReportFragment extends Fragment {
 
+    SharedPreferences sharedPreferences;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-    @BindView(R.id.progress)
-    ProgressBar progress;
     Unbinder unbinder;
-    EmployeeDetailss employeeDetailss = null;
-    SharedPreferences sharedPreferences;
+
+    private String defUsername, defUserPwd;
     private int defSelection;
     private int pos;
-    private String userName, userPwd;
-    private String defUsername, defUserPwd;
+
+    private EmployeeDetailss employeeDetailss = null;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.vp_dashboard_fragment, container, false);
+        View view = inflater.inflate(R.layout.ot_cd_report_fragment, container, false);
         setHasOptionsMenu(true);
         unbinder = ButterKnife.bind(this, view);
+        pos = 0;
 
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
 
-        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
-
         try {
             Gson gson = new Gson();
             sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
             String string = sharedPreferences.getString("LOGIN_DATA", "");
-            userName = sharedPreferences.getString("USERNAME", "");
-            userPwd = sharedPreferences.getString("PWD", "");
             defUsername = sharedPreferences.getString("DEFAULT_USER_NAME", "");
             defUserPwd = sharedPreferences.getString("DEFAULT_USER_PWD", "");
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
             employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
+            if (employeeDetailss == null) {
+                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+            }
         } catch (Exception e) {
             Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
             e.printStackTrace();
         }
 
+        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
 
         return view;
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        ViewPagerAdapter(FragmentManager fm) {
+        public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -107,9 +108,9 @@ public class VPDashboardFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new DashboardFragment();
+                    return new ReportFragmenNewt();
                 case 1:
-                    return new CheckDamFragment();
+                    return new CDReportFragmenNewt();
             }
             return null;
         }
@@ -123,18 +124,12 @@ public class VPDashboardFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "OTs";
+                    return "OT";
                 case 1:
-                    return "CDs";
+                    return "CD";
             }
             return null;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override
@@ -162,7 +157,7 @@ public class VPDashboardFragment extends Fragment {
                         && employeeDetailss.getEmployeeDetail().size() > 0)
                     displayMultiSelectDialog(employeeDetailss);
                 else
-                    Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+                    Utilities.showCustomNetworkAlert(getActivity(), getActivity().getResources().getString(R.string.something), false);
                 return true;
             case R.id.action_logout:
                 Utilities.showCustomNetworkAlertLogout(getActivity(), "Do you want logout from app?");
@@ -181,9 +176,9 @@ public class VPDashboardFragment extends Fragment {
         for (int z = 0; z < employeeDetailss.getEmployeeDetail().size(); z++) {
             if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("CE")){
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getUnit()
-                        +")");
+                +" ("
+                +employeeDetailss.getEmployeeDetail().get(z).getUnit()
+                +")");
             }
 
             else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("SE")){
@@ -201,7 +196,7 @@ public class VPDashboardFragment extends Fragment {
             }
 
             else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DE")
-                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")){
+            || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")){
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
                         +" ("
                         +employeeDetailss.getEmployeeDetail().get(z).getSubdivision()
@@ -271,6 +266,20 @@ public class VPDashboardFragment extends Fragment {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            ((DashboardActivity) getActivity()).getSupportActionBar()
+                    .setTitle(employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName());
+            ((DashboardActivity) getActivity()).getSupportActionBar()
+                    .setSubtitle(employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

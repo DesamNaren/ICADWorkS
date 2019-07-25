@@ -1,111 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainRL"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_8dp"
+    android:layout_marginTop="@dimen/dimen_8dp"
+    android:layout_marginRight="@dimen/dimen_8dp"
     android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/header_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="@dimen/dimen_4dp"
-        android:gravity="center"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:src="@drawable/profile_db" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_20dp">
-
-                <cgg.gov.in.icadworks.custom.CustomFontTextView
-                    android:id="@+id/empNameTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/white_new" />
-
-                <cgg.gov.in.icadworks.custom.CustomFontTextView
-                    android:id="@+id/empDesTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:textColor="@color/white_new" />
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/data_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header_ll"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_8dp"
-            android:layout_marginRight="@dimen/dimen_8dp"
             android:orientation="horizontal">
 
-            <cgg.gov.in.icadworks.custom.CustomFontTextView
-                android:id="@+id/title"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@color/white_new"
-                android:padding="@dimen/dimen_4dp"
-                android:text="Abstract"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:visibility="gone"
-                android:id="@+id/shareIV"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@color/white_new"
-                android:padding="@dimen/dimen_4dp"
-                android:src="@drawable/ic_menu_share" />
+                <!--android:drawableRight="@drawable/down_arrow"-->
 
+                <cgg.gov.in.icadworks.custom.CustomFontTextView
+                    android:padding="@dimen/dimen_4dp"
+                    android:background="@color/white_new"
+                    android:id="@+id/title"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp" />
+
+
+                <ImageView
+                    android:padding="@dimen/dimen_4dp"
+                    android:background="@color/white_new"
+                    android:src="@drawable/ic_menu_share"
+                    android:layout_gravity="center"
+                    android:id="@+id/shareIV"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/liner_ll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:id="@+id/absrtract_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_8dp"
-            android:layout_marginRight="@dimen/dimen_8dp">
+            android:layout_marginTop="@dimen/dimen_2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -120,7 +71,6 @@
 
 
                     <LinearLayout
-                        android:id="@+id/totalLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -149,7 +99,6 @@
 
 
                     <LinearLayout
-                        android:id="@+id/notStartedLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -177,7 +126,6 @@
                         android:background="@color/gray" />
 
                     <LinearLayout
-                        android:id="@+id/inProLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -204,7 +152,6 @@
                         android:background="@color/gray" />
 
                     <LinearLayout
-                        android:id="@+id/comLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -233,18 +180,13 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="@dimen/dimen_8dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginRight="@dimen/dimen_8dp"
+            android:layout_height="0.2dp"
             android:background="@color/gray" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/absrtract_ll2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_8dp"
-            android:layout_marginRight="@dimen/dimen_8dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -272,7 +214,7 @@
                             android:text="Checkdams" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:id="@+id/cdsCount"
+                            android:id="@+id/tanksCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_4dp"
@@ -350,7 +292,7 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Agmt" />
+                            android:text="Agreements" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/aggCount"
@@ -366,74 +308,15 @@
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
-        </LinearLayout>
+
     </LinearLayout>
 
-    <SearchView
-        android:id="@+id/inputSearch"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/data_ll"
-        android:layout_marginLeft="@dimen/dimen_8dp"
-        android:layout_marginTop="@dimen/dimen_8dp"
-        android:layout_marginRight="@dimen/dimen_8dp"
-        android:background="@color/white"
-        android:cursorVisible="false"
-        android:drawableRight="@android:drawable/ic_menu_search"
-        android:gravity="center"
-        android:hint="Search by OT ID or OT Name or location"
-        android:inputType="text"
-        android:maxLines="1"
-        android:paddingRight="10sp"
-        android:visibility="gone" />
 
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/simpleSwipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/inputSearch">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/dashboardRV"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_8dp"
-            android:background="@color/colorPrimary"
-            android:visibility="visible"
-            tools:listitem="@layout/dashboard_item" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/switchView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+    <android.support.v7.widget.RecyclerView
         android:visibility="gone"
-        app:srcCompat="@android:drawable/ic_dialog_map" />
-
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
+        android:id="@+id/extradetails_rv"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:indeterminateTint="@color/orange"
-        android:visibility="gone" />
+        android:layout_marginTop="@dimen/dimen_4dp" />
 
-    <cgg.gov.in.icadworks.custom.CustomFontTextView
-        android:id="@+id/emptyTV"
-        android:text="No checkdam records found"
-        android:textColor="@color/white_new"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:visibility="gone" />
-
-</RelativeLayout>
+</LinearLayout>

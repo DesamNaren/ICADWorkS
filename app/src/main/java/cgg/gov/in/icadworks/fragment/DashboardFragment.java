@@ -45,7 +45,7 @@ import cgg.gov.in.icadworks.adapter.DashboardAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
-import cgg.gov.in.icadworks.model.response.checkdam.office.CheckDamOfficeResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
@@ -595,7 +595,7 @@ public class DashboardFragment extends Fragment implements OTView {
     }
 
     @Override
-    public void getCheckDamOfficeResponse(CheckDamOfficeResponse checkDamOfficeResponse) {
+    public void getCheckDamOfficeResponse(CDOfficeResponse checkDamOfficeResponse) {
 
     }
 

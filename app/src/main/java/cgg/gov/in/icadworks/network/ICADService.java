@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import cgg.gov.in.icadworks.model.request.OTUpdateRequest;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
-import cgg.gov.in.icadworks.model.response.checkdam.office.CheckDamOfficeResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.ot.OTUpdateResponse;
 import cgg.gov.in.icadworks.model.response.itemStatus.ItemStatusResponse;
 import cgg.gov.in.icadworks.model.response.items.WorkItemsResponse;
@@ -90,13 +90,13 @@ public interface ICADService {
                                           @Query("password") String password);
 
     @GET("getCheckDamsOfficeData")
-    Observable<CheckDamOfficeResponse> getCDOfficeRes(@Query("secid") String secID,
-                                                      @Query("subdivid") String subDivID,
-                                                      @Query("divid") String divID,
-                                                      @Query("circid") String cirID,
-                                                      @Query("unitid") String unitID,
-                                                      @Query("user") String user,
-                                                      @Query("password") String password);
+    Observable<CDOfficeResponse> getCDOfficeRes(@Query("secid") String secID,
+                                                @Query("subdivid") String subDivID,
+                                                @Query("divid") String divID,
+                                                @Query("circid") String cirID,
+                                                @Query("unitid") String unitID,
+                                                @Query("user") String user,
+                                                @Query("password") String password);
 
     @POST("updateItemsStatus")
     Observable<OTUpdateResponse> submitOTData(@Body OTUpdateRequest otUpdateRequest, @Header("Content-Type") String content_type);

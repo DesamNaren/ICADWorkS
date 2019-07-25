@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
+import cgg.gov.in.icadworks.fragment.CDReportFragmenNewt;
+import cgg.gov.in.icadworks.fragment.ReportFragmenNewt;
 import cgg.gov.in.icadworks.fragment.DashboardFragment;
 import cgg.gov.in.icadworks.fragment.InfoFragment;
 import cgg.gov.in.icadworks.fragment.ProfileFragment;
@@ -27,11 +29,12 @@ import cgg.gov.in.icadworks.fragment.ReportFragmenNewt;
 import cgg.gov.in.icadworks.fragment.ReportFragment;
 import cgg.gov.in.icadworks.fragment.UserManualFragment;
 import cgg.gov.in.icadworks.fragment.VPDashboardFragment;
+import cgg.gov.in.icadworks.interfaces.callBackInterface;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.util.Utilities;
 
 public class DashboardActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, callBackInterface {
 
     private CustomFontTextView name, des;
     private NavigationView navigationView;
@@ -104,7 +107,7 @@ public class DashboardActivity extends AppCompatActivity
                 Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
                 if (fragment == null) {
                     Utilities.showCustomNetworkAlertLogout(this, "Do you want logout and exit from app?");
-                } else if (fragment instanceof ReportFragmenNewt) {
+                } else if (fragment instanceof ReportFragmenNewt || fragment instanceof CDReportFragmenNewt) {
                     Utilities.showCustomNetworkAlertLogout(this, "Do you want logout and exit from app?");
                 } else if (fragment instanceof ProfileFragment) {
                     fragmentTag = "Profile";
@@ -174,5 +177,15 @@ public class DashboardActivity extends AppCompatActivity
         transaction.replace(R.id.content_frame, fragment, name);
         transaction.addToBackStack(null);
         transaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    public void callCDDashboardFragment(Fragment fragment) {
+        if(fragment instanceof ReportFragmenNewt) {
+            selectedFragment = new CDReportFragmenNewt();
+        }else {
+            selectedFragment = new ReportFragmenNewt();
+        }
+        displayFragment(selectedFragment, fragmentTag);
     }
 }

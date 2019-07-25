@@ -38,8 +38,6 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.ot.OTData;
-import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.util.Utilities;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -59,26 +57,22 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
     CustomFontTextView lonTV;
     @BindView(R.id.details_layout)
     LinearLayout detailsLayout;
-    @BindView(R.id.otIDTV)
-    CustomFontTextView otIDTV;
-    @BindView(R.id.otNameTV)
-    CustomFontTextView otNameTV;
+    @BindView(R.id.cdCodeTV)
+    CustomFontTextView cdCodeTV;
+    @BindView(R.id.cdNameTV)
+    CustomFontTextView cdNameTV;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    @BindView(R.id.proTv)
-    CustomFontTextView proTv;
-    @BindView(R.id.resTV)
-    CustomFontTextView resTV;
-    @BindView(R.id.canalTV)
-    CustomFontTextView canalTV;
-    @BindView(R.id.ventTV)
-    CustomFontTextView ventTV;
-    @BindView(R.id.dischargeTV)
-    CustomFontTextView dischargeTV;
-    @BindView(R.id.tanksTV)
-    CustomFontTextView tanksTV;
-    @BindView(R.id.cumTV)
-    CustomFontTextView cumTV;
+    @BindView(R.id.circleTV)
+    CustomFontTextView circleTV;
+    @BindView(R.id.secTv)
+    CustomFontTextView secTv;
+    @BindView(R.id.unitTv)
+    CustomFontTextView unitTv;
+    @BindView(R.id.divTV)
+    CustomFontTextView divTv;
+    @BindView(R.id.subDivTv)
+    CustomFontTextView subDivTv;
     @BindView(R.id.foundationTV)
     CustomFontTextView foundationTV;
     @BindView(R.id.supStrTV)
@@ -127,37 +121,20 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
 
             checkDamData = getIntent().getParcelableExtra("CD_ITEM_DATA");
 
-            if (checkDamData.getLatitude().contains("-")) {
-                String[] strings = checkDamData.getLatitude().split("-");
-                otLat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-            }
+            distTV.setText(checkDamData.getDistrict());
+            manTV.setText(checkDamData.getMandal());
+            vilTV.setText(checkDamData.getVillage());
+            conTV.setText(checkDamData.getAssembly());
+            latTv.setText(checkDamData.getLatitude());
+            lonTV.setText(checkDamData.getLongitude());
 
-            if (checkDamData.getLongitude().contains("-")) {
-                String[] strings = checkDamData.getLongitude().split("-");
-                otLng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-            }
-
-            if (!(otLat > 0 && otLng > 0)) {
-                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
-            }
-
-//            distTV.setText(checkDamData.getDistrictname());
-//            manTV.setText(checkDamData.getMandalname());
-//            vilTV.setText(checkDamData.getVillagename());
-//            conTV.setText(checkDamData.getAssemblyname());
-//            latTv.setText(checkDamData.getLatitude());
-//            lonTV.setText(checkDamData.getLongitude());
-//
-//
-//            otIDTV.setText(checkDamData.getStructureId());
-//            otNameTV.setText(checkDamData.getStructurename());
-//            proTv.setText(checkDamData.getProjectname());
-//            resTV.setText(checkDamData.getReservoirname());
-//            canalTV.setText(checkDamData.getCanalname());
-//            ventTV.setText(checkDamData.getVentDiaInMm() + "mm");
-//            dischargeTV.setText(checkDamData.getDischargeInCusecs() + "cusecs");
-//            tanksTV.setText(checkDamData.getTanksToBeFedCount());
-//            cumTV.setText(checkDamData.getCumulativeCapacityOfTankInMcft() + "mcft");
+            cdCodeTV.setText(String.valueOf(checkDamData.getTankCode()));
+            cdNameTV.setText(checkDamData.getTankName());
+            circleTV.setText(checkDamData.getCircleName());
+            secTv.setText(checkDamData.getSectionName());
+            unitTv.setText(checkDamData.getUnitName());
+            divTv.setText(checkDamData.getDivisionName());
+            subDivTv.setText(checkDamData.getSubDivisionName());
 
             if (checkDamData.getGetItemStatusData() != null && checkDamData.getGetItemStatusData().size() > 0) {
                 for (int z = 0; z < checkDamData.getGetItemStatusData().size(); z++) {
@@ -181,6 +158,28 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
                 }
             }
 
+            if (checkDamData.getLatitude().contains("-")) {
+                try {
+                    String[] strings = checkDamData.getLatitude().split("-");
+                    otLat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (checkDamData.getLongitude().contains("-")) {
+                try {
+                    String[] strings = checkDamData.getLongitude().split("-");
+                    otLng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (!(otLat > 0 && otLng > 0)) {
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
@@ -199,15 +198,15 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
-//        if (checkDamData.getAgmtStatus() == null) {
-//            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
-//            return;
-//        }
-//
-//        if (checkDamData.getAgmtStatus().equalsIgnoreCase("NO")) {
-//            Utilities.showCustomNetworkAlert(this, checkDamData.getAgmtMsg(), false);
-//            return;
-//        }
+        if (checkDamData.getAgmt_status() == null) {
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
+            return;
+        }
+
+        if (checkDamData.getAgmt_status().equalsIgnoreCase("NO")) {
+            Utilities.showCustomNetworkAlert(this, checkDamData.getAgmtMsg(), false);
+            return;
+        }
 
         distance = 0.0;
         if (mCurrentLocation != null && mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
@@ -229,10 +228,10 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
             }
 
             if (distance > 100) {
-//                if (otData.getRadiusMsg() == null || TextUtils.isEmpty(otData.getRadiusMsg()))
-//                    Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
-//                else
-//                    Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
+                if (checkDamData.getRadius_msg() == null || TextUtils.isEmpty(checkDamData.getRadius_msg()))
+                    Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
+                else
+                    Utilities.showCustomNetworkAlert(this, checkDamData.getRadius_msg(), false);
 
             } else if (distance > 0 && distance <= 100) {
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
@@ -280,8 +279,8 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.image_view:
-//                if (otData.getPhotoPath() != null && !TextUtils.isEmpty(otData.getPhotoPath())) {
-//                    displayDialogBox(otData.getPhotoPath());
+//                if (checkDamData.getPhotoPath() != null && !TextUtils.isEmpty(checkDamData.getPhotoPath())) {
+//                    displayDialogBox(checkDamData.getPhotoPath());
 //                } else {
 //                    Toast.makeText(this, "No preview found", Toast.LENGTH_SHORT).show();
 //                }
@@ -290,14 +289,14 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
                 try {
                     ScrollView abstractView = getWindow().getDecorView().findViewById(R.id.scrlView);
                     Utilities.takeSCImage(this, abstractView,
-                            employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName() + "OT Data");
+                            employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName() + "CD Data");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return true;
             case R.id.nav_map:
                 if (!(otLat > 0 && otLng > 0)) {
-                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
                 } else {
 
                     SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);

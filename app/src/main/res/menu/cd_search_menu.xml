@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.activities.MyActivity">
+
+
+    <item
+        android:visible="false"
+        android:id="@+id/action_view"
+        android:icon="@android:drawable/ic_menu_view"
+        android:orderInCategory="100"
+        android:title="View"
+        app:showAsAction="always" />
+
+    <item
+        android:visible="false"
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="200"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:icon="@drawable/power_off"
+        android:orderInCategory="300"
+        android:title="Logout"
+        app:showAsAction="always" />
+
+</menu>

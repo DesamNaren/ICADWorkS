@@ -1,5 +1,6 @@
 package cgg.gov.in.icadworks.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -36,12 +38,16 @@ import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.ReportView;
+import cgg.gov.in.icadworks.interfaces.callBackInterface;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
+import cgg.gov.in.icadworks.model.response.ot.OTData;
+import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.presenter.ReportPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.DashboardActivity;
+import cgg.gov.in.icadworks.view.MapsActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -56,6 +62,8 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
     ProgressBar progress;
     @BindView(R.id.emptyTV)
     CustomFontTextView emptyTV;
+    @BindView(R.id.switchView)
+    CustomFontTextView switchView;
     Unbinder unbinder;
 
     private String defUsername, defUserPwd;
@@ -64,7 +72,17 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
 
     private EmployeeDetailss employeeDetailss = null;
     private ReportPresenter reportPresenter;
+    private callBackInterface anInterface;
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            anInterface = (callBackInterface) context;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Nullable
     @Override
@@ -74,7 +92,7 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
         unbinder = ButterKnife.bind(this, view);
         pos = 0;
 
-
+        switchView.setText("CDs");
         reportPresenter = new ReportPresenter();
         reportPresenter.attachView(this);
 
@@ -115,7 +133,20 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
         } else {
             Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.please_check_internet), false);
         }
+
+        switchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               callCDDashboardFragment();
+            }
+        });
+
+
         return view;
+    }
+
+    private void callCDDashboardFragment() {
+        anInterface.callCDDashboardFragment(ReportFragmenNewt.this);
     }
 
     @Override

@@ -27,6 +27,30 @@ public class OTUpdateRequest{
     @Expose
     private String password;
 
+    @SerializedName("phase")
+    @Expose
+    private String phase;
+
+    @SerializedName("typeOfStructure ")
+    @Expose
+    private String typeOfStructure ;
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(String phase) {
+        this.phase = phase;
+    }
+
+    public String getTypeOfStructure() {
+        return typeOfStructure;
+    }
+
+    public void setTypeOfStructure(String typeOfStructure) {
+        this.typeOfStructure = typeOfStructure;
+    }
+
     public String getUser() {
         return user;
     }

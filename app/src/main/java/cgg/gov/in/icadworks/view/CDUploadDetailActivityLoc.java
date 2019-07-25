@@ -454,11 +454,13 @@ public class CDUploadDetailActivityLoc extends LocBaseActivity implements Update
                     if (photoStr != null && !photoStr.equalsIgnoreCase("")) {
                         ArrayList<OTItemReq> otItemReqs = new ArrayList<>();
                         OTUpdateRequest otUpdateRequest = new OTUpdateRequest();
-//                        otUpdateRequest.setStructureId(checkDamData.getStructureId());
-//                        otUpdateRequest.setStructureNo(checkDamData.getStructureNo());
+                        otUpdateRequest.setStructureId(String.valueOf(checkDamData.getTankCode()));
+                        otUpdateRequest.setStructureNo(String.valueOf(checkDamData.getTankId()));
                         otUpdateRequest.setPhoto(photoStr);
                         otUpdateRequest.setUser(defUsername);
                         otUpdateRequest.setPassword(defUserPwd);
+                        otUpdateRequest.setPhase(String.valueOf(11));
+                        otUpdateRequest.setTypeOfStructure(String.valueOf(2));
 
                         String foundVal = foundationSpinner.getSelectedItem().toString();
                         String supStrVal = supStrSpinner.getSelectedItem().toString();

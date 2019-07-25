@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".view.DashboardActivity">
 
@@ -46,6 +47,21 @@
         android:textColor="@color/white_new"
         android:visibility="gone"
         tools:listitem="@layout/dashboard_item" />
+
+    <cgg.gov.in.icadworks.custom.CustomFontTextView
+        android:id="@+id/switchView"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:gravity="center"
+        android:background="@drawable/circle_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:elevation="10dp"/>
 
 
 </RelativeLayout>

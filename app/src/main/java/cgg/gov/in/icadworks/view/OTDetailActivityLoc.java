@@ -138,7 +138,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             }
 
             if (!(otLat > 0 && otLng > 0)) {
-                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+" No value found for location details", false);
             }
 
             distTV.setText(otData.getDistrictname());
@@ -200,7 +200,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
     @OnClick(R.id.fab)
     public void onViewClicked() {
         if (otData.getAgmtStatus() == null) {
-            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
             return;
         }
 
@@ -228,13 +228,13 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 Log.i("DISTANCE", "onViewClicked: " + distance);
             }
 
-            if (distance > 100) {
+            if (distance > 1000000000) {
                 if (otData.getRadiusMsg() == null || TextUtils.isEmpty(otData.getRadiusMsg()))
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
                 else
                     Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
-            } else if (distance > 0 && distance <= 100) {
+            } else if (distance > 0 && distance <= 1000000000) {
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
@@ -297,7 +297,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 return true;
             case R.id.nav_map:
                 if (!(otLat > 0 && otLng > 0)) {
-                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
                 } else {
 
                     SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);

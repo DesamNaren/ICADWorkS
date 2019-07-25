@@ -462,6 +462,9 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
                         otUpdateRequest.setUser(defUsername);
                         otUpdateRequest.setPassword(defUserPwd);
 
+                        otUpdateRequest.setPhase(String.valueOf(1));
+                        otUpdateRequest.setTypeOfStructure(String.valueOf(1));
+
                         String foundVal = foundationSpinner.getSelectedItem().toString();
                         String supStrVal = supStrSpinner.getSelectedItem().toString();
                         String shutterVal = shuttersSpinner.getSelectedItem().toString();

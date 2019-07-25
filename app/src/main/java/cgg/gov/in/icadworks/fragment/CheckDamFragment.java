@@ -39,15 +39,12 @@ import java.util.List;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.CheckDamAdapter;
-import cgg.gov.in.icadworks.adapter.DashboardAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
-import cgg.gov.in.icadworks.model.response.checkdam.CheckDamItemStatusData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
-import cgg.gov.in.icadworks.model.response.checkdam.office.CheckDamOfficeResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.presenter.OTPresenter;
@@ -55,7 +52,6 @@ import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.CDMapsActivity;
 import cgg.gov.in.icadworks.view.DashboardActivity;
-import cgg.gov.in.icadworks.view.MapsActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -491,17 +487,17 @@ public class CheckDamFragment extends Fragment implements OTView {
     }
 
     @Override
-    public void getCheckDamOfficeResponse(CheckDamOfficeResponse checkDamOfficeResponse) {
+    public void getCheckDamOfficeResponse(CDOfficeResponse cdOfficeResponse) {
         progressBar.setVisibility(View.GONE);
         try {
-            if (checkDamOfficeResponse != null) {
-                if (checkDamOfficeResponse.getStatusCode() == 200 && checkDamOfficeResponse.getData() != null && checkDamOfficeResponse.getData().size() > 0) {
-                    cdsCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getCheckDams()));
-                    tsCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getTechSanctions()));
-                    tenCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getTendersPublish()));
-                    aggCount.setText(String.valueOf(checkDamOfficeResponse.getAbstractReport().get(0).getAgreements()));
-                } else if (checkDamOfficeResponse.getStatus() != null && checkDamOfficeResponse.getStatus() == 404) {
-                    Utilities.showCustomNetworkAlert(getActivity(), checkDamOfficeResponse.getTag(), false);
+            if (cdOfficeResponse != null) {
+                if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null && cdOfficeResponse.getCdOfficeData().size() > 0) {
+                    cdsCount.setText(String.valueOf(cdOfficeResponse.getAbstractReport().get(0).getCheckDams()));
+                    tsCount.setText(String.valueOf(cdOfficeResponse.getAbstractReport().get(0).getTechSanctions()));
+                    tenCount.setText(String.valueOf(cdOfficeResponse.getAbstractReport().get(0).getTendersPublish()));
+                    aggCount.setText(String.valueOf(cdOfficeResponse.getAbstractReport().get(0).getAgreements()));
+                } else if (cdOfficeResponse.getStatus() != null && cdOfficeResponse.getStatus() == 404) {
+                    Utilities.showCustomNetworkAlert(getActivity(), cdOfficeResponse.getTag(), false);
                 } else {
                     Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
                 }
@@ -542,7 +538,7 @@ public class CheckDamFragment extends Fragment implements OTView {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onPrepareOptionsMenu(menu);
-        inflater.inflate(R.menu.search_menu, menu);
+        inflater.inflate(R.menu.cd_search_menu, menu);
         mMenu = menu;
 
         mMenu.findItem(R.id.action_view).setVisible(false);

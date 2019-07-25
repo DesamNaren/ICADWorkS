@@ -181,7 +181,7 @@ public class CDMapsActivity extends FragmentActivity implements OnMapReadyCallba
                             cdName = checkDamData.getTankName();
                         }
 
-                        if (!TextUtils.isEmpty(String.valueOf(checkDamData.getTankCode()))){
+                        if (!TextUtils.isEmpty(String.valueOf(checkDamData.getTankCode()))) {
                             cdCode = String.valueOf(checkDamData.getTankCode());
                         }
 
@@ -197,23 +197,23 @@ public class CDMapsActivity extends FragmentActivity implements OnMapReadyCallba
 
 
                         if (checkDamResponse.getData().get(i).getGetItemStatusData() != null && checkDamResponse.getData().get(i).getGetItemStatusData().size() > 0) {
-                                int statusId = 0;
+                            int statusId = 0;
 
-                                for (int y = 0; y < checkDamResponse.getData().get(i).getGetItemStatusData().size(); y++) {
-                                    statusId += Integer.valueOf(checkDamResponse.getData().get(i).getGetItemStatusData().get(y).getStatusId());
-                                }
+                            for (int y = 0; y < checkDamResponse.getData().get(i).getGetItemStatusData().size(); y++) {
+                                statusId += Integer.valueOf(checkDamResponse.getData().get(i).getGetItemStatusData().get(y).getStatusId());
+                            }
 
-                                if (statusId > 0 && statusId == 3) {
-                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
-                                }
+                            if (statusId > 0 && statusId == 3) {
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
+                            }
 
-                                if (statusId > 3 && statusId <= 8) {
-                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_ot));
-                                }
+                            if (statusId > 3 && statusId <= 8) {
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_ot));
+                            }
 
-                                if (statusId == 9) {
-                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_ot));
-                                }
+                            if (statusId == 9) {
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_ot));
+                            }
 
 
                             if (statusId > 0 && statusId < 3) {
@@ -371,7 +371,7 @@ public class CDMapsActivity extends FragmentActivity implements OnMapReadyCallba
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
 
-//                setMarkers(checkDamResponse);
+                setMarkers(checkDamResponse);
             }
         } else {
             buildGoogleApiClient();
