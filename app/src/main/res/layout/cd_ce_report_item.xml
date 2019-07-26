@@ -211,7 +211,7 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Checkdams" />
+                            android:text="Check Dams" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/tanksCount"

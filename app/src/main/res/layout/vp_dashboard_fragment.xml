@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".view.DashboardActivity">
 
@@ -12,6 +13,7 @@
         android:layout_marginLeft="@dimen/dimen_8dp"
         android:layout_marginRight="@dimen/dimen_8dp"
         android:id="@+id/tab_layout"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

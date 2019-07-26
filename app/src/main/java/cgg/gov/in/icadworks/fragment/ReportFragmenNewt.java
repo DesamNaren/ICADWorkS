@@ -100,6 +100,7 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
+        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
 
         try {
             Gson gson = new Gson();
@@ -169,8 +170,6 @@ public class ReportFragmenNewt extends Fragment implements ReportView {
                     Gson gson = new Gson();
                     editor.putString("REPORT_DATA", gson.toJson(reportResponse));
                     editor.commit();
-                    viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
-
                 } else if (reportResponse.getStatus() != null && reportResponse.getStatus() == 404) {
                     emptyTV.setVisibility(View.VISIBLE);
                     emptyTV.setText(reportResponse.getTag());

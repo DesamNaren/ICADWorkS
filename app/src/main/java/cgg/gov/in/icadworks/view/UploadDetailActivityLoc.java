@@ -649,7 +649,6 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
         public void onReceive(Context context, Intent intent) {
             try {
                 if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
-                    // Make an action or refresh an already managed state.
                     callPermissions();
                 }
             } catch (Exception e) {

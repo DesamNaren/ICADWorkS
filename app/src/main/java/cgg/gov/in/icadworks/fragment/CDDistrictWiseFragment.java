@@ -53,7 +53,7 @@ public class CDDistrictWiseFragment extends Fragment {
 
     @BindView(R.id.projectRV)
     RecyclerView projectRV;
-//    @BindView(R.id.simpleSwipeRefreshLayout)
+    //    @BindView(R.id.simpleSwipeRefreshLayout)
 //    SwipeRefreshLayout simpleSwipeRefreshLayout;
     @BindView(R.id.emptyTV)
     CustomFontTextView emptyTV;
@@ -101,7 +101,6 @@ public class CDDistrictWiseFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
 
 
-
         try {
             Gson gson = new Gson();
             sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
@@ -132,7 +131,7 @@ public class CDDistrictWiseFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 LinearLayout abstractView = getActivity().getWindow().getDecorView().findViewById(R.id.data_ll);
-                Utilities.takeSCImage(getActivity(), abstractView ,
+                Utilities.takeSCImage(getActivity(), abstractView,
                         employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName()
                                 + "( " + employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() + " )" + "_Unit Data");
             }
@@ -148,7 +147,7 @@ public class CDDistrictWiseFragment extends Fragment {
             if (cdOfficeResponse != null) {
                 if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null && cdOfficeResponse.getCdOfficeData().size() > 0) {
 
-                    int cds = 0,tsCnt = 0, tenders = 0, agreements = 0;
+                    int cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
                     int notSta = 0, inPro = 0, completed = 0, total = 0;
 
                     for (int x = 0; x < cdOfficeResponse.getCdOfficeData().size(); x++) {
@@ -157,17 +156,17 @@ public class CDDistrictWiseFragment extends Fragment {
                         tenders = tenders + cdOfficeResponse.getCdOfficeData().get(x).getTendersAward();
                         agreements = agreements + cdOfficeResponse.getCdOfficeData().get(x).getAgreements();
 
-//                        notSta = notSta + checkDamOfficeResponse.getData().get(x).getNotStarted();
-//                        inPro = inPro + checkDamOfficeResponse.getData().get(x).getInProgress();
-//                        completed = completed + checkDamOfficeResponse.getData().get(x).getCompleted();
-//                        total = total + checkDamOfficeResponse.getData().get(x).getOts();
+                        notSta = notSta + cdOfficeResponse.getCdOfficeData().get(x).getNot_started();
+                        inPro = inPro + cdOfficeResponse.getCdOfficeData().get(x).getIn_progress();
+                        completed = completed + cdOfficeResponse.getCdOfficeData().get(x).getCompleted();
+                        total = total + cdOfficeResponse.getCdOfficeData().get(x).getTotal_cds();
 
                     }
 
-//                    totalCount.setText(String.valueOf(total));
-//                    notStCount.setText(String.valueOf(notSta));
-//                    inProCount.setText(String.valueOf(inPro));
-//                    comCount.setText(String.valueOf(completed));
+                    totalCount.setText(String.valueOf(total));
+                    notStCount.setText(String.valueOf(notSta));
+                    inProCount.setText(String.valueOf(inPro));
+                    comCount.setText(String.valueOf(completed));
 
                     tanksCount.setText(String.valueOf(cds));
                     tsCount.setText(String.valueOf(tsCnt));
@@ -212,22 +211,22 @@ public class CDDistrictWiseFragment extends Fragment {
                     CDOfficeData cdOfficeData = new CDOfficeData();
                     for (int z = 0; z < cdOfficeResponse.getCdOfficeData().size(); z++) {
 
-                        if (dCode == Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(z).getDcode())){
+                        if (dCode == Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(z).getDcode())) {
 
                             cds = cds + cdOfficeResponse.getCdOfficeData().get(z).getCheckDams();
-                            tsCnt = tsCnt +  cdOfficeResponse.getCdOfficeData().get(z).getTechSanctions();
+                            tsCnt = tsCnt + cdOfficeResponse.getCdOfficeData().get(z).getTechSanctions();
                             tenders = tenders + cdOfficeResponse.getCdOfficeData().get(z).getTendersAward();
-                            agreements = agreements +  cdOfficeResponse.getCdOfficeData().get(z).getAgreements();
+                            agreements = agreements + cdOfficeResponse.getCdOfficeData().get(z).getAgreements();
 
-//                            notSta = notSta + checkDamOfficeResponse.getData().get(z).getNotStarted();
-//                            inPro = inPro + checkDamOfficeResponse.getData().get(z).getInProgress();
-//                            completed = completed + checkDamOfficeResponse.getData().get(z).getCompleted();
-//                            total = total + checkDamOfficeResponse.getData().get(z).getOts();
+                            notSta = notSta + cdOfficeResponse.getCdOfficeData().get(z).getNot_started();
+                            inPro = inPro + cdOfficeResponse.getCdOfficeData().get(z).getIn_progress();
+                            completed = completed + cdOfficeResponse.getCdOfficeData().get(z).getCompleted();
+                            total = total + cdOfficeResponse.getCdOfficeData().get(z).getTotal_cds();
 
-//                            reportData.setDcode(Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(z).getDcode()));
-//                            reportData.setDname(checkDamOfficeResponse.getData().get(z).getDname());
-//                            reportData.setProjectId(checkDamOfficeResponse.getData().get(z).getProjectId());
-//                            reportData.setProjectName(checkDamOfficeResponse.getData().get(z).getProjectName());
+//                            cdOfficeData.Dcode(Integer.valueOf(cdOfficeResponse.getCdOfficeData().get(z).getDcode()));
+//                            cdOfficeData.setDname(checkDamOfficeResponse.getData().get(z).getDname());
+//                            cdOfficeData.setProjectId(checkDamOfficeResponse.getData().get(z).getProjectId());
+//                            cdOfficeData.setProjectName(checkDamOfficeResponse.getData().get(z).getProjectName());
 
 
                             cdOfficeData.setDcode(cdOfficeResponse.getCdOfficeData().get(z).getDcode());
@@ -238,6 +237,10 @@ public class CDDistrictWiseFragment extends Fragment {
                         cdOfficeData.setTechSanctions(tsCnt);
                         cdOfficeData.setTendersAward(tenders);
                         cdOfficeData.setAgreements(agreements);
+                        cdOfficeData.setNot_started(notSta);
+                        cdOfficeData.setIn_progress(inPro);
+                        cdOfficeData.setCompleted(completed);
+                        cdOfficeData.setTotal_cds(total);
                     }
                     cdOfficeDataArrayList.add(cdOfficeData);
                 }

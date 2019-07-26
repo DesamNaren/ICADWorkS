@@ -77,6 +77,50 @@ public class CDOfficeData implements Parcelable {
     @SerializedName("admin_sanctions")
     @Expose
     private Integer adminSanctions;
+    @SerializedName("not_started")
+    @Expose
+    private Integer not_started;
+    @SerializedName("in_progress")
+    @Expose
+    private Integer in_progress;
+    @SerializedName("completed")
+    @Expose
+    private Integer completed;
+    @SerializedName("total_cds")
+    @Expose
+    private Integer total_cds;
+
+    public Integer getNot_started() {
+        return not_started;
+    }
+
+    public void setNot_started(Integer not_started) {
+        this.not_started = not_started;
+    }
+
+    public Integer getIn_progress() {
+        return in_progress;
+    }
+
+    public void setIn_progress(Integer in_progress) {
+        this.in_progress = in_progress;
+    }
+
+    public Integer getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Integer completed) {
+        this.completed = completed;
+    }
+
+    public Integer getTotal_cds() {
+        return total_cds;
+    }
+
+    public void setTotal_cds(Integer total_cds) {
+        this.total_cds = total_cds;
+    }
 
     public Double getBillssent() {
         return billssent;
@@ -262,6 +306,7 @@ public class CDOfficeData implements Parcelable {
         this.adminSanctions = adminSanctions;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -292,6 +337,10 @@ public class CDOfficeData implements Parcelable {
         dest.writeValue(this.unitId);
         dest.writeString(this.dcode);
         dest.writeValue(this.adminSanctions);
+        dest.writeValue(this.not_started);
+        dest.writeValue(this.in_progress);
+        dest.writeValue(this.completed);
+        dest.writeValue(this.total_cds);
     }
 
     public CDOfficeData() {
@@ -321,6 +370,10 @@ public class CDOfficeData implements Parcelable {
         this.unitId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.dcode = in.readString();
         this.adminSanctions = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.not_started = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.in_progress = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.completed = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.total_cds = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<CDOfficeData> CREATOR = new Parcelable.Creator<CDOfficeData>() {

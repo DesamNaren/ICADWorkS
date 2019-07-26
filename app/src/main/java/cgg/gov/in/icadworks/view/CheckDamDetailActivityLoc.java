@@ -267,11 +267,11 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-//        if (checkDamData != null && checkDamData.getPhotoPath() != null && !TextUtils.isEmpty(checkDamData.getPhotoPath().trim())) {
-//            menu.findItem(R.id.image_view).setVisible(true);
-//        } else {
-//            menu.findItem(R.id.image_view).setVisible(false);
-//        }
+        if (checkDamData != null && checkDamData.getImage_path() != null && !TextUtils.isEmpty(checkDamData.getImage_path().trim())) {
+            menu.findItem(R.id.image_view).setVisible(true);
+        } else {
+            menu.findItem(R.id.image_view).setVisible(false);
+        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -279,11 +279,11 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.image_view:
-//                if (checkDamData.getPhotoPath() != null && !TextUtils.isEmpty(checkDamData.getPhotoPath())) {
-//                    displayDialogBox(checkDamData.getPhotoPath());
-//                } else {
-//                    Toast.makeText(this, "No preview found", Toast.LENGTH_SHORT).show();
-//                }
+                if (checkDamData.getImage_path() != null && !TextUtils.isEmpty(checkDamData.getImage_path())) {
+                    displayDialogBox(checkDamData.getImage_path());
+                } else {
+                    Toast.makeText(this, "No preview found", Toast.LENGTH_SHORT).show();
+                }
                 return true;
             case R.id.image_share:
                 try {

@@ -95,6 +95,8 @@ public class CDReportFragmenNewt extends Fragment implements CDReportView {
         tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
 
+
+
         try {
             Gson gson = new Gson();
             sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
@@ -134,6 +136,7 @@ public class CDReportFragmenNewt extends Fragment implements CDReportView {
                 callCDDashboardFragment();
             }
         });
+        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
 
         return view;
     }
@@ -183,7 +186,7 @@ public class CDReportFragmenNewt extends Fragment implements CDReportView {
                     Gson gson = new Gson();
                     editor.putString("CD_REPORT_DATA", gson.toJson(cdOfficeResponse));
                     editor.commit();
-                    viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+
 
                 } else if (cdOfficeResponse.getStatus() != null && cdOfficeResponse.getStatus() == 404) {
                     emptyTV.setVisibility(View.VISIBLE);

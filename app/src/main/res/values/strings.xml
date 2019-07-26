@@ -35,4 +35,7 @@
     <string name="share">Share</string>
     <string name="user_manual">User Manual</string>
 
+    <string name="ot">OTs</string>
+    <string name="cd">CDs</string>
+
 </resources>

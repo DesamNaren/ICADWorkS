@@ -73,7 +73,6 @@ public class VPDashboardFragment extends Fragment {
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
-
         viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
 
         try {
@@ -123,9 +122,9 @@ public class VPDashboardFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "OTs";
+                    return getString(R.string.ot);
                 case 1:
-                    return "CDs";
+                    return getString(R.string.cd);
             }
             return null;
         }

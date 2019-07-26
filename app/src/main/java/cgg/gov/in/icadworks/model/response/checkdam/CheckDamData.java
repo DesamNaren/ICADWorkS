@@ -115,6 +115,18 @@ public class  CheckDamData implements Parcelable {
     @Expose
     private String radius_msg;
 
+    @SerializedName("image_path")
+    @Expose
+    private String image_path;
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
     public String getAgmtMsg() {
         return agmtMsg;
     }
@@ -429,6 +441,7 @@ public class  CheckDamData implements Parcelable {
         dest.writeString(this.mandal);
         dest.writeString(this.agmt_status);
         dest.writeString(this.radius_msg);
+        dest.writeString(this.image_path);
     }
 
     public CheckDamData() {
@@ -469,6 +482,7 @@ public class  CheckDamData implements Parcelable {
         this.mandal = in.readString();
         this.agmt_status = in.readString();
         this.radius_msg = in.readString();
+        this.image_path = in.readString();
     }
 
     public static final Parcelable.Creator<CheckDamData> CREATOR = new Parcelable.Creator<CheckDamData>() {

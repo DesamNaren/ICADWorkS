@@ -63,18 +63,16 @@ public class CDCEReportAdapter extends RecyclerView.Adapter<CDCEReportAdapter.It
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder itemViewHolder, final int position) {
         try {
-
             itemViewHolder.extradetailsRv.setVisibility(View.GONE);
-
             itemViewHolder.title.setText(mFilteredList.get(position).getOfficeName());
             itemViewHolder.tanksCount.setText(String.valueOf(mFilteredList.get(position).getCheckDams()));
             itemViewHolder.tsCount.setText(String.valueOf(mFilteredList.get(position).getTechSanctions()));
             itemViewHolder.tenCount.setText(String.valueOf(mFilteredList.get(position).getTendersAward()));
             itemViewHolder.aggCount.setText(String.valueOf(mFilteredList.get(position).getAgreements()));
-//            itemViewHolder.notStCount.setText(String.valueOf(mFilteredList.get(position).getNotStarted()));
-//            itemViewHolder.inProCount.setText(String.valueOf(mFilteredList.get(position).getInProgress()));
-//            itemViewHolder.comCount.setText(String.valueOf(mFilteredList.get(position).getCompleted()));
-//            itemViewHolder.totalCount.setText(String.valueOf(mFilteredList.get(position).getTotal()));
+            itemViewHolder.notStCount.setText(String.valueOf(mFilteredList.get(position).getNot_started()));
+            itemViewHolder.inProCount.setText(String.valueOf(mFilteredList.get(position).getIn_progress()));
+            itemViewHolder.comCount.setText(String.valueOf(mFilteredList.get(position).getCompleted()));
+            itemViewHolder.totalCount.setText(String.valueOf(mFilteredList.get(position).getTotal_cds()));
 
             itemViewHolder.shareIV.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,8 +82,6 @@ public class CDCEReportAdapter extends RecyclerView.Adapter<CDCEReportAdapter.It
                             mFilteredList.get(position).getOfficeName() + "_CD Unit Data");
                 }
             });
-
-
 //            itemViewHolder.title.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
