@@ -1,12 +1,10 @@
 package cgg.gov.in.icadworks.fragment;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,11 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,14 +33,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.adapter.ProjectReportAdapter;
+import cgg.gov.in.icadworks.adapter.OTProjectReportAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
-import cgg.gov.in.icadworks.interfaces.ReportView;
 import cgg.gov.in.icadworks.model.ProjectReportData;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
-import cgg.gov.in.icadworks.presenter.ReportPresenter;
-import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -54,7 +47,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by lenovo on 03-06-2019.
  */
 
-public class ProjectWiseFragment extends Fragment {
+public class OTProjectWiseFragment extends Fragment {
 
     @BindView(R.id.projectRV)
     RecyclerView projectRV;
@@ -103,7 +96,7 @@ public class ProjectWiseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_project_wise, container, false);
+        View view = inflater.inflate(R.layout.ot_abstract_fragment, container, false);
         setHasOptionsMenu(true);
         unbinder = ButterKnife.bind(this, view);
 
@@ -190,7 +183,7 @@ public class ProjectWiseFragment extends Fragment {
     }
 
 
-    ProjectReportAdapter projectReportAdapter;
+    OTProjectReportAdapter OTProjectReportAdapter;
 
     private void prepareAdapter(ReportResponse reportResponse) {
 
@@ -254,10 +247,10 @@ public class ProjectWiseFragment extends Fragment {
 
                     sortData(projectReportData);
 
-                    projectReportAdapter = new ProjectReportAdapter(projectReportData, getActivity(), getActivity());
+                    OTProjectReportAdapter = new OTProjectReportAdapter(projectReportData, getActivity(), getActivity());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                     projectRV.setLayoutManager(mLayoutManager);
-                    projectRV.setAdapter(projectReportAdapter);
+                    projectRV.setAdapter(OTProjectReportAdapter);
                 }
 
             }
@@ -317,8 +310,8 @@ public class ProjectWiseFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 try {
-                    if (projectReportAdapter != null) {
-                        projectReportAdapter.getFilter().filter(newText);
+                    if (OTProjectReportAdapter != null) {
+                        OTProjectReportAdapter.getFilter().filter(newText);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

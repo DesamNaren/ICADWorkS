@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -36,8 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.adapter.DistrictReportAdapter;
-import cgg.gov.in.icadworks.adapter.ProjectReportAdapter;
+import cgg.gov.in.icadworks.adapter.OTCEReportAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.ProjectReportData;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
@@ -51,11 +48,19 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by lenovo on 03-06-2019.
  */
 
-public class DistrictWiseFragment extends Fragment {
+public class OTCEWiseFragment extends Fragment {
 
-
-    @BindView(R.id.title)
-    CustomFontTextView title;
+    @BindView(R.id.projectRV)
+    RecyclerView projectRV;
+//    @BindView(R.id.simpleSwipeRefreshLayout)
+//    SwipeRefreshLayout simpleSwipeRefreshLayout;
+    @BindView(R.id.emptyTV)
+    CustomFontTextView emptyTV;
+    @BindView(R.id.switchView)
+    FloatingActionButton switchView;
+    @BindView(R.id.progress)
+    ProgressBar progress;
+    Unbinder unbinder;
     @BindView(R.id.totalCount)
     CustomFontTextView totalCount;
     @BindView(R.id.notStCount)
@@ -78,19 +83,10 @@ public class DistrictWiseFragment extends Fragment {
     CardView absrtractLl2;
     @BindView(R.id.data_ll)
     LinearLayout dataLl;
-    @BindView(R.id.projectRV)
-    RecyclerView projectRV;
-    @BindView(R.id.emptyTV)
-    CustomFontTextView emptyTV;
-    @BindView(R.id.switchView)
-    FloatingActionButton switchView;
-    @BindView(R.id.progress)
-    ProgressBar progress;
     @BindView(R.id.rlView)
     RelativeLayout rlView;
     @BindView(R.id.shareIV)
     ImageView shareIV;
-    Unbinder unbinder;
     SharedPreferences sharedPreferences;
     ReportResponse reportResponse;
     private int defSelection;
@@ -99,9 +95,10 @@ public class DistrictWiseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_district_wise, container, false);
+        View view = inflater.inflate(R.layout.ot_abstract_fragment, container, false);
         setHasOptionsMenu(true);
         unbinder = ButterKnife.bind(this, view);
+
 
 
         try {
@@ -124,33 +121,34 @@ public class DistrictWiseFragment extends Fragment {
             String string = sharedPreferences.getString("REPORT_DATA", "");
             reportResponse = gson.fromJson(string, ReportResponse.class);
 
-            setDistrictData(reportResponse);
+            setCEData(reportResponse);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+
         shareIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 LinearLayout abstractView = getActivity().getWindow().getDecorView().findViewById(R.id.data_ll);
                 Utilities.takeSCImage(getActivity(), abstractView ,
                         employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName()
-                                + "( " + employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() + " )" + "_District Data");
+                                + "( " + employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() + " )" + "_Unit Data");
             }
         });
-
 
 
         return view;
     }
 
-    private void setDistrictData(ReportResponse reportResponse) {
+
+    private void setCEData(ReportResponse reportResponse) {
         try {
             if (reportResponse != null) {
                 if (reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
 
-                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nominations=0;
+                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,
+                            nominations =0, agreements = 0;
                     int notSta = 0, inPro = 0, completed = 0, total = 0;
 
                     for (int x = 0; x < reportResponse.getData().size(); x++) {
@@ -161,6 +159,7 @@ public class DistrictWiseFragment extends Fragment {
                         tenders = tenders + reportResponse.getData().get(x).getTenders();
                         nominations = nominations + reportResponse.getData().get(x).getNominations();
                         agreements = agreements + reportResponse.getData().get(x).getAgreements();
+
 
                         notSta = notSta + reportResponse.getData().get(x).getNotStarted();
                         inPro = inPro + reportResponse.getData().get(x).getInProgress();
@@ -175,7 +174,7 @@ public class DistrictWiseFragment extends Fragment {
                     inProCount.setText(String.valueOf(inPro));
                     comCount.setText(String.valueOf(completed));
 
-                    tanksCount.setText(String.valueOf(tanks) +"/"+String.valueOf(tanksTobeFed));
+                    tanksCount.setText(String.valueOf(tanks) + "/" + String.valueOf(tanksTobeFed));
                     tsCount.setText(String.valueOf(tsCnt) +
                             " [ " + String.valueOf(techSanOts) + " ]");
                     tenCount.setText(String.valueOf(tenders)+ " [ " + String.valueOf(nominations) + " ]");
@@ -198,35 +197,35 @@ public class DistrictWiseFragment extends Fragment {
         }
     }
 
-    DistrictReportAdapter districtReportAdapter;
+    OTCEReportAdapter OTCEReportAdapter;
+
     private void prepareAdapter(ReportResponse reportResponse) {
 
         try {
             Set<Integer> hashSet = new HashSet<>();
             for (int x = 0; x < reportResponse.getData().size(); x++) {
-                hashSet.add(reportResponse.getData().get(x).getDcode());
+                hashSet.add(reportResponse.getData().get(x).getUnitId());
             }
 
             if (reportResponse.getData().size() > 0) {
                 ArrayList<ProjectReportData> projectReportData = new ArrayList<>();
-                ProjectReportData reportData = null;
                 Iterator<Integer> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nomination=0;
+                    int tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,nominations=0, agreements = 0;
                     int notSta = 0, inPro = 0, completed = 0, total = 0;
-
-                    int distID = iterator.next();
-                    reportData = new ProjectReportData();
+                    int unitID = iterator.next();
+                    ProjectReportData reportData = new ProjectReportData();
                     for (int z = 0; z < reportResponse.getData().size(); z++) {
-                        if (distID == reportResponse.getData().get(z).getDcode()) {
+
+                        if (unitID == reportResponse.getData().get(z).getUnitId()) {
 
                             tanks = tanks + reportResponse.getData().get(z).getTanks();
                             tanksTobeFed = tanksTobeFed + reportResponse.getData().get(z).getTanks_to_be_fed();
                             tsCnt = tsCnt + reportResponse.getData().get(z).getTechsanctions();
                             techSanOts = techSanOts + reportResponse.getData().get(z).getTechsancots();
                             tenders = tenders + reportResponse.getData().get(z).getTenders();
-                            nomination = nomination + reportResponse.getData().get(z).getNominations();
+                            nominations = nominations + reportResponse.getData().get(z).getNominations();
                             agreements = agreements + reportResponse.getData().get(z).getAgreements();
 
                             notSta = notSta + reportResponse.getData().get(z).getNotStarted();
@@ -239,42 +238,40 @@ public class DistrictWiseFragment extends Fragment {
                             reportData.setDname(reportResponse.getData().get(z).getDname());
                             reportData.setProjectId(reportResponse.getData().get(z).getProjectId());
                             reportData.setProjectName(reportResponse.getData().get(z).getProjectName());
+                            reportData.setUnitId(reportResponse.getData().get(z).getUnitId());
+                            reportData.setUnitName(reportResponse.getData().get(z).getUnitName());
                         }
-
-
 
                         reportData.setTanks(tanks);
                         reportData.setTanksTobeFed(tanksTobeFed);
                         reportData.setTechsanctions(tsCnt);
                         reportData.setTechsancots(techSanOts);
                         reportData.setTenders(tenders);
-                        reportData.setNominations(nomination);
                         reportData.setAgreements(agreements);
                         reportData.setNotStarted(notSta);
                         reportData.setInProgress(inPro);
                         reportData.setCompleted(completed);
                         reportData.setTotal(total);
+                        reportData.setNominations(nominations);
 
                     }
                     projectReportData.add(reportData);
-
-
                 }
 
                 if (projectReportData.size() > 0) {
-
                     sortData(projectReportData);
-
-                    districtReportAdapter = new DistrictReportAdapter(reportResponse, projectReportData, getActivity(),getActivity());
+                    OTCEReportAdapter = new OTCEReportAdapter(reportResponse, projectReportData, getActivity(), getActivity());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                     projectRV.setLayoutManager(mLayoutManager);
-                    projectRV.setAdapter(districtReportAdapter);
+                    projectRV.setAdapter(OTCEReportAdapter);
                 }
 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     private Menu mMenu;
@@ -320,8 +317,8 @@ public class DistrictWiseFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 try {
-                    if (districtReportAdapter != null) {
-                        districtReportAdapter.getFilter().filter(newText);
+                    if (OTCEReportAdapter != null) {
+                        OTCEReportAdapter.getFilter().filter(newText);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -331,19 +328,17 @@ public class DistrictWiseFragment extends Fragment {
         });
     }
 
-
 //    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (isVisibleToUser) {
-//            try {
-//                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
+////    public void setUserVisibleHint(boolean isVisibleToUser) {
+////        super.setUserVisibleHint(isVisibleToUser);
+////        if (isVisibleToUser) {
+////            try {
+////                getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+////            } catch (Exception e) {
+////                e.printStackTrace();
+////            }
+////        }
+////    }
 
 
     @Override
@@ -355,9 +350,10 @@ public class DistrictWiseFragment extends Fragment {
     private void sortData(ArrayList<ProjectReportData> projectReportData) {
         Collections.sort(projectReportData, new Comparator<ProjectReportData>() {
             public int compare(ProjectReportData lhs, ProjectReportData rhs) {
-                return (lhs.getDname().compareTo(rhs.getDname()));
+                return (lhs.getUnitName().compareTo(rhs.getUnitName()));
             }
         });
     }
+
 
 }

@@ -20,15 +20,12 @@ import com.google.gson.Gson;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
-import cgg.gov.in.icadworks.fragment.CDReportFragmenNewt;
-import cgg.gov.in.icadworks.fragment.ReportFragmenNewt;
-import cgg.gov.in.icadworks.fragment.DashboardFragment;
+import cgg.gov.in.icadworks.fragment.OTBaseAbstractFragment;
+import cgg.gov.in.icadworks.fragment.CDBaseAbstractFragment;
 import cgg.gov.in.icadworks.fragment.InfoFragment;
 import cgg.gov.in.icadworks.fragment.ProfileFragment;
-import cgg.gov.in.icadworks.fragment.ReportFragmenNewt;
-import cgg.gov.in.icadworks.fragment.ReportFragment;
+import cgg.gov.in.icadworks.fragment.StrucutureBaseFragment;
 import cgg.gov.in.icadworks.fragment.UserManualFragment;
-import cgg.gov.in.icadworks.fragment.VPDashboardFragment;
 import cgg.gov.in.icadworks.interfaces.callBackInterface;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.util.Utilities;
@@ -66,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        selectedFragment = new ReportFragmenNewt();
+        selectedFragment = new OTBaseAbstractFragment();
         fragmentTag = "Home";
         displayFragment(selectedFragment, fragmentTag);
 
@@ -103,17 +100,17 @@ public class DashboardActivity extends AppCompatActivity
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             } else {
-                selectedFragment = new ReportFragmenNewt();
+                selectedFragment = new OTBaseAbstractFragment();
                 Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
                 if (fragment == null) {
                     Utilities.showCustomNetworkAlertLogout(this, "Do you want logout and exit from app?");
-                } else if (fragment instanceof ReportFragmenNewt || fragment instanceof CDReportFragmenNewt) {
+                } else if (fragment instanceof OTBaseAbstractFragment || fragment instanceof CDBaseAbstractFragment) {
                     Utilities.showCustomNetworkAlertLogout(this, "Do you want logout and exit from app?");
                 } else if (fragment instanceof ProfileFragment) {
                     fragmentTag = "Profile";
                     navigationView.setCheckedItem(R.id.nav_home);
                     displayFragment(selectedFragment, fragmentTag);
-                } else if (fragment instanceof VPDashboardFragment) {
+                } else if (fragment instanceof StrucutureBaseFragment) {
                     fragmentTag = "Report";
                     navigationView.setCheckedItem(R.id.nav_home);
                     displayFragment(selectedFragment, fragmentTag);
@@ -143,7 +140,7 @@ public class DashboardActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             fragmentTag = "Home";
-            selectedFragment = new ReportFragmenNewt();
+            selectedFragment = new OTBaseAbstractFragment();
             displayFragment(selectedFragment, fragmentTag);
 
         } else if (id == R.id.nav_profile) {
@@ -153,7 +150,7 @@ public class DashboardActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_reports) {
             fragmentTag = "Reports";
-            selectedFragment = new VPDashboardFragment();
+            selectedFragment = new StrucutureBaseFragment();
             displayFragment(selectedFragment, fragmentTag);
         } else if (id == R.id.nav_info) {
             fragmentTag = "Info";
@@ -181,10 +178,10 @@ public class DashboardActivity extends AppCompatActivity
 
     @Override
     public void callCDDashboardFragment(Fragment fragment) {
-        if(fragment instanceof ReportFragmenNewt) {
-            selectedFragment = new CDReportFragmenNewt();
+        if(fragment instanceof OTBaseAbstractFragment) {
+            selectedFragment = new CDBaseAbstractFragment();
         }else {
-            selectedFragment = new ReportFragmenNewt();
+            selectedFragment = new OTBaseAbstractFragment();
         }
         displayFragment(selectedFragment, fragmentTag);
     }

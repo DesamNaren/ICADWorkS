@@ -22,16 +22,15 @@ import butterknife.OnClick;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
-import cgg.gov.in.icadworks.model.response.checkdam.CheckDamItemStatusData;
 import cgg.gov.in.icadworks.view.CheckDamDetailActivityLoc;
 
-public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemViewHolder> implements Filterable {
+public class CDDashboardAdapter extends RecyclerView.Adapter<CDDashboardAdapter.ItemViewHolder> implements Filterable {
 
     private List<CheckDamData> checkDamData;
     private List<CheckDamData> mFilteredList;
     private Context context;
 
-    public CheckDamAdapter(List<CheckDamData> checkDamData, Context context) {
+    public CDDashboardAdapter(List<CheckDamData> checkDamData, Context context) {
         this.checkDamData = checkDamData;
         mFilteredList = checkDamData;
         this.context = context;
@@ -40,7 +39,7 @@ public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemVi
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.checkdam_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cd_dashbaord_item, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -49,10 +48,10 @@ public class CheckDamAdapter extends RecyclerView.Adapter<CheckDamAdapter.ItemVi
         try {
             itemViewHolder.cdCode.setText(String.valueOf(mFilteredList.get(position).getTankCode()));
             itemViewHolder.cdName.setText(mFilteredList.get(position).getTankName());
-            CheckDamSubAdapter checkDamSubAdapter = new CheckDamSubAdapter(mFilteredList.get(position), context);
+            CDDashboardSubAdapter CDDashboardSubAdapter = new CDDashboardSubAdapter(mFilteredList.get(position), context);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
-            itemViewHolder.extradetailsRv.setAdapter(checkDamSubAdapter);
+            itemViewHolder.extradetailsRv.setAdapter(CDDashboardSubAdapter);
 
             itemViewHolder.cardItem.setOnClickListener(new View.OnClickListener() {
                 @Override

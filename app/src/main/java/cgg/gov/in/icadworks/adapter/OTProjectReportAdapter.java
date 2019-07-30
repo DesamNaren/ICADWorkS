@@ -21,11 +21,9 @@ import butterknife.OnClick;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.ProjectReportData;
-import cgg.gov.in.icadworks.model.response.ot.OTData;
-import cgg.gov.in.icadworks.model.response.report.ReportData;
 import cgg.gov.in.icadworks.util.Utilities;
 
-public class ProjectReportAdapter extends RecyclerView.Adapter<ProjectReportAdapter.ItemViewHolder> implements Filterable {
+public class OTProjectReportAdapter extends RecyclerView.Adapter<OTProjectReportAdapter.ItemViewHolder> implements Filterable {
 
 
     private ArrayList<ProjectReportData> projectReportData;
@@ -33,7 +31,7 @@ public class ProjectReportAdapter extends RecyclerView.Adapter<ProjectReportAdap
     private Context context;
     private Activity activity;
 
-    public ProjectReportAdapter(ArrayList<ProjectReportData> projectReportData, Context context, Activity activity) {
+    public OTProjectReportAdapter(ArrayList<ProjectReportData> projectReportData, Context context, Activity activity) {
         this.projectReportData = projectReportData;
         mFilteredList = projectReportData;
         this.context = context;

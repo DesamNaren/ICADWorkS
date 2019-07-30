@@ -8,30 +8,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
-import cgg.gov.in.icadworks.model.response.ot.OTData;
-import cgg.gov.in.icadworks.model.response.ot.OTStatusData;
+import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
 
-public class DashboardSubAdapter extends RecyclerView.Adapter<DashboardSubAdapter.ItemViewHolder> {
+public class CDDashboardSubAdapter extends RecyclerView.Adapter<CDDashboardSubAdapter.ItemViewHolder> {
 
-    private OTData otResponse;
+    private CheckDamData checkDamData;
     private Context context;
 
-    public DashboardSubAdapter(OTData otResponse, Context context) {
-        this.otResponse = otResponse;
+    public CDDashboardSubAdapter(CheckDamData checkDamData, Context context) {
+        this.checkDamData = checkDamData;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.sub_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cd_dashboard_sub_item, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -39,50 +36,50 @@ public class DashboardSubAdapter extends RecyclerView.Adapter<DashboardSubAdapte
     public void onBindViewHolder(@NonNull ItemViewHolder itemViewHolder, final int position) {
         try {
 
-            for(int x=0;x<otResponse.getGetItemStatusData().size();x++){
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                && otResponse.getGetItemStatusData().get(x).getStatusId().contains("1")){
+            for(int x=0;x<checkDamData.getGetItemStatusData().size();x++){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
+                && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("1")){
                     itemViewHolder.foundationTV.setBackgroundColor(Color.parseColor("#ee3738"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("2")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("2")){
                     itemViewHolder.foundationTV.setBackgroundColor(Color.parseColor("#FF7F00"));
                 }
 
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("3")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("3")){
                     itemViewHolder.foundationTV.setBackgroundColor(Color.parseColor("#008000"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("1")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("1")){
                     itemViewHolder.superTV.setBackgroundColor(Color.parseColor("#ee3738"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("2")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("2")){
                     itemViewHolder.superTV.setBackgroundColor(Color.parseColor("#FF7F00"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("3")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("3")){
                     itemViewHolder.superTV.setBackgroundColor(Color.parseColor("#008000"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("1")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("1")){
                     itemViewHolder.shutterTV.setBackgroundColor(Color.parseColor("#ee3738"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("2")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("2")){
                     itemViewHolder.shutterTV.setBackgroundColor(Color.parseColor("#FF7F00"));
                 }
 
-                if(otResponse.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getGetItemStatusData().get(x).getStatusId().contains("3")){
+                if(checkDamData.getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
+                        && checkDamData.getGetItemStatusData().get(x).getStatusId().contains("3")){
                     itemViewHolder.shutterTV.setBackgroundColor(Color.parseColor("#008000"));
                 }
 
@@ -96,7 +93,7 @@ public class DashboardSubAdapter extends RecyclerView.Adapter<DashboardSubAdapte
 
     @Override
     public int getItemCount() {
-        return otResponse == null ? 0 : 1;
+        return checkDamData == null ? 0 : 1;
     }
 
     @OnClick(R.id.cardItem)

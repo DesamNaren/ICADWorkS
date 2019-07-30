@@ -259,7 +259,7 @@
 
 
                     <LinearLayout
-
+                        android:visibility="gone"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -281,6 +281,7 @@
                     </LinearLayout>
 
                     <View
+                        android:visibility="gone"
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
                         android:background="@color/gray" />
@@ -400,7 +401,7 @@
             android:layout_marginTop="@dimen/dimen_8dp"
             android:background="@color/colorPrimary"
             android:visibility="visible"
-            tools:listitem="@layout/dashboard_item" />
+            tools:listitem="@layout/ot_dashboard_item" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

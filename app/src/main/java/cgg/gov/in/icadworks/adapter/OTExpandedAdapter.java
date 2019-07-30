@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,15 +21,13 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.report.ReportData;
 import cgg.gov.in.icadworks.util.Utilities;
 
-public class DistrictSubAdapter extends RecyclerView.Adapter<DistrictSubAdapter.ItemViewHolder> {
-
-
+public class OTExpandedAdapter extends RecyclerView.Adapter<OTExpandedAdapter.ItemViewHolder> {
 
     private ArrayList<ReportData> otResponse;
     private Context context;
     private Activity activity;
 
-    public DistrictSubAdapter(ArrayList<ReportData> otResponse, Context context, Activity activity) {
+    public OTExpandedAdapter(ArrayList<ReportData> otResponse, Context context, Activity activity) {
         this.otResponse = otResponse;
         this.context = context;
         this.activity = activity;
@@ -39,7 +36,7 @@ public class DistrictSubAdapter extends RecyclerView.Adapter<DistrictSubAdapter.
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.district_wise_sub_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_expanded_item, viewGroup, false);
         return new ItemViewHolder(view);
     }
 

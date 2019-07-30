@@ -56,7 +56,7 @@ public class CDCEReportAdapter extends RecyclerView.Adapter<CDCEReportAdapter.It
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cd_ce_report_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cd_sub_item, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -161,7 +161,7 @@ public class CDCEReportAdapter extends RecyclerView.Adapter<CDCEReportAdapter.It
 //
 //                                        sortData(subReportData);
 //
-//                                        DistrictSubAdapter dashboardSubAdapter = new DistrictSubAdapter(subReportData, context, activity);
+//                                        OTExpandedAdapter dashboardSubAdapter = new OTExpandedAdapter(subReportData, context, activity);
 //                                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 //                                        itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
 //                                        itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);
@@ -171,7 +171,7 @@ public class CDCEReportAdapter extends RecyclerView.Adapter<CDCEReportAdapter.It
 //                            }
 //                        }
 //
-//                        DistrictSubAdapter dashboardSubAdapter = new DistrictSubAdapter(subReportData, context, activity);
+//                        OTExpandedAdapter dashboardSubAdapter = new OTExpandedAdapter(subReportData, context, activity);
 //                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
 //                        itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
 //                        itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);

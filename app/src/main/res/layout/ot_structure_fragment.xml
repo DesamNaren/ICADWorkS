@@ -400,7 +400,7 @@
             android:layout_marginTop="@dimen/dimen_8dp"
             android:background="@color/colorPrimary"
             android:visibility="visible"
-            tools:listitem="@layout/dashboard_item" />
+            tools:listitem="@layout/ot_dashboard_item" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -426,7 +426,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:visibility="visible"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_dialog_map" />
 
     <ProgressBar

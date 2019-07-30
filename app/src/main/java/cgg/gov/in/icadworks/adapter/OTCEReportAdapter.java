@@ -31,7 +31,7 @@ import cgg.gov.in.icadworks.model.response.report.ReportData;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.util.Utilities;
 
-public class CEReportAdapter extends RecyclerView.Adapter<CEReportAdapter.ItemViewHolder> implements Filterable {
+public class OTCEReportAdapter extends RecyclerView.Adapter<OTCEReportAdapter.ItemViewHolder> implements Filterable {
 
 
     private ArrayList<ProjectReportData> t_projectReportData;
@@ -41,7 +41,7 @@ public class CEReportAdapter extends RecyclerView.Adapter<CEReportAdapter.ItemVi
     ArrayList<ReportData> subReportData;
     Activity activity;
 
-    public CEReportAdapter(ReportResponse reportResponse, ArrayList<ProjectReportData> t_projectReportData, Context context, Activity activity) {
+    public OTCEReportAdapter(ReportResponse reportResponse, ArrayList<ProjectReportData> t_projectReportData, Context context, Activity activity) {
         this.reportResponse = reportResponse;
         this.t_projectReportData = t_projectReportData;
         mFilteredList = t_projectReportData;
@@ -52,7 +52,7 @@ public class CEReportAdapter extends RecyclerView.Adapter<CEReportAdapter.ItemVi
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ce_report_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_sub_item, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -166,7 +166,7 @@ public class CEReportAdapter extends RecyclerView.Adapter<CEReportAdapter.ItemVi
 
                                         sortData(subReportData);
 
-                                        DistrictSubAdapter dashboardSubAdapter = new DistrictSubAdapter(subReportData, context, activity);
+                                        OTExpandedAdapter dashboardSubAdapter = new OTExpandedAdapter(subReportData, context, activity);
                                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                                         itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
                                         itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);
@@ -176,7 +176,7 @@ public class CEReportAdapter extends RecyclerView.Adapter<CEReportAdapter.ItemVi
                             }
                         }
 
-                        DistrictSubAdapter dashboardSubAdapter = new DistrictSubAdapter(subReportData, context, activity);
+                        OTExpandedAdapter dashboardSubAdapter = new OTExpandedAdapter(subReportData, context, activity);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
                         itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
                         itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);

@@ -3,38 +3,321 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dimen_4dp"
-    android:orientation="horizontal">
+    android:layout_marginLeft="@dimen/dimen_8dp"
+    android:layout_marginTop="@dimen/dimen_8dp"
+    android:layout_marginRight="@dimen/dimen_8dp"
+    android:orientation="vertical">
 
-    <cgg.gov.in.icadworks.custom.CustomFontTextView
-        android:padding="@dimen/dimen_4dp"
-        android:textColor="@color/white_new"
-        android:id="@+id/foundationTV"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:text="Foundation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
-    <cgg.gov.in.icadworks.custom.CustomFontTextView
-        android:textColor="@color/white_new"
-        android:padding="@dimen/dimen_4dp"
-        android:id="@+id/superTV"
-        android:gravity="center"
-        android:layout_marginLeft="0.5dp"
-        android:layout_marginRight="0.5dp"
-        android:layout_weight="1"
-        android:text="Super Structure"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/data_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <cgg.gov.in.icadworks.custom.CustomFontTextView
-        android:padding="@dimen/dimen_4dp"
-        android:textColor="@color/white_new"
-        android:id="@+id/shutterTV"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:text="Protection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!--android:drawableRight="@drawable/down_arrow"-->
+
+                <cgg.gov.in.icadworks.custom.CustomFontTextView
+                    android:padding="@dimen/dimen_4dp"
+                    android:background="@color/white_new"
+                    android:id="@+id/title"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp" />
+
+
+                <ImageView
+                    android:padding="@dimen/dimen_4dp"
+                    android:background="@color/white_new"
+                    android:src="@drawable/ic_menu_share"
+                    android:layout_gravity="center"
+                    android:id="@+id/shareIV"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/absrtract_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total CDs" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/totalCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/blue"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Not Started" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/notStCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/red" />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="In Progress" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/inProCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/orange" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Completed" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/comCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/green" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:background="@color/gray" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/absrtract_ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Check Dams" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/tanksCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/blue" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:visibility="gone"
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="TS" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/tsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/blue" />
+
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Tenders" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/tenCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/blue" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Agreements" />
+
+                        <cgg.gov.in.icadworks.custom.CustomFontTextView
+                            android:id="@+id/aggCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_4dp"
+                            android:textColor="@color/blue" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/extradetails_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_4dp" />
 
 </LinearLayout>

@@ -20,7 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 
@@ -31,12 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.custom.CustomFontTextView;
-import cgg.gov.in.icadworks.interfaces.CDReportView;
-import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.presenter.CDReportPresenter;
-import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.DashboardActivity;
 
@@ -108,9 +102,9 @@ public class OTCDReportFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new ReportFragmenNewt();
+                    return new OTBaseAbstractFragment();
                 case 1:
-                    return new CDReportFragmenNewt();
+                    return new CDBaseAbstractFragment();
             }
             return null;
         }

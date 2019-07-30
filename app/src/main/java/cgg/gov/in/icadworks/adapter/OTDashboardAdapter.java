@@ -23,13 +23,13 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.view.OTDetailActivityLoc;
 
-public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.ItemViewHolder> implements Filterable {
+public class OTDashboardAdapter extends RecyclerView.Adapter<OTDashboardAdapter.ItemViewHolder> implements Filterable {
 
     private ArrayList<OTData> otResponse;
     private ArrayList<OTData> mFilteredList;
     private Context context;
 
-    public DashboardAdapter(ArrayList<OTData> otResponse, Context context) {
+    public OTDashboardAdapter(ArrayList<OTData> otResponse, Context context) {
         this.otResponse = otResponse;
         mFilteredList = otResponse;
         this.context = context;
@@ -38,7 +38,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Item
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.dashboard_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_dashboard_item, viewGroup, false);
         return new ItemViewHolder(view);
     }
 
@@ -56,10 +56,10 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Item
                     + "(m),"
                     + mFilteredList.get(position).getDistrictname());
 
-            DashboardSubAdapter dashboardSubAdapter = new DashboardSubAdapter(mFilteredList.get(position), context);
+            OTDashboardSubAdapter OTDashboardSubAdapter = new OTDashboardSubAdapter(mFilteredList.get(position), context);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
-            itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);
+            itemViewHolder.extradetailsRv.setAdapter(OTDashboardSubAdapter);
 
             itemViewHolder.cardItem.setOnClickListener(new View.OnClickListener() {
                 @Override

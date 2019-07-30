@@ -1,5 +1,6 @@
 package cgg.gov.in.icadworks.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +13,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.google.gson.Gson;
 
@@ -33,12 +32,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.interfaces.OTView;
+import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.ReportView;
+import cgg.gov.in.icadworks.interfaces.callBackInterface;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
-import cgg.gov.in.icadworks.presenter.OTPresenter;
 import cgg.gov.in.icadworks.presenter.ReportPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
@@ -46,28 +44,50 @@ import cgg.gov.in.icadworks.view.DashboardActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class VPDashboardFragment extends Fragment {
+public class OTBaseAbstractFragment extends Fragment implements ReportView {
 
+    SharedPreferences sharedPreferences;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     @BindView(R.id.progress)
     ProgressBar progress;
+    @BindView(R.id.emptyTV)
+    CustomFontTextView emptyTV;
+    @BindView(R.id.switchView)
+    CustomFontTextView switchView;
     Unbinder unbinder;
-    EmployeeDetailss employeeDetailss = null;
-    SharedPreferences sharedPreferences;
+
+    private String defUsername, defUserPwd;
     private int defSelection;
     private int pos;
-    private String userName, userPwd;
-    private String defUsername, defUserPwd;
+
+    private EmployeeDetailss employeeDetailss = null;
+    private ReportPresenter reportPresenter;
+    private callBackInterface anInterface;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            anInterface = (callBackInterface) context;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.vp_dashboard_fragment, container, false);
+        View view = inflater.inflate(R.layout.dashboard_abstract_fragment, container, false);
         setHasOptionsMenu(true);
         unbinder = ButterKnife.bind(this, view);
+        pos = 0;
+
+        switchView.setText("CDs");
+        reportPresenter = new ReportPresenter();
+        reportPresenter.attachView(this);
 
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
@@ -79,26 +99,109 @@ public class VPDashboardFragment extends Fragment {
             Gson gson = new Gson();
             sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
             String string = sharedPreferences.getString("LOGIN_DATA", "");
-            userName = sharedPreferences.getString("USERNAME", "");
-            userPwd = sharedPreferences.getString("PWD", "");
             defUsername = sharedPreferences.getString("DEFAULT_USER_NAME", "");
             defUserPwd = sharedPreferences.getString("DEFAULT_USER_PWD", "");
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
             employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
+            if (employeeDetailss == null) {
+                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+            }
         } catch (Exception e) {
             Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
             e.printStackTrace();
         }
 
+        if (ConnectionDetector.isConnectedToInternet(getActivity())) {
+            if (defSelection >= 0 && employeeDetailss != null) {
+                progress.setVisibility(View.VISIBLE);
+                reportPresenter.getDashboardReport(employeeDetailss.getEmployeeDetail().get(defSelection).getSectionId(),
+                        employeeDetailss.getEmployeeDetail().get(defSelection).getSubdivisionId(),
+                        employeeDetailss.getEmployeeDetail().get(defSelection).getDivisionId(),
+                        employeeDetailss.getEmployeeDetail().get(defSelection).getCircleId(),
+                        employeeDetailss.getEmployeeDetail().get(defSelection).getUnitId(),
+                        defUsername,
+                        defUserPwd);
+            } else {
+                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+            }
+        } else {
+            Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.please_check_internet), false);
+        }
+
+        switchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               callCDDashboardFragment();
+            }
+        });
+
 
         return view;
     }
 
+    private void callCDDashboardFragment() {
+        anInterface.callCDDashboardFragment(OTBaseAbstractFragment.this);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    ReportResponse reportResponse;
+
+    @Override
+    public void getReportResponse(ReportResponse reportResponse) {
+        try {
+            progress.setVisibility(View.GONE);
+            if (reportResponse != null) {
+                if (reportResponse.getStatusCode()!=null && reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
+                    this.reportResponse = reportResponse;
+                    sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    Gson gson = new Gson();
+                    editor.putString("REPORT_DATA", gson.toJson(reportResponse));
+                    editor.commit();
+                } else if (reportResponse.getStatus() != null && reportResponse.getStatus() == 404) {
+                    emptyTV.setVisibility(View.VISIBLE);
+                    emptyTV.setText(reportResponse.getTag());
+                    Utilities.showCustomNetworkAlert(getActivity(), reportResponse.getTag(), false);
+                } else {
+                    Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
+                }
+            } else {
+
+                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void showMessage(int stringId) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showProgressIndicator(Boolean show) {
+
+    }
+
+    @Override
+    public void showErrorMessage(String message) {
+
+    }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        ViewPagerAdapter(FragmentManager fm) {
+        public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -106,34 +209,32 @@ public class VPDashboardFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new DashboardFragment();
+                    return new OTProjectWiseFragment();
                 case 1:
-                    return new CheckDamFragment();
+                    return new OTCEWiseFragment();
+                case 2:
+                    return new OTDistrictWiseFragment();
             }
             return null;
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return getString(R.string.ot);
+                    return "Project";
                 case 1:
-                    return getString(R.string.cd);
+                    return "Unit";
+                case 2:
+                    return "District";
             }
             return null;
         }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override
@@ -161,7 +262,7 @@ public class VPDashboardFragment extends Fragment {
                         && employeeDetailss.getEmployeeDetail().size() > 0)
                     displayMultiSelectDialog(employeeDetailss);
                 else
-                    Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+                    Utilities.showCustomNetworkAlert(getActivity(), getActivity().getResources().getString(R.string.something), false);
                 return true;
             case R.id.action_logout:
                 Utilities.showCustomNetworkAlertLogout(getActivity(), "Do you want logout from app?");
@@ -180,9 +281,9 @@ public class VPDashboardFragment extends Fragment {
         for (int z = 0; z < employeeDetailss.getEmployeeDetail().size(); z++) {
             if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("CE")){
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getUnit()
-                        +")");
+                +" ("
+                +employeeDetailss.getEmployeeDetail().get(z).getUnit()
+                +")");
             }
 
             else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("SE")){
@@ -200,7 +301,7 @@ public class VPDashboardFragment extends Fragment {
             }
 
             else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DE")
-                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")){
+            || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")){
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
                         +" ("
                         +employeeDetailss.getEmployeeDetail().get(z).getSubdivision()
@@ -270,6 +371,20 @@ public class VPDashboardFragment extends Fragment {
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            ((DashboardActivity) getActivity()).getSupportActionBar()
+                    .setTitle(employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName());
+            ((DashboardActivity) getActivity()).getSupportActionBar()
+                    .setSubtitle(employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
