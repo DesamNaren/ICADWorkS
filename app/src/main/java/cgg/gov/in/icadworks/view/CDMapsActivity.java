@@ -204,20 +204,20 @@ public class CDMapsActivity extends FragmentActivity implements OnMapReadyCallba
                             }
 
                             if (statusId > 0 && statusId == 3) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_not_sta));
                             }
 
                             if (statusId > 3 && statusId <= 8) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_ot));
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_in_pro));
                             }
 
                             if (statusId == 9) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_ot));
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_com));
                             }
 
 
                             if (statusId > 0 && statusId < 3) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
+                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_not_sta));
                             }
 
                         }
