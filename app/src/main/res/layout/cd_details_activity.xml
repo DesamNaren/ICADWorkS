@@ -624,7 +624,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="0.7"
-                                android:text="Protection"
+                                android:text="Protection Works"
                                 android:textColor="@color/colorPrimary" />
 
                             <cgg.gov.in.icadworks.custom.CustomFontTextView

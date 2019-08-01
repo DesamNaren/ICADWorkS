@@ -12,7 +12,7 @@
         <item
             android:id="@+id/nav_reports"
             android:icon="@android:drawable/ic_menu_manage"
-            android:title="Structure Details" />
+            android:title="Structure Wise Details" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile_db"

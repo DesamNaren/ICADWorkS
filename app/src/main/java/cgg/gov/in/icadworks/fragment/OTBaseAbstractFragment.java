@@ -93,7 +93,7 @@ public class OTBaseAbstractFragment extends Fragment implements ReportView {
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
-        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+
 
         try {
             Gson gson = new Gson();
@@ -158,11 +158,14 @@ public class OTBaseAbstractFragment extends Fragment implements ReportView {
             if (reportResponse != null) {
                 if (reportResponse.getStatusCode()!=null && reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
                     this.reportResponse = reportResponse;
+
                     sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     Gson gson = new Gson();
                     editor.putString("REPORT_DATA", gson.toJson(reportResponse));
                     editor.commit();
+                    viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+
                 } else if (reportResponse.getStatus() != null && reportResponse.getStatus() == 404) {
                     emptyTV.setVisibility(View.VISIBLE);
                     emptyTV.setText(reportResponse.getTag());

@@ -135,7 +135,7 @@ public class CDBaseAbstractFragment extends Fragment implements CDReportView {
                 callCDDashboardFragment();
             }
         });
-        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+
 
         return view;
     }
@@ -186,7 +186,7 @@ public class CDBaseAbstractFragment extends Fragment implements CDReportView {
                     editor.putString("CD_REPORT_DATA", gson.toJson(cdOfficeResponse));
                     editor.commit();
 
-
+                    viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
                 } else if (cdOfficeResponse.getStatus() != null && cdOfficeResponse.getStatus() == 404) {
                     emptyTV.setVisibility(View.VISIBLE);
                     emptyTV.setText(cdOfficeResponse.getTag());
