@@ -178,9 +178,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             otName = otData.getStructurename();
                         }
 
-                        String finals = " Chain ID: " + otData.getStructureId() + "\n\n" +
-                                " OT Name: " + otName + "\n\n" +
-                                " OT Number: " + otData.getStructureNo();
+                        String finals = "Chain ID: " + otData.getStructureId() + "\n\n" +
+                                "OT Name: " + otName + "\n\n" +
+                                "OT Number: " + otData.getStructureNo();
 
                         markerOptions.title(finals);
 

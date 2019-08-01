@@ -185,8 +185,8 @@ public class CDMapsActivity extends FragmentActivity implements OnMapReadyCallba
                             cdCode = String.valueOf(checkDamData.getTankCode());
                         }
 
-                        String finals = " Name: " + cdName + "\n\n" +
-                                " Code: " + cdCode;
+                        String finals = "Name: " + cdName + "\n\n" +
+                                "Code: " + cdCode;
 
                         markerOptions.title(finals);
 
