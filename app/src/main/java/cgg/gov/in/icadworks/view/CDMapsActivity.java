@@ -152,101 +152,106 @@ public class CDMapsActivity extends FragmentActivity implements OnMapReadyCallba
                     final MarkerOptions markerOptions = new MarkerOptions();
                     final CheckDamData checkDamData = checkDamResponse.getData().get(i);
                     if (checkDamData.getLatitude() != null && checkDamData.getLongitude() != null) {
-
                         Log.e("Lat-Long", checkDamData.getLatitude() + "_" + checkDamData.getLongitude());
 
                         String latitude = checkDamData.getLatitude().trim().replace("--", "-");
                         String longitude = checkDamData.getLongitude().trim().replace("--", "-");
 
-                        if (latitude.contains("-")) {
-                            String[] strings = checkDamData.getLatitude().split("-");
-                            lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        } else {
-                            lat = Double.valueOf(latitude);
-                        }
-
-                        if (longitude.contains("-")) {
-                            String[] strings = checkDamData.getLongitude().split("-");
-                            lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        } else {
-                            lng = Double.valueOf(longitude);
-                        }
-
-                        LatLng latLng = new LatLng(lat, lng);
-
-                        markerOptions.position(latLng);
-                        String cdName = "";
-                        String cdCode = "";
-                        if (!TextUtils.isEmpty(checkDamData.getTankName())) {
-                            cdName = checkDamData.getTankName();
-                        }
-
-                        if (!TextUtils.isEmpty(String.valueOf(checkDamData.getTankCode()))) {
-                            cdCode = String.valueOf(checkDamData.getTankCode());
-                        }
-
-                        String finals = "Name: " + cdName + "\n\n" +
-                                "Code: " + cdCode;
-
-                        markerOptions.title(finals);
-
-                        if (ContextCompat.checkSelfPermission(CDMapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                                == PackageManager.PERMISSION_GRANTED) {
-                            mMap.setMyLocationEnabled(true);
-                        }
-
-
-                        if (checkDamResponse.getData().get(i).getGetItemStatusData() != null && checkDamResponse.getData().get(i).getGetItemStatusData().size() > 0) {
-                            int statusId = 0;
-
-                            for (int y = 0; y < checkDamResponse.getData().get(i).getGetItemStatusData().size(); y++) {
-                                statusId += Integer.valueOf(checkDamResponse.getData().get(i).getGetItemStatusData().get(y).getStatusId());
-                            }
-
-                            if (statusId > 0 && statusId == 3) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_not_sta));
-                            }
-
-                            if (statusId > 3 && statusId <= 8) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_in_pro));
-                            }
-
-                            if (statusId == 9) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_com));
+                        try {
+                            if (latitude.contains("-")) {
+                                String[] strings = checkDamData.getLatitude().split("-");
+                                lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                            } else {
+                                lat = Double.valueOf(latitude);
                             }
 
 
-                            if (statusId > 0 && statusId < 3) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_not_sta));
+                            if (longitude.contains("-")) {
+                                String[] strings = checkDamData.getLongitude().split("-");
+                                lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                            } else {
+                                lng = Double.valueOf(longitude);
                             }
 
-                        }
+
+                            LatLng latLng = new LatLng(lat, lng);
+
+                            markerOptions.position(latLng);
+                            String cdName = "";
+                            String cdCode = "";
+                            if (!TextUtils.isEmpty(checkDamData.getTankName())) {
+                                cdName = checkDamData.getTankName();
+                            }
+
+                            if (!TextUtils.isEmpty(String.valueOf(checkDamData.getTankCode()))) {
+                                cdCode = String.valueOf(checkDamData.getTankCode());
+                            }
+
+                            String finals = "Name: " + cdName + "\n\n" +
+                                    "Code: " + cdCode;
+
+                            markerOptions.title(finals);
+
+                            if (ContextCompat.checkSelfPermission(CDMapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                                mMap.setMyLocationEnabled(true);
+                            }
 
 
-                        markername = mMap.addMarker(markerOptions);
+                            if (checkDamResponse.getData().get(i).getGetItemStatusData() != null && checkDamResponse.getData().get(i).getGetItemStatusData().size() > 0) {
+                                int statusId = 0;
 
-                        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                            @Override
-                            public void onInfoWindowClick(Marker marker) {
-                                markername.showInfoWindow();
+                                for (int y = 0; y < checkDamResponse.getData().get(i).getGetItemStatusData().size(); y++) {
+                                    statusId += Integer.valueOf(checkDamResponse.getData().get(i).getGetItemStatusData().get(y).getStatusId());
+                                }
 
-                                String title = marker.getTitle().trim();
-                                String chainIDVal = title.substring(title.lastIndexOf("\n") + 1);
-                                chainIDVal = chainIDVal.substring(chainIDVal.indexOf(":") + 1, chainIDVal.length());
+                                if (statusId > 0 && statusId == 3) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_not_sta));
+                                }
+
+                                if (statusId > 3 && statusId <= 8) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_in_pro));
+                                }
+
+                                if (statusId == 9) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_com));
+                                }
 
 
-                                for (int i = 0; i < checkDamResponse.getData().size(); i++) {
-                                    if (chainIDVal.trim().equalsIgnoreCase(String.valueOf(checkDamResponse.getData().get(i).getTankCode()).trim())) {
-                                        startActivity(new Intent(CDMapsActivity.this, CheckDamDetailActivityLoc.class)
-                                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                .putExtra("CD_ITEM_DATA", checkDamResponse.getData().get(i)));
-                                        break;
+                                if (statusId > 0 && statusId < 3) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.cd_not_sta));
+                                }
+
+                            }
+
+
+                            markername = mMap.addMarker(markerOptions);
+
+                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    markername.showInfoWindow();
+
+                                    String title = marker.getTitle().trim();
+                                    String chainIDVal = title.substring(title.lastIndexOf("\n") + 1);
+                                    chainIDVal = chainIDVal.substring(chainIDVal.indexOf(":") + 1, chainIDVal.length());
+
+
+                                    for (int i = 0; i < checkDamResponse.getData().size(); i++) {
+                                        if (chainIDVal.trim().equalsIgnoreCase(String.valueOf(checkDamResponse.getData().get(i).getTankCode()).trim())) {
+                                            startActivity(new Intent(CDMapsActivity.this, CheckDamDetailActivityLoc.class)
+                                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                    .putExtra("CD_ITEM_DATA", checkDamResponse.getData().get(i)));
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                        });
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+                            });
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 

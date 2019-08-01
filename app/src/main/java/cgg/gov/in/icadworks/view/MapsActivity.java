@@ -150,47 +150,47 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     final MarkerOptions markerOptions = new MarkerOptions();
                     final OTData otData = otResponse.getData().get(i);
                     if (otData.getLatitude() != null && otData.getLongitude() != null) {
+                        try {
+                            Log.e("Lat-Long", otData.getLatitude() + "_" + otData.getLongitude());
 
-                        Log.e("Lat-Long", otData.getLatitude() + "_" + otData.getLongitude());
+                            String latitude = otData.getLatitude().trim().replace("--", "-");
+                            String longitude = otData.getLongitude().trim().replace("--", "-");
 
-                        String latitude = otData.getLatitude().trim().replace("--", "-");
-                        String longitude = otData.getLongitude().trim().replace("--", "-");
+                            if (latitude.contains("-")) {
+                                String[] strings = otData.getLatitude().split("-");
+                                lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                            } else {
+                                lat = Double.valueOf(latitude);
+                            }
 
-                        if (latitude.contains("-")) {
-                            String[] strings = otData.getLatitude().split("-");
-                            lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        } else {
-                            lat = Double.valueOf(latitude);
-                        }
+                            if (longitude.contains("-")) {
+                                String[] strings = otData.getLongitude().split("-");
+                                lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                            } else {
+                                lng = Double.valueOf(longitude);
+                            }
 
-                        if (longitude.contains("-")) {
-                            String[] strings = otData.getLongitude().split("-");
-                            lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        } else {
-                            lng = Double.valueOf(longitude);
-                        }
+                            LatLng latLng = new LatLng(lat, lng);
 
-                        LatLng latLng = new LatLng(lat, lng);
+                            markerOptions.position(latLng);
+                            String otName = "";
+                            if (!TextUtils.isEmpty(otData.getStructurename())) {
+                                otName = otData.getStructurename();
+                            }
 
-                        markerOptions.position(latLng);
-                        String otName = "";
-                        if (!TextUtils.isEmpty(otData.getStructurename())) {
-                            otName = otData.getStructurename();
-                        }
+                            String finals = "Chain ID: " + otData.getStructureId() + "\n\n" +
+                                    "OT Name: " + otName + "\n\n" +
+                                    "OT Number: " + otData.getStructureNo();
 
-                        String finals = "Chain ID: " + otData.getStructureId() + "\n\n" +
-                                "OT Name: " + otName + "\n\n" +
-                                "OT Number: " + otData.getStructureNo();
+                            markerOptions.title(finals);
 
-                        markerOptions.title(finals);
-
-                        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                                == PackageManager.PERMISSION_GRANTED) {
-                            mMap.setMyLocationEnabled(true);
-                        }
+                            if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                                mMap.setMyLocationEnabled(true);
+                            }
 
 
-                        if (otResponse.getData().get(i).getGetItemStatusData() != null && otResponse.getData().get(i).getGetItemStatusData().size() > 0) {
+                            if (otResponse.getData().get(i).getGetItemStatusData() != null && otResponse.getData().get(i).getGetItemStatusData().size() > 0) {
                                 int statusId = 0;
 
                                 for (int y = 0; y < otResponse.getData().get(i).getGetItemStatusData().size(); y++) {
@@ -210,37 +210,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
 
 
-                            if (statusId > 0 && statusId < 3) {
-                                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
+                                if (statusId > 0 && statusId < 3) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
+                                }
+
                             }
 
-                        }
+
+                            markername = mMap.addMarker(markerOptions);
+
+                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    markername.showInfoWindow();
+
+                                    String title = marker.getTitle().trim();
+                                    String chainIDVal = title.substring(title.lastIndexOf("\n") + 1);
+                                    chainIDVal = chainIDVal.substring(chainIDVal.indexOf(":") + 1, chainIDVal.length());
 
 
-                        markername = mMap.addMarker(markerOptions);
-
-                        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                            @Override
-                            public void onInfoWindowClick(Marker marker) {
-                                markername.showInfoWindow();
-
-                                String title = marker.getTitle().trim();
-                                String chainIDVal = title.substring(title.lastIndexOf("\n") + 1);
-                                chainIDVal = chainIDVal.substring(chainIDVal.indexOf(":") + 1, chainIDVal.length());
-
-
-                                for (int i = 0; i < otResponse.getData().size(); i++) {
-                                    if (chainIDVal.trim().equalsIgnoreCase(otResponse.getData().get(i).getStructureNo().trim())) {
-                                        startActivity(new Intent(MapsActivity.this, OTDetailActivityLoc.class)
-                                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                .putExtra("ITEM_DATA", otResponse.getData().get(i)));
-                                        break;
+                                    for (int i = 0; i < otResponse.getData().size(); i++) {
+                                        if (chainIDVal.trim().equalsIgnoreCase(otResponse.getData().get(i).getStructureNo().trim())) {
+                                            startActivity(new Intent(MapsActivity.this, OTDetailActivityLoc.class)
+                                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                    .putExtra("ITEM_DATA", otResponse.getData().get(i)));
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                        });
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+                            });
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
