@@ -96,7 +96,7 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
 
         try {
             getSupportActionBar().show();
-            getSupportActionBar().setTitle("Checkdam Details");
+            getSupportActionBar().setTitle("CD Details");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             Gson gson = new Gson();

@@ -228,13 +228,13 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 Log.i("DISTANCE", "onViewClicked: " + distance);
             }
 
-            if (distance > 1000000000) {
+            if (distance > 100) {
                 if (otData.getRadiusMsg() == null || TextUtils.isEmpty(otData.getRadiusMsg()))
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
                 else
                     Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
-            } else if (distance > 0 && distance <= 1000000000) {
+            } else if (distance > 0 && distance <= 100) {
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
