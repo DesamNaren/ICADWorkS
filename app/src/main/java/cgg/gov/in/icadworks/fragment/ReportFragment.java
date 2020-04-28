@@ -39,7 +39,7 @@ public class ReportFragment extends Fragment implements ReportView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-                View view = inflater.inflate(R.layout.report_fragment, container, false);
+                View view = inflater.inflate(R.layout.dashboard_abstract_fragment, container, false);
         progress.setVisibility(View.VISIBLE);
         unbinder = ButterKnife.bind(this, view);
 

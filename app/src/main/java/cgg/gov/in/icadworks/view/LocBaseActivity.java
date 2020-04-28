@@ -60,12 +60,12 @@ public class LocBaseActivity extends AppCompatActivity {
     private String mLastUpdateTime;
 
     // location updates interval - 10sec
-    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
+    private static final long UPDATE_INTERVAL_IN_MILLISECONDS = 0;
 
     // fastest updates interval - 5 sec
     // location updates will be received if another app is requesting the locations
     // than your app can handle
-    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
+    private static final long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 0;
 
     private static final int REQUEST_CHECK_SETTINGS = 100;
 
@@ -232,12 +232,9 @@ public class LocBaseActivity extends AppCompatActivity {
                         updateLocationUI();
                     }
                 });
-
-
     }
 
     public void stopLocationUpdates() {
-
         mFusedLocationClient.removeLocationUpdates(mLocationCallback)
                 .addOnCompleteListener(this, new OnCompleteListener<Void>() {
                     @Override
@@ -246,8 +243,6 @@ public class LocBaseActivity extends AppCompatActivity {
                     }
                 });
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -308,7 +303,6 @@ public class LocBaseActivity extends AppCompatActivity {
             stopLocationUpdates();
         }
     }
-
 
     public void updateLocationUI() {
 

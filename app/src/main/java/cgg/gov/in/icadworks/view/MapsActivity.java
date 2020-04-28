@@ -150,125 +150,100 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     final MarkerOptions markerOptions = new MarkerOptions();
                     final OTData otData = otResponse.getData().get(i);
                     if (otData.getLatitude() != null && otData.getLongitude() != null) {
+                        try {
+                            Log.e("Lat-Long", otData.getLatitude() + "_" + otData.getLongitude());
 
-                        Log.e("Lat-Long", otData.getLatitude() + "_" + otData.getLongitude());
+                            String latitude = otData.getLatitude().trim().replace("--", "-");
+                            String longitude = otData.getLongitude().trim().replace("--", "-");
 
-                        String latitude = otData.getLatitude().trim().replace("--", "-");
-                        String longitude = otData.getLongitude().trim().replace("--", "-");
+                            if (latitude.contains("-")) {
+                                String[] strings = otData.getLatitude().split("-");
+                                lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                            } else {
+                                lat = Double.valueOf(latitude);
+                            }
 
-                        if (latitude.contains("-")) {
-                            String[] strings = otData.getLatitude().split("-");
-                            lat = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        }else {
-                            lat = Double.valueOf(latitude);
-                        }
+                            if (longitude.contains("-")) {
+                                String[] strings = otData.getLongitude().split("-");
+                                lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
+                            } else {
+                                lng = Double.valueOf(longitude);
+                            }
 
-                        if (longitude.contains("-")) {
-                            String[] strings = otData.getLongitude().split("-");
-                            lng = ConvertDegreeAngleToDouble(Double.valueOf(strings[0]), Double.valueOf(strings[1]), Double.valueOf(strings[2]));
-                        }else {
-                            lng = Double.valueOf(longitude);
-                        }
+                            LatLng latLng = new LatLng(lat, lng);
 
-                        LatLng latLng = new LatLng(lat, lng);
+                            markerOptions.position(latLng);
+                            String otName = "";
+                            if (!TextUtils.isEmpty(otData.getStructurename())) {
+                                otName = otData.getStructurename();
+                            }
 
-                        markerOptions.position(latLng);
-                        String otName = "";
-                        if (!TextUtils.isEmpty(otData.getStructurename())) {
-                            otName = otData.getStructurename();
-                        }
+                            String finals = "Chain ID: " + otData.getStructureId() + "\n\n" +
+                                    "OT Name: " + otName + "\n\n" +
+                                    "OT Number: " + otData.getStructureNo();
 
-                        String finals = " Chain ID: " + otData.getStructureId() + "\n\n" +
-                                " OT Name: " + otName + "\n\n" +
-                                " OT Number: " + otData.getStructureNo();
+                            markerOptions.title(finals);
 
-                        markerOptions.title(finals);
-
-                        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                                == PackageManager.PERMISSION_GRANTED) {
-                            mMap.setMyLocationEnabled(true);
-                        }
+                            if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                    == PackageManager.PERMISSION_GRANTED) {
+                                mMap.setMyLocationEnabled(true);
+                            }
 
 
-                        if (otResponse.getData().get(i).getGetItemStatusData() != null && otResponse.getData().get(i).getGetItemStatusData().size() > 0) {
-                            for (int x = 0; x < otResponse.getData().get(i).getGetItemStatusData().size(); x++) {
+                            if (otResponse.getData().get(i).getGetItemStatusData() != null && otResponse.getData().get(i).getGetItemStatusData().size() > 0) {
+                                int statusId = 0;
 
-                                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-
+                                for (int y = 0; y < otResponse.getData().get(i).getGetItemStatusData().size(); y++) {
+                                    statusId += Integer.valueOf(otResponse.getData().get(i).getGetItemStatusData().get(y).getStatusId());
                                 }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                                if (statusId > 0 && statusId == 3) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
                                 }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("1")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                if (statusId > 3 && statusId <= 8) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.orange_ot));
                                 }
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("2")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                if (statusId == 9) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.green_ot));
                                 }
 
 
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("1")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("2")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                                }
-
-                                if (otResponse.getData().get(i).getGetItemStatusData().get(x).getIrrWorkId().equalsIgnoreCase("3")
-                                        && otResponse.getData().get(i).getGetItemStatusData().get(x).getStatusId().contains("3")) {
-                                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                if (statusId > 0 && statusId < 3) {
+                                    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.red_ot));
                                 }
 
                             }
-                        }
 
 
-                        markername = mMap.addMarker(markerOptions);
-                        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                            @Override
-                            public void onInfoWindowClick(Marker marker) {
-                                markername.showInfoWindow();
+                            markername = mMap.addMarker(markerOptions);
 
-                                String title = marker.getTitle().trim();
-                                String chainIDVal = title.substring(title.lastIndexOf("\n") + 1);
-                                chainIDVal = chainIDVal.substring(chainIDVal.indexOf(":") + 1, chainIDVal.length());
+                            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                @Override
+                                public void onInfoWindowClick(Marker marker) {
+                                    markername.showInfoWindow();
+
+                                    String title = marker.getTitle().trim();
+                                    String chainIDVal = title.substring(title.lastIndexOf("\n") + 1);
+                                    chainIDVal = chainIDVal.substring(chainIDVal.indexOf(":") + 1, chainIDVal.length());
 
 
-                                for (int i = 0; i < otResponse.getData().size(); i++) {
-                                    if (chainIDVal.trim().equalsIgnoreCase(otResponse.getData().get(i).getStructureNo().trim())) {
-                                        startActivity(new Intent(MapsActivity.this, OTDetailActivityLoc.class)
-                                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                .putExtra("ITEM_DATA", otResponse.getData().get(i)));
-                                        break;
+                                    for (int i = 0; i < otResponse.getData().size(); i++) {
+                                        if (chainIDVal.trim().equalsIgnoreCase(otResponse.getData().get(i).getStructureNo().trim())) {
+                                            startActivity(new Intent(MapsActivity.this, OTDetailActivityLoc.class)
+                                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                    .putExtra("ITEM_DATA", otResponse.getData().get(i)));
+                                            break;
+                                        }
                                     }
                                 }
-                            }
-                        });
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                        mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+                            });
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                            mMap.animateCamera(CameraUpdateFactory.zoomTo(9));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
@@ -281,6 +256,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setInfoWindowAdapter((GoogleMap.InfoWindowAdapter) customInfoWindow);
 
             if (fromClass.equalsIgnoreCase("OT")) {
+                mMap.getUiSettings().setMapToolbarEnabled(true);
                 markername.showInfoWindow();
             }
 
@@ -291,27 +267,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
         }
 
-    }
-
-    private double distanceCalc(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1))
-                * Math.sin(deg2rad(lat2))
-                + Math.cos(deg2rad(lat1))
-                * Math.cos(deg2rad(lat2))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
     }
 
     private void turnOnLocation() {
@@ -403,6 +358,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
 
         //Initialize Google Play Services
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -434,7 +390,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mGoogleApiClient.connect();
     }
-
 
 
     @Override

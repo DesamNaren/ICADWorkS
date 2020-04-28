@@ -141,13 +141,5 @@
             android:src="@drawable/footer" />
     </LinearLayout>
 
-    <ProgressBar
-        android:indeterminateTint="@android:color/holo_orange_dark"
-        android:id="@+id/progress"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 </RelativeLayout>

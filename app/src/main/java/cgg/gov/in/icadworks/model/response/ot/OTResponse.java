@@ -29,27 +29,6 @@ public class OTResponse implements Parcelable {
     public OTResponse() {
     }
 
-    protected OTResponse(Parcel in) {
-        data = in.createTypedArrayList(OTData.CREATOR);
-        if (in.readByte() == 0) {
-            statusCode = null;
-        } else {
-            statusCode = in.readInt();
-        }
-        tag = in.readString();
-    }
-
-    public static final Creator<OTResponse> CREATOR = new Creator<OTResponse>() {
-        @Override
-        public OTResponse createFromParcel(Parcel in) {
-            return new OTResponse(in);
-        }
-
-        @Override
-        public OTResponse[] newArray(int size) {
-            return new OTResponse[size];
-        }
-    };
 
     public ArrayList<OTData> getData() {
         return data;
@@ -89,14 +68,30 @@ public class OTResponse implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeTypedList(data);
-        if (statusCode == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeInt(statusCode);
-        }
-        parcel.writeString(tag);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.data);
+        dest.writeValue(this.statusCode);
+        dest.writeString(this.tag);
+        dest.writeList(this.abstractReport);
     }
+
+    public OTResponse(Parcel in) {
+        this.data = in.createTypedArrayList(OTData.CREATOR);
+        this.statusCode = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tag = in.readString();
+        this.abstractReport = new ArrayList<AbstractReport>();
+        in.readList(this.abstractReport, AbstractReport.class.getClassLoader());
+    }
+
+    public static final Creator<OTResponse> CREATOR = new Creator<OTResponse>() {
+        @Override
+        public OTResponse createFromParcel(Parcel source) {
+            return new OTResponse(source);
+        }
+
+        @Override
+        public OTResponse[] newArray(int size) {
+            return new OTResponse[size];
+        }
+    };
 }
