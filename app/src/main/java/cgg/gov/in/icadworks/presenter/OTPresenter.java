@@ -5,6 +5,7 @@ import cgg.gov.in.icadworks.application.ICADApplication;
 import cgg.gov.in.icadworks.base.BasePresenter;
 import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.network.ICADService;
@@ -19,6 +20,7 @@ public class OTPresenter implements BasePresenter<OTView> {
     private Subscription subscription;
     OTResponse otResponse;
     CheckDamResponse checkDamResponse;
+    CDOfficeResponse cdOfficeResponse;
     ReportResponse reportResponse;
 
     @Override
@@ -64,7 +66,6 @@ public class OTPresenter implements BasePresenter<OTView> {
         }
     }
 
-
     public void getCDData(String sectionID, String subDivID, String divID, String cirID,
                           String unitID, String userName, String userPwd) {
         try {
@@ -93,7 +94,39 @@ public class OTPresenter implements BasePresenter<OTView> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            otView.getOTResponse(otResponse);
+            otView.getCheckDamResponse(checkDamResponse);
+        }
+    }
+
+    public void getCDOfficeData(String sectionID, String subDivID, String divID, String cirID,
+                          String unitID, String userName, String userPwd) {
+        try {
+            ICADApplication application = ICADApplication.get(otView.getContext());
+            ICADService gitHubService = application.getDBService(2);
+
+            subscription = gitHubService.getCDOfficeRes(sectionID,subDivID,divID,cirID,unitID,userName,userPwd)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(application.defaultSubscribeScheduler())
+                    .subscribe(new Subscriber<CDOfficeResponse>() {
+                        @Override
+                        public void onCompleted() {
+                            otView.getCheckDamOfficeResponse(cdOfficeResponse);
+                        }
+
+                        @Override
+                        public void onError(Throwable error) {
+                            otView.getCheckDamOfficeResponse(cdOfficeResponse);
+                        }
+
+                        @Override
+                        public void onNext(CDOfficeResponse cdOfficeResponse) {
+                            OTPresenter.this.cdOfficeResponse = cdOfficeResponse;
+                        }
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            otView.getCheckDamOfficeResponse(cdOfficeResponse);
         }
     }
 

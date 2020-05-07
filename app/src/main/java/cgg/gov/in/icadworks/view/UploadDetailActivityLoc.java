@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -39,6 +40,7 @@ import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,10 +54,11 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.UpdateOTView;
 import cgg.gov.in.icadworks.model.request.OTItemReq;
 import cgg.gov.in.icadworks.model.request.OTUpdateRequest;
-import cgg.gov.in.icadworks.model.response.ot.OTUpdateResponse;
 import cgg.gov.in.icadworks.model.response.itemStatus.ItemStatusResponse;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
+import cgg.gov.in.icadworks.model.response.ot.OTUpdateResponse;
 import cgg.gov.in.icadworks.presenter.UpdateOTPresenter;
+import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 
 public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOTView {
@@ -115,7 +118,6 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
         updateOTPresenter = new UpdateOTPresenter();
         updateOTPresenter.attachView(this);
 
-
         foundationSpinner.setOnItemSelectedListener(onSpinnerClick);
         supStrSpinner.setOnItemSelectedListener(onSpinnerClick);
         shuttersSpinner.setOnItemSelectedListener(onSpinnerClick);
@@ -126,7 +128,7 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
             defUsername = sharedPreferences.getString("DEFAULT_USER_NAME", "");
             defUserPwd = sharedPreferences.getString("DEFAULT_USER_PWD", "");
 
-            String otDataStr = sharedPreferences.getString("ITEM_DATA", "");
+            String otDataStr = sharedPreferences.getString("ITEM_DATA_FIN", "");
             otData = gson.fromJson(otDataStr, OTData.class);
 
             otIDTV.setText(otData.getStructureId());
@@ -135,7 +137,6 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
             foundationStatusID = sharedPreferences.getString("FOUNDATION_VAL", "");
             superStrID = sharedPreferences.getString("SUPER_STR_VAL", "");
             shutterStatusID = sharedPreferences.getString("SHUTTER_VAL", "");
-
             foundationTextVal = sharedPreferences.getString("FOUNDATION_TEXT_VAL", "");
             superTextVal = sharedPreferences.getString("SUPER_TEXT_VAL", "");
             shutterTextVal = sharedPreferences.getString("SHUTTER_TEXT_VAL", "");
@@ -392,8 +393,8 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
                         .show();
             }
         }
-    }
 
+    }
 
     private void onCaptureImageResult(Intent data) {
         try {
@@ -461,6 +462,9 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
                         otUpdateRequest.setUser(defUsername);
                         otUpdateRequest.setPassword(defUserPwd);
 
+                        otUpdateRequest.setPhase(String.valueOf(1));
+                        otUpdateRequest.setTypeOfStructure(String.valueOf(1));
+
                         String foundVal = foundationSpinner.getSelectedItem().toString();
                         String supStrVal = supStrSpinner.getSelectedItem().toString();
                         String shutterVal = shuttersSpinner.getSelectedItem().toString();
@@ -505,9 +509,12 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
 
                         if (otItemReqs.size() > 0) {
                             otUpdateRequest.setOTItemReq(otItemReqs);
-                            progress.setVisibility(View.VISIBLE);
-
-                            updateOTPresenter.submitOTData(otUpdateRequest);
+                            if (ConnectionDetector.isConnectedToInternet(this)) {
+                                progress.setVisibility(View.VISIBLE);
+                                updateOTPresenter.submitOTData(otUpdateRequest);
+                            } else {
+                                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.no_internet), false);
+                            }
                         }
                     } else {
                         Utilities.showCustomNetworkAlert(this, "Please capture the photo", false);
@@ -615,7 +622,6 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
         return newBitmap;
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -643,7 +649,6 @@ public class UploadDetailActivityLoc extends LocBaseActivity implements UpdateOT
         public void onReceive(Context context, Intent intent) {
             try {
                 if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
-                    // Make an action or refresh an already managed state.
                     callPermissions();
                 }
             } catch (Exception e) {

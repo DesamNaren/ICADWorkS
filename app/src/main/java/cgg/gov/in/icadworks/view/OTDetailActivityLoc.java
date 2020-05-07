@@ -6,10 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,6 +38,8 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
+import cgg.gov.in.icadworks.util.ConnectionDetector;
+import cgg.gov.in.icadworks.util.GPSTracker;
 import cgg.gov.in.icadworks.util.Utilities;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -106,7 +110,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             String string = sharedPreferences.getString("LOGIN_DATA", "");
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
 
-             employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
+            employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
             if (defSelection >= 0 && employeeDetailss != null && employeeDetailss.getEmployeeDetail() != null) {
                 if (employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() != null) {
                     if (employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AEE")
@@ -116,7 +120,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                         fab.setVisibility(View.GONE);
                     }
                 }
-            }else {
+            } else {
                 Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
             }
 
@@ -134,7 +138,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             }
 
             if (!(otLat > 0 && otLng > 0)) {
-                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+" No value found for location details", false);
             }
 
             distTV.setText(otData.getDistrictname());
@@ -195,9 +199,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
 
     @OnClick(R.id.fab)
     public void onViewClicked() {
-
         if (otData.getAgmtStatus() == null) {
-            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for agreement status", false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
             return;
         }
 
@@ -206,26 +209,38 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             return;
         }
 
-
         distance = 0.0;
-        if (mCurrentLocation != null) {
-            if (mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
-                distance = distanceCalc(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude(), otLat, otLng);
+        if (mCurrentLocation != null && mCurrentLocation.getLatitude() > 0 && mCurrentLocation.getLongitude() > 0) {
+            Location src = new Location("Src");
+            src.setLatitude(mCurrentLocation.getLatitude());
+            src.setLongitude(mCurrentLocation.getLongitude());
+
+            Location dest = new Location("Dest");
+            String otLatStr = roundDecimal(otLat, 7);
+            dest.setLatitude(Double.parseDouble(otLatStr));
+            String otLngStr = roundDecimal(otLng, 7);
+            dest.setLongitude(Double.parseDouble(otLngStr));
+
+            distance = calcDistanceKm(src, dest);
+            if (distance > 0) {
+                String finalDistance = roundDecimal(distance, 7);
+                distance = Double.parseDouble(finalDistance);
+                Log.i("DISTANCE", "onViewClicked: " + distance);
             }
 
             if (distance > 100) {
-                if (otData.getRadiusMsg() != null)
-                    Utilities.showCustomNetworkAlert(this, otData.getAgmtMsg(), false);
-                else
+                if (otData.getRadiusMsg() == null || TextUtils.isEmpty(otData.getRadiusMsg()))
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
-            } else if (distance > 0 && distance <= 100) {
+                else
+                    Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
+            } else if (distance > 0 && distance <= 100) {
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
                 String otDataStr = gson.toJson(otData);
 
-                editor.putString("ITEM_DATA", otDataStr);
+                editor.putString("ITEM_DATA_FIN", otDataStr);
                 editor.putString("FOUNDATION_VAL", foundationVal);
                 editor.putString("SUPER_STR_VAL", superStrVal);
                 editor.putString("SHUTTER_VAL", shutterVal);
@@ -233,14 +248,16 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 editor.putString("SUPER_TEXT_VAL", superTextVal);
                 editor.putString("SHUTTER_TEXT_VAL", shutterTextVal);
                 editor.commit();
+
                 startActivity(new Intent(OTDetailActivityLoc.this, UploadDetailActivityLoc.class));
             } else {
                 Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
             }
         } else {
-            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + " Unable to get location", false);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -251,9 +268,9 @@ public class OTDetailActivityLoc extends LocBaseActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if(otData!=null && otData.getPhotoPath() != null && !TextUtils.isEmpty(otData.getPhotoPath().trim())){
+        if (otData != null && otData.getPhotoPath() != null && !TextUtils.isEmpty(otData.getPhotoPath().trim())) {
             menu.findItem(R.id.image_view).setVisible(true);
-        }else {
+        } else {
             menu.findItem(R.id.image_view).setVisible(false);
         }
         return super.onPrepareOptionsMenu(menu);
@@ -272,7 +289,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             case R.id.image_share:
                 try {
                     ScrollView abstractView = getWindow().getDecorView().findViewById(R.id.scrlView);
-                    Utilities.takeSCImage(this, abstractView ,
+                    Utilities.takeSCImage(this, abstractView,
                             employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName() + "OT Data");
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -280,8 +297,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 return true;
             case R.id.nav_map:
                 if (!(otLat > 0 && otLng > 0)) {
-                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
-                }else {
+                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
+                } else {
 
                     SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -343,25 +360,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
 
     }
 
-    private double distanceCalc(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1))
-                * Math.sin(deg2rad(lat2))
-                + Math.cos(deg2rad(lat1))
-                * Math.cos(deg2rad(lat2))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
-    }
-
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
+    private double calcDistanceKm(Location src, Location dest) {
+        return src.distanceTo(dest);
     }
 
     @Override
@@ -398,5 +398,10 @@ public class OTDetailActivityLoc extends LocBaseActivity {
         }
     };
 
+
+    public static String roundDecimal(double value, int places) {
+        String format = "%." + places + "f";
+        return String.format(format, value);
+    }
 
 }

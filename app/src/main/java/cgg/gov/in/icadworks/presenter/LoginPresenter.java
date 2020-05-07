@@ -1,16 +1,20 @@
 package cgg.gov.in.icadworks.presenter;
 
 
+import java.util.ArrayList;
+
 import cgg.gov.in.icadworks.application.ICADApplication;
 import cgg.gov.in.icadworks.base.BasePresenter;
 import cgg.gov.in.icadworks.interfaces.LoginView;
 import cgg.gov.in.icadworks.model.response.itemStatus.ItemStatusResponse;
 import cgg.gov.in.icadworks.model.response.items.WorkItemsResponse;
+import cgg.gov.in.icadworks.model.response.login.EmployeeDetail;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.network.ICADService;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 
 
 public class LoginPresenter implements BasePresenter<LoginView> {
@@ -65,7 +69,6 @@ public class LoginPresenter implements BasePresenter<LoginView> {
 
     public void getItemStatus(String userName, String password) {
         try {
-//            loginView.showProgressIndicator(true);
             ICADApplication application = ICADApplication.get(loginView.getContext());
             ICADService gitHubService = application.getDBService(2);
 
@@ -75,13 +78,11 @@ public class LoginPresenter implements BasePresenter<LoginView> {
                     .subscribe(new Subscriber<ItemStatusResponse>() {
                         @Override
                         public void onCompleted() {
-//                            loginView.showProgressIndicator(false);
                             loginView.getItemStatusResponse(itemStatusResponse);
                         }
 
                         @Override
                         public void onError(Throwable error) {
-//                            loginView.showProgressIndicator(false);
                             loginView.getItemStatusResponse(itemStatusResponse);
                         }
 
@@ -92,7 +93,6 @@ public class LoginPresenter implements BasePresenter<LoginView> {
                     });
 
         } catch (Exception e) {
-//            loginView.showProgressIndicator(false);
             e.printStackTrace();
             loginView.getLoginResponseSuccess(employeeDetailss);
         }

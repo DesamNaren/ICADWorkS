@@ -1,9 +1,15 @@
 package cgg.gov.in.icadworks.model.response.checkdam;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CheckDamData {
+public class  CheckDamData implements Parcelable {
+
     @SerializedName("tank_name")
     @Expose
     private String tankName;
@@ -16,6 +22,9 @@ public class CheckDamData {
     @SerializedName("acode")
     @Expose
     private String acode;
+    @SerializedName("agmt_msg")
+    @Expose
+    private String agmtMsg;
     @SerializedName("bundlength")
     @Expose
     private Integer bundlength;
@@ -28,6 +37,9 @@ public class CheckDamData {
     @SerializedName("division")
     @Expose
     private Integer division;
+    @SerializedName("getItemStatusData")
+    @Expose
+    private List<CheckDamItemStatusData> getItemStatusData = null;
     @SerializedName("section_id")
     @Expose
     private Integer sectionId;
@@ -36,7 +48,7 @@ public class CheckDamData {
     private String assembly;
     @SerializedName("preworkcapacity")
     @Expose
-    private Double preworkcapacity;
+    private Integer preworkcapacity;
     @SerializedName("village")
     @Expose
     private String village;
@@ -54,7 +66,7 @@ public class CheckDamData {
     private String longitude;
     @SerializedName("tank_code")
     @Expose
-    private Long tankCode;
+    private long tankCode;
     @SerializedName("habitation")
     @Expose
     private String habitation;
@@ -94,6 +106,50 @@ public class CheckDamData {
     @SerializedName("mandal")
     @Expose
     private String mandal;
+
+    @SerializedName("agmt_status")
+    @Expose
+    private String agmt_status;
+
+    @SerializedName("radius_msg")
+    @Expose
+    private String radius_msg;
+
+    @SerializedName("image_path")
+    @Expose
+    private String image_path;
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
+    public String getAgmtMsg() {
+        return agmtMsg;
+    }
+
+    public void setAgmtMsg(String agmtMsg) {
+        this.agmtMsg = agmtMsg;
+    }
+
+    public String getAgmt_status() {
+        return agmt_status;
+    }
+
+    public void setAgmt_status(String agmt_status) {
+        this.agmt_status = agmt_status;
+    }
+
+    public String getRadius_msg() {
+        return radius_msg;
+    }
+
+    public void setRadius_msg(String radius_msg) {
+        this.radius_msg = radius_msg;
+    }
 
     public String getTankName() {
         return tankName;
@@ -159,6 +215,14 @@ public class CheckDamData {
         this.division = division;
     }
 
+    public List<CheckDamItemStatusData> getGetItemStatusData() {
+        return getItemStatusData;
+    }
+
+    public void setGetItemStatusData(List<CheckDamItemStatusData> getItemStatusData) {
+        this.getItemStatusData = getItemStatusData;
+    }
+
     public Integer getSectionId() {
         return sectionId;
     }
@@ -175,11 +239,11 @@ public class CheckDamData {
         this.assembly = assembly;
     }
 
-    public Double getPreworkcapacity() {
+    public Integer getPreworkcapacity() {
         return preworkcapacity;
     }
 
-    public void setPreworkcapacity(Double preworkcapacity) {
+    public void setPreworkcapacity(Integer preworkcapacity) {
         this.preworkcapacity = preworkcapacity;
     }
 
@@ -223,11 +287,11 @@ public class CheckDamData {
         this.longitude = longitude;
     }
 
-    public Long getTankCode() {
+    public long getTankCode() {
         return tankCode;
     }
 
-    public void setTankCode(Long tankCode) {
+    public void setTankCode(long tankCode) {
         this.tankCode = tankCode;
     }
 
@@ -334,4 +398,102 @@ public class CheckDamData {
     public void setMandal(String mandal) {
         this.mandal = mandal;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.tankName);
+        dest.writeString(this.latitude);
+        dest.writeValue(this.tankId);
+        dest.writeString(this.acode);
+        dest.writeString(this.agmtMsg);
+        dest.writeValue(this.bundlength);
+        dest.writeString(this.vcode);
+        dest.writeValue(this.geoId);
+        dest.writeValue(this.division);
+        dest.writeTypedList(this.getItemStatusData);
+        dest.writeValue(this.sectionId);
+        dest.writeString(this.assembly);
+        dest.writeValue(this.preworkcapacity);
+        dest.writeString(this.village);
+        dest.writeString(this.circleName);
+        dest.writeValue(this.subDivision);
+        dest.writeValue(this.postworkcapacity);
+        dest.writeString(this.longitude);
+        dest.writeLong(this.tankCode);
+        dest.writeString(this.habitation);
+        dest.writeValue(this.ayacut);
+        dest.writeString(this.sectionName);
+        dest.writeString(this.unitName);
+        dest.writeValue(this.unit);
+        dest.writeString(this.mcode);
+        dest.writeString(this.subDivisionName);
+        dest.writeString(this.district);
+        dest.writeString(this.divisionName);
+        dest.writeValue(this.circle);
+        dest.writeString(this.hcode);
+        dest.writeString(this.dcode);
+        dest.writeString(this.mandal);
+        dest.writeString(this.agmt_status);
+        dest.writeString(this.radius_msg);
+        dest.writeString(this.image_path);
+    }
+
+    public CheckDamData() {
+    }
+
+    protected CheckDamData(Parcel in) {
+        this.tankName = in.readString();
+        this.latitude = in.readString();
+        this.tankId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.acode = in.readString();
+        this.agmtMsg = in.readString();
+        this.bundlength = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.vcode = in.readString();
+        this.geoId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.division = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.getItemStatusData = in.createTypedArrayList(CheckDamItemStatusData.CREATOR);
+        this.sectionId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.assembly = in.readString();
+        this.preworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.village = in.readString();
+        this.circleName = in.readString();
+        this.subDivision = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.postworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.longitude = in.readString();
+        this.tankCode = in.readLong();
+        this.habitation = in.readString();
+        this.ayacut = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.sectionName = in.readString();
+        this.unitName = in.readString();
+        this.unit = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.mcode = in.readString();
+        this.subDivisionName = in.readString();
+        this.district = in.readString();
+        this.divisionName = in.readString();
+        this.circle = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.hcode = in.readString();
+        this.dcode = in.readString();
+        this.mandal = in.readString();
+        this.agmt_status = in.readString();
+        this.radius_msg = in.readString();
+        this.image_path = in.readString();
+    }
+
+    public static final Parcelable.Creator<CheckDamData> CREATOR = new Parcelable.Creator<CheckDamData>() {
+        @Override
+        public CheckDamData createFromParcel(Parcel source) {
+            return new CheckDamData(source);
+        }
+
+        @Override
+        public CheckDamData[] newArray(int size) {
+            return new CheckDamData[size];
+        }
+    };
 }

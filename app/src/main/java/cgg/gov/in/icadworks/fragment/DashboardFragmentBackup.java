@@ -37,10 +37,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.adapter.DashboardAdapter;
+import cgg.gov.in.icadworks.adapter.OTDashboardAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
+import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
@@ -80,7 +81,7 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
     private String defUsername, defUserPwd;
     FloatingActionButton switchView;
     //    private SearchView mSearchView;
-    private DashboardAdapter dashboardAdapter;
+    private OTDashboardAdapter OTDashboardAdapter;
     private ProgressBar progressBar;
     private Menu mMenu;
     private OTResponse otResponse;
@@ -96,7 +97,7 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        View view = inflater.inflate(R.layout.ot_structure_fragment, container, false);
         pos = 0;
         setHasOptionsMenu(true);
 
@@ -131,7 +132,7 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
                     sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     Gson gson = new Gson();
-                    ArrayList<OTData> otData = dashboardAdapter.getFilteredData();
+                    ArrayList<OTData> otData = OTDashboardAdapter.getFilteredData();
                     OTResponse tempOtResponse = new OTResponse();
                     tempOtResponse.setData(otData);
                     editor.putString("OT_DATA", gson.toJson(tempOtResponse));
@@ -257,9 +258,9 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
             @Override
             public boolean onQueryTextChange(String newText) {
                 try {
-                    if (dashboardAdapter != null) {
-                        dashboardAdapter.getFilter().filter(newText);
-                        ArrayList<OTData> otData = dashboardAdapter.getFilteredData();
+                    if (OTDashboardAdapter != null) {
+                        OTDashboardAdapter.getFilter().filter(newText);
+                        ArrayList<OTData> otData = OTDashboardAdapter.getFilteredData();
                         showItemCount(otData.size());
                     }
                 } catch (Exception e) {
@@ -397,6 +398,11 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
 
     }
 
+    @Override
+    public void getCheckDamOfficeResponse(CDOfficeResponse checkDamOfficeResponse) {
+
+    }
+
     private void showItemCount(int count) {
         Snackbar snackbar;
         snackbar = Snackbar.make(mainRL, "Found " + count + " Records", Snackbar.LENGTH_SHORT);
@@ -410,9 +416,9 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
 
     void setDataAdapter(OTResponse otResponse) {
         flagSwitch = "list";
-        dashboardAdapter = new DashboardAdapter(otResponse.getData(), getActivity());
+        OTDashboardAdapter = new OTDashboardAdapter(otResponse.getData(), getActivity());
         dashboardRV.setLayoutManager(new LinearLayoutManager(getActivity()));
-        dashboardRV.setAdapter(dashboardAdapter);
+        dashboardRV.setAdapter(OTDashboardAdapter);
     }
 
     @Override
@@ -429,7 +435,7 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
         inflater.inflate(R.menu.search_menu, menu);
         mMenu = menu;
 
-        MenuItem menuItem = mMenu.getItem(1);
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setQueryHint("Search by Chain ID or OT Name or location");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
