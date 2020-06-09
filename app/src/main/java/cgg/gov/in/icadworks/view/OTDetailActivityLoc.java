@@ -38,6 +38,7 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
+import cgg.gov.in.icadworks.util.AppConstants;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.GPSTracker;
 import cgg.gov.in.icadworks.util.Utilities;
@@ -228,13 +229,13 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 Log.i("DISTANCE", "onViewClicked: " + distance);
             }
 
-            if (distance > 100) {
+            if (distance > AppConstants.RADIUS) {
                 if (otData.getRadiusMsg() == null || TextUtils.isEmpty(otData.getRadiusMsg()))
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
                 else
                     Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
-            } else if (distance > 0 && distance <= 100) {
+            } else if (distance > 0 && distance <= AppConstants.RADIUS) {
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();

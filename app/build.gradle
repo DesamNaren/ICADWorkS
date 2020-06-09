@@ -8,7 +8,7 @@ android {
         applicationId "cgg.gov.in.icadworks"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 7
+        versionCode 8
         versionName "1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -24,7 +24,7 @@ android {
     }
 
     buildTypes {
-        release {
+        release{
             buildConfigField("String", "SERVER_SOAP_URL", "\"http://irrigationhrmstg.cgg.gov.in/hrmsserver/icadtg/\"")
             buildConfigField("String", "SERVER_REST_URL", "\"http://missionkakatiya.cgg.gov.in/OTRestServices/service/missionkakatiya/\"")
             buildConfigField("String", "USER_MANUAL_URL", "\"http://missionkakatiya.cgg.gov.in/IrrWorksWebApp/uploadedFiles/icadworks_usermanual/icadworks_usermanual/icad.html\"")
@@ -51,7 +51,7 @@ android {
 
         demo {
             buildConfigField("String", "SERVER_SOAP_URL", "\"http://irrigationhrmstg.cgg.gov.in/hrmsserver/icadtg/\"")
-            buildConfigField("String", "SERVER_REST_URL", "\"https://demo.cgg.gov.in/irrigationtsws/rest/ir/\"")
+            buildConfigField("String", "SERVER_REST_URL", "\"http://missionkakatiya.cgg.gov.in/OTRestServices/service/missionkakatiya/\"")
             buildConfigField("String", "USER_MANUAL_URL", "\"http://missionkakatiya.cgg.gov.in/IrrWorksWebApp/uploadedFiles/icadworks_usermanual/icadworks_usermanual/icad.html\"")
             signingConfig signingConfigs.release
             debuggable true

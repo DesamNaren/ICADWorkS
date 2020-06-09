@@ -475,7 +475,7 @@ public class CDStructureFragment extends Fragment implements OTView {
                         mMenu.findItem(R.id.action_search).setVisible(false);
                     switchView.setVisibility(View.GONE);
                     shareIV.setVisibility(View.GONE);
-                    Utilities.showCustomNetworkAlert(getActivity(), checkDamResponse.getTag(), false);
+                    Utilities.showCustomNetworkAlert(getActivity(), "No CD records found", false);
                 }
             } else {
                 Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);

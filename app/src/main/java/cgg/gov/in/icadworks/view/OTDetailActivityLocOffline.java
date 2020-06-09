@@ -38,6 +38,7 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
+import cgg.gov.in.icadworks.util.AppConstants;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import uk.co.senab.photoview.PhotoViewAttacher;
@@ -231,13 +232,13 @@ public class OTDetailActivityLocOffline extends LocBaseActivity {
                     Log.i("DISTANCE", "onViewClicked: " + distance);
                 }
 
-                if (distance > 100) {
+                if (distance > AppConstants.RADIUS) {
                     if (TextUtils.isEmpty(otData.getRadiusMsg()) || otData.getRadiusMsg() == null)
                         Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
                     else
                         Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
-                } else if (distance > 0 && distance <= 100) {
+                } else if (distance > 0 && distance <= AppConstants.RADIUS) {
                     navigateToUpdateActivity("online");
                 } else {
                     Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);

@@ -38,6 +38,7 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
+import cgg.gov.in.icadworks.util.AppConstants;
 import cgg.gov.in.icadworks.util.Utilities;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -227,13 +228,13 @@ public class CheckDamDetailActivityLoc extends LocBaseActivity {
                 Log.i("DISTANCE", "onViewClicked: " + distance);
             }
 
-            if (distance > 100) {
+            if (distance > AppConstants.RADIUS) {
                 if (checkDamData.getRadius_msg() == null || TextUtils.isEmpty(checkDamData.getRadius_msg()))
                     Utilities.showCustomNetworkAlert(this, "Sorry, Status update not allowed, You are not within the 100 meter radius of selected OT", false);
                 else
                     Utilities.showCustomNetworkAlert(this, checkDamData.getRadius_msg(), false);
 
-            } else if (distance > 0 && distance <= 100) {
+            } else if (distance > 0 && distance <= AppConstants.RADIUS) {
                 SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
