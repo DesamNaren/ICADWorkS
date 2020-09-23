@@ -39,8 +39,6 @@ import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.util.AppConstants;
-import cgg.gov.in.icadworks.util.ConnectionDetector;
-import cgg.gov.in.icadworks.util.GPSTracker;
 import cgg.gov.in.icadworks.util.Utilities;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -94,6 +92,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
     private double distance = 0.0;
     private int defSelection;
     private EmployeeDetailss employeeDetailss;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +107,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             Gson gson = new Gson();
-            SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
+            sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
+            editor = sharedPreferences.edit();
             String string = sharedPreferences.getString("LOGIN_DATA", "");
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
 
@@ -139,7 +140,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             }
 
             if (!(otLat > 0 && otLng > 0)) {
-                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+" No value found for location details", false);
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + " No value found for location details", false);
             }
 
             distTV.setText(otData.getDistrictname());
@@ -201,7 +202,7 @@ public class OTDetailActivityLoc extends LocBaseActivity {
     @OnClick(R.id.fab)
     public void onViewClicked() {
         if (otData.getAgmtStatus() == null) {
-            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for location details", false);
             return;
         }
 
@@ -236,8 +237,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                     Utilities.showCustomNetworkAlert(this, otData.getRadiusMsg(), false);
 
             } else if (distance > 0 && distance <= AppConstants.RADIUS) {
-                SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+
                 Gson gson = new Gson();
                 String otDataStr = gson.toJson(otData);
 
@@ -298,11 +299,9 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 return true;
             case R.id.nav_map:
                 if (!(otLat > 0 && otLng > 0)) {
-                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something)+ ". No value found for location details", false);
+                    Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something) + ". No value found for location details", false);
                 } else {
 
-                    SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
                     Gson gson = new Gson();
 
                     ArrayList<OTData> arrayList = new ArrayList<>();
@@ -318,11 +317,18 @@ public class OTDetailActivityLoc extends LocBaseActivity {
                 }
                 return true;
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        editor.putString("SEL_STAGE", "NA");
+        editor.commit();
+        finish();
     }
 
     private void displayDialogBox(String photo) {

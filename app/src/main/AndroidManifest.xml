@@ -106,6 +106,7 @@
 
         <activity android:name=".view.LocalDBActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.StructureMasterOTPieActivity" />
     </application>
 
 </manifest>

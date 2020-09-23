@@ -64,6 +64,7 @@ public class OTDashboardAdapter extends RecyclerView.Adapter<OTDashboardAdapter.
             itemViewHolder.cardItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     context.startActivity(new Intent(context, OTDetailActivityLoc.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             .putExtra("ITEM_DATA", mFilteredList.get(position)));

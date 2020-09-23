@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.OTDashboardAdapter;
@@ -47,6 +48,7 @@ import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
 import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
+import cgg.gov.in.icadworks.model.response.ot.AbstractReport;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
@@ -55,6 +57,7 @@ import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.DashboardActivity;
 import cgg.gov.in.icadworks.view.MapsActivity;
+import cgg.gov.in.icadworks.view.StructureMasterOTPieActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -95,7 +98,8 @@ public class OTStructureFragment extends Fragment implements OTView {
     private SwipeRefreshLayout swipeRefreshLayout;
     private RelativeLayout mainRL;
     private LinearLayout notStartedL, inProL, comL, totalLayout;
-    private ImageView shareIV;
+    private ImageView shareIV, pieChartIV;
+    private SharedPreferences.Editor editor;
 
     @Nullable
     @Override
@@ -126,17 +130,21 @@ public class OTStructureFragment extends Fragment implements OTView {
         progressBar = view.findViewById(R.id.progress);
         mainRL = view.findViewById(R.id.mainRL);
         shareIV = view.findViewById(R.id.shareIV);
+        pieChartIV = view.findViewById(R.id.pieChartIv);
 
         data_ll = view.findViewById(R.id.data_ll);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.simpleSwipeRefreshLayout);
+        sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
+        editor.putString("SEL_STAGE", "");
+        editor.commit();
 
         switchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
                     Gson gson = new Gson();
                     ArrayList<OTData> otData = OTDashboardAdapter.getFilteredData();
                     OTResponse tempOtResponse = new OTResponse();
@@ -155,7 +163,7 @@ public class OTStructureFragment extends Fragment implements OTView {
 
         try {
             Gson gson = new Gson();
-            sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
+
             String string = sharedPreferences.getString("LOGIN_DATA", "");
             userName = sharedPreferences.getString("USERNAME", "");
             userPwd = sharedPreferences.getString("PWD", "");
@@ -198,6 +206,8 @@ public class OTStructureFragment extends Fragment implements OTView {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                editor.putString("SEL_STAGE", "");
+                editor.commit();
 
                 notStartedL.setBackgroundColor(Color.TRANSPARENT);
                 totalLayout.setBackgroundColor(Color.TRANSPARENT);
@@ -240,6 +250,14 @@ public class OTStructureFragment extends Fragment implements OTView {
             }
         });
 
+        pieChartIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), StructureMasterOTPieActivity.class));
+            }
+        });
+
 
         notStartedL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,11 +268,11 @@ public class OTStructureFragment extends Fragment implements OTView {
                     inProL.setBackgroundColor(Color.TRANSPARENT);
                     comL.setBackgroundColor(Color.TRANSPARENT);
 
-                    if(!TextUtils.isEmpty(notStCount.getText().toString()) && Integer.valueOf(notStCount.getText().toString())>0){
+                    if (!TextUtils.isEmpty(notStCount.getText().toString()) && Integer.valueOf(notStCount.getText().toString()) > 0) {
                         clearRV();
 
                         getFilterData();
-                    }else {
+                    } else {
                         emptyTV.setVisibility(View.VISIBLE);
                         switchView.setVisibility(View.GONE);
                         OTDashboardAdapter.setFilteredData(null);
@@ -276,11 +294,11 @@ public class OTStructureFragment extends Fragment implements OTView {
                     notStartedL.setBackgroundColor(Color.TRANSPARENT);
                     comL.setBackgroundColor(Color.TRANSPARENT);
                     totalLayout.setBackgroundColor(Color.TRANSPARENT);
-                    if(!TextUtils.isEmpty(inProCount.getText().toString()) && Integer.valueOf(inProCount.getText().toString())>0){
+                    if (!TextUtils.isEmpty(inProCount.getText().toString()) && Integer.valueOf(inProCount.getText().toString()) > 0) {
                         clearRV();
 
                         getFilterDataInPro();
-                    }else {
+                    } else {
                         emptyTV.setVisibility(View.VISIBLE);
                         switchView.setVisibility(View.GONE);
                         OTDashboardAdapter.setFilteredData(null);
@@ -302,10 +320,10 @@ public class OTStructureFragment extends Fragment implements OTView {
                     notStartedL.setBackgroundColor(Color.TRANSPARENT);
                     inProL.setBackgroundColor(Color.TRANSPARENT);
                     totalLayout.setBackgroundColor(Color.TRANSPARENT);
-                    if(!TextUtils.isEmpty(comCount.getText().toString()) && Integer.valueOf(comCount.getText().toString())>0){
+                    if (!TextUtils.isEmpty(comCount.getText().toString()) && Integer.valueOf(comCount.getText().toString()) > 0) {
                         clearRV();
                         getFilterDataCom();
-                    }else {
+                    } else {
                         emptyTV.setVisibility(View.VISIBLE);
                         switchView.setVisibility(View.GONE);
                         OTDashboardAdapter.setFilteredData(null);
@@ -327,10 +345,10 @@ public class OTStructureFragment extends Fragment implements OTView {
                     notStartedL.setBackgroundColor(Color.TRANSPARENT);
                     inProL.setBackgroundColor(Color.TRANSPARENT);
                     comL.setBackgroundColor(Color.TRANSPARENT);
-                    if(!TextUtils.isEmpty(totalCount.getText().toString()) && Integer.valueOf(totalCount.getText().toString())>0){
+                    if (!TextUtils.isEmpty(totalCount.getText().toString()) && Integer.valueOf(totalCount.getText().toString()) > 0) {
                         clearRV();
                         setDataAdapter(otResponse);
-                    }else {
+                    } else {
                         emptyTV.setVisibility(View.VISIBLE);
                         dashboardRV.setAdapter(null);
                         switchView.setVisibility(View.GONE);
@@ -369,20 +387,20 @@ public class OTStructureFragment extends Fragment implements OTView {
         ArrayList<OTData> tempData = new ArrayList<>();
 
 
-        if(otData.size()>0){
+        if (otData.size() > 0) {
             dashboardRV.setAdapter(null);
-            for(int z=0;z<otData.size();z++){
-                int statusId=0;
-                for(int y=0;y<otData.get(z).getGetItemStatusData().size();y++){
-                    statusId +=Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
+            for (int z = 0; z < otData.size(); z++) {
+                int statusId = 0;
+                for (int y = 0; y < otData.get(z).getGetItemStatusData().size(); y++) {
+                    statusId += Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
                 }
 
-                if(statusId>0 && statusId==3){
+                if (statusId == 3) {
                     tempData.add(otData.get(z));
                 }
             }
         }
-        if(tempData.size()>0){
+        if (tempData.size() > 0) {
             setDataAdapterOT(tempData);
         }
 
@@ -391,20 +409,20 @@ public class OTStructureFragment extends Fragment implements OTView {
     private void getFilterDataInPro() {
         ArrayList<OTData> otData = new ArrayList<>(otResponse.getData());
         ArrayList<OTData> tempData = new ArrayList<>();
-        if(otData.size()>0){
+        if (otData.size() > 0) {
             dashboardRV.setAdapter(null);
-            for(int z=0;z<otData.size();z++){
-                int statusId=0;
-                for(int y=0;y<otData.get(z).getGetItemStatusData().size();y++){
-                    statusId +=Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
+            for (int z = 0; z < otData.size(); z++) {
+                int statusId = 0;
+                for (int y = 0; y < otData.get(z).getGetItemStatusData().size(); y++) {
+                    statusId += Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
                 }
 
-                if(statusId>3 && statusId<=8){
+                if (statusId > 3 && statusId <= 8) {
                     tempData.add(otData.get(z));
                 }
             }
         }
-        if(tempData.size()>0) {
+        if (tempData.size() > 0) {
             setDataAdapterOT(tempData);
         }
     }
@@ -412,20 +430,20 @@ public class OTStructureFragment extends Fragment implements OTView {
     private void getFilterDataCom() {
         ArrayList<OTData> otData = new ArrayList<>(otResponse.getData());
         ArrayList<OTData> tempData = new ArrayList<>();
-        if(otData.size()>0){
+        if (otData.size() > 0) {
             dashboardRV.setAdapter(null);
-            for(int z=0;z<otData.size();z++){
-                int statusId=0;
-                for(int y=0;y<otData.get(z).getGetItemStatusData().size();y++){
-                    statusId +=Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
+            for (int z = 0; z < otData.size(); z++) {
+                int statusId = 0;
+                for (int y = 0; y < otData.get(z).getGetItemStatusData().size(); y++) {
+                    statusId += Integer.valueOf(otData.get(z).getGetItemStatusData().get(y).getStatusId());
                 }
 
-                if(statusId==9){
+                if (statusId == 9) {
                     tempData.add(otData.get(z));
                 }
             }
         }
-        if(tempData.size()>0){
+        if (tempData.size() > 0) {
             setDataAdapterOT(tempData);
         }
     }
@@ -434,10 +452,45 @@ public class OTStructureFragment extends Fragment implements OTView {
     public void onResume() {
         super.onResume();
         try {
-            ((DashboardActivity) getActivity()).getSupportActionBar()
-                    .setTitle(empNameTV.getText().toString());
-            ((DashboardActivity) getActivity()).getSupportActionBar()
-                    .setSubtitle(empDesTV.getText().toString());
+            String stage = sharedPreferences.getString("SEL_STAGE", "");
+            if (stage != null) {
+                if (stage.contains("Not Started")) {
+                    notStartedL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+                    clearRV();
+                    getFilterData();
+                } else if (stage.contains("In Progress")) {
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    comL.setBackgroundColor(Color.TRANSPARENT);
+                    clearRV();
+                    getFilterDataInPro();
+                } else if (stage.contains("Completed")) {
+                    comL.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                    notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                    inProL.setBackgroundColor(Color.TRANSPARENT);
+                    totalLayout.setBackgroundColor(Color.TRANSPARENT);
+                    clearRV();
+                    getFilterDataCom();
+                }
+            } else {
+                notStartedL.setBackgroundColor(Color.TRANSPARENT);
+                totalLayout.setBackgroundColor(getResources().getColor(R.color.color_gray));
+                inProL.setBackgroundColor(Color.TRANSPARENT);
+                comL.setBackgroundColor(Color.TRANSPARENT);
+
+            }
+            if (((DashboardActivity) getActivity()) != null &&
+                    ((DashboardActivity) getActivity()).getSupportActionBar() != null) {
+                ((DashboardActivity) getActivity()).getSupportActionBar()
+                        .setTitle(empNameTV.getText().toString());
+                ((DashboardActivity) getActivity()).getSupportActionBar()
+                        .setSubtitle(empDesTV.getText().toString());
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -496,6 +549,13 @@ public class OTStructureFragment extends Fragment implements OTView {
                 if (otResponse.getStatusCode() != null && otResponse.getStatusCode() == 200) {
                     this.otResponse = otResponse;
                     if (otResponse.getAbstractReport() != null && otResponse.getAbstractReport().size() > 0) {
+
+                        Gson gson = new Gson();
+                        List<AbstractReport> abstractReports = otResponse.getAbstractReport();
+                        String abstractReport = gson.toJson(abstractReports);
+
+                        editor.putString("OT_ABSTRACT_PIE_DATA", abstractReport);
+                        editor.commit();
                         totalCount.setText(otResponse.getAbstractReport().get(0).getTotal());
                         notStCount.setText(otResponse.getAbstractReport().get(0).getNotStarted());
                         inProCount.setText(otResponse.getAbstractReport().get(0).getInProgress());
@@ -506,13 +566,12 @@ public class OTStructureFragment extends Fragment implements OTView {
                     emptyTV.setVisibility(View.GONE);
                     switchView.setVisibility(View.VISIBLE);
                     shareIV.setVisibility(View.VISIBLE);
+                    pieChartIV.setVisibility(View.VISIBLE);
                     if (mMenu != null)
                         mMenu.findItem(R.id.action_search).setVisible(true);
                     setDataAdapter(otResponse);
 
                     callReportData();
-
-
                 } else {
                     dashboardRV.setAdapter(null);
                     emptyTV.setVisibility(View.VISIBLE);
@@ -522,6 +581,7 @@ public class OTStructureFragment extends Fragment implements OTView {
                         mMenu.findItem(R.id.action_search).setVisible(false);
                     switchView.setVisibility(View.GONE);
                     shareIV.setVisibility(View.GONE);
+                    pieChartIV.setVisibility(View.GONE);
                     Utilities.showCustomNetworkAlert(getActivity(), "No OT records found", false);
                 }
             } else {
@@ -700,47 +760,38 @@ public class OTStructureFragment extends Fragment implements OTView {
         final ArrayList<String> desArrayList = new ArrayList<>();
 
         for (int z = 0; z < employeeDetailss.getEmployeeDetail().size(); z++) {
-            if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("CE")){
+            if (employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("CE")) {
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getUnit()
-                        +")");
-            }
-
-            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("SE")){
+                        + " ("
+                        + employeeDetailss.getEmployeeDetail().get(z).getUnit()
+                        + ")");
+            } else if (employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("SE")) {
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getCircle()
-                        +")");
-            }
-
-            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("EE")){
+                        + " ("
+                        + employeeDetailss.getEmployeeDetail().get(z).getCircle()
+                        + ")");
+            } else if (employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("EE")) {
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getDivision()
-                        +")");
-            }
-
-            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DE")
-                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")){
+                        + " ("
+                        + employeeDetailss.getEmployeeDetail().get(z).getDivision()
+                        + ")");
+            } else if (employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DE")
+                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("DEE")) {
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getSubdivision()
-                        +")");
-            }
-
-            else if(employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("AE")
-                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("AEE")){
+                        + " ("
+                        + employeeDetailss.getEmployeeDetail().get(z).getSubdivision()
+                        + ")");
+            } else if (employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("AE")
+                    || employeeDetailss.getEmployeeDetail().get(z).getDesignation().equalsIgnoreCase("AEE")) {
                 desArrayList.add(employeeDetailss.getEmployeeDetail().get(z).getDesignation()
-                        +" ("
-                        +employeeDetailss.getEmployeeDetail().get(z).getSection()
-                        +")");
+                        + " ("
+                        + employeeDetailss.getEmployeeDetail().get(z).getSection()
+                        + ")");
             }
         }
 
         if (desArrayList.size() > 0) {
 
-            sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", 0);
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -780,7 +831,6 @@ public class OTStructureFragment extends Fragment implements OTView {
 //                            }
 //                        }
 
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putInt("DEFAULT_SELECTION", defSelection);
                         editor.commit();
 
@@ -917,6 +967,7 @@ public class OTStructureFragment extends Fragment implements OTView {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
     @SuppressLint("StaticFieldLeak")
     class MyTask extends AsyncTask<Integer, Integer, Boolean> {
 
@@ -957,5 +1008,6 @@ public class OTStructureFragment extends Fragment implements OTView {
 //            }
 //        }
 //    }
+
 
 }

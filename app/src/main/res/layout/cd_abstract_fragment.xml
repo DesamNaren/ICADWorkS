@@ -7,7 +7,7 @@
     android:id="@+id/rlView"
     android:orientation="vertical">
 
-    <include layout="@layout/cd_layout_abstract" />
+        <include layout="@layout/cd_layout_abstract" />
 
 
     <android.support.v7.widget.RecyclerView
