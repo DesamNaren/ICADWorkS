@@ -52,6 +52,7 @@ import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.CDMapsActivity;
 import cgg.gov.in.icadworks.view.DashboardActivity;
+import cgg.gov.in.icadworks.view.StructureMasterOTPieActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -93,6 +94,7 @@ public class CDStructureFragment extends Fragment implements OTView {
     private RelativeLayout mainRL;
     private LinearLayout liner_ll;
     private ImageView shareIV;
+    private ImageView pieChartIv;
 
     @Nullable
     @Override
@@ -120,6 +122,7 @@ public class CDStructureFragment extends Fragment implements OTView {
         progressBar = view.findViewById(R.id.progress);
         mainRL = view.findViewById(R.id.mainRL);
         shareIV = view.findViewById(R.id.shareIV);
+        pieChartIv = view.findViewById(R.id.pieChartIv);
 
         data_ll = view.findViewById(R.id.data_ll);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.simpleSwipeRefreshLayout);
@@ -231,6 +234,12 @@ public class CDStructureFragment extends Fragment implements OTView {
             }
         });
 
+        pieChartIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), StructureMasterOTPieActivity.class));
+            }
+        });
 
         notStartedL.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -452,6 +461,10 @@ public class CDStructureFragment extends Fragment implements OTView {
         try {
             if (checkDamResponse != null) {
                 if (checkDamResponse.getStatusCode() != null && checkDamResponse.getStatusCode() == 200) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    String str = new Gson().toJson(checkDamResponse);
+                    editor.putString("CD_PIE_DATA", str);
+                    editor.commit();
                     if (checkDamResponse.getAbstractReport() != null && checkDamResponse.getAbstractReport().size() > 0) {
                         totalCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getTotal()));
                         notStCount.setText(String.valueOf(checkDamResponse.getAbstractReport().get(0).getNotStarted()));

@@ -32,14 +32,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.fragment.FoundationPieFragment;
-import cgg.gov.in.icadworks.fragment.ShutterPieFragment;
-import cgg.gov.in.icadworks.fragment.SuperStrPieFragment;
-import cgg.gov.in.icadworks.model.response.ot.AbstractReport;
-import cgg.gov.in.icadworks.model.response.ot.OTResponse;
+import cgg.gov.in.icadworks.fragment.CDFoundationPieFragment;
+import cgg.gov.in.icadworks.fragment.CDProtectionPieFragment;
+import cgg.gov.in.icadworks.fragment.CDSuperStrPieFragment;
+import cgg.gov.in.icadworks.model.response.checkdam.CheckDamAbstractReport;
+import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
 import cgg.gov.in.icadworks.util.Utilities;
 
-public class StructureMasterOTPieActivity extends AppCompatActivity implements OnChartValueSelectedListener {
+public class StructureMasterCDPieActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     PieChart pieChart;
     PieDataSet dataSet;
@@ -59,7 +59,7 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
         try {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle("OT Abstract Report");
+                getSupportActionBar().setTitle("CD Abstract Report");
                 ColorDrawable colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
@@ -77,20 +77,20 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
 
         sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        String pieChartData = sharedPreferences.getString("OT_PIE_DATA", "");
-        OTResponse otResponse = new Gson().fromJson(pieChartData, OTResponse.class);
+        String pieChartData = sharedPreferences.getString("CD_PIE_DATA", "");
+        CheckDamResponse checkDamResponse = new Gson().fromJson(pieChartData, CheckDamResponse.class);
 
-        if (otResponse != null && otResponse.getAbstractReport().size() > 0) {
-            setPieData(otResponse.getAbstractReport());
+        if (checkDamResponse != null && checkDamResponse.getAbstractReport().size() > 0) {
+            setPieData(checkDamResponse.getAbstractReport());
         } else {
             Toast.makeText(this, getString(R.string.something), Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void setPieData(List<AbstractReport> abstractReports) {
+    private void setPieData(List<CheckDamAbstractReport> abstractReports) {
         pieEntries = new ArrayList<>();
         int index = 0;
-        for (AbstractReport abstractReport : abstractReports) {
+        for (CheckDamAbstractReport abstractReport : abstractReports) {
             LegendEntry legendEntryNs = new LegendEntry();
             LegendEntry legendEntryIp = new LegendEntry();
             LegendEntry legendEntryC = new LegendEntry();
@@ -174,11 +174,11 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new FoundationPieFragment();
+                    return new CDFoundationPieFragment();
                 case 1:
-                    return new SuperStrPieFragment();
+                    return new CDSuperStrPieFragment();
                 case 2:
-                    return new ShutterPieFragment();
+                    return new CDProtectionPieFragment();
             }
             return null;
         }
@@ -196,7 +196,7 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
                 case 1:
                     return "Super Structure";
                 case 2:
-                    return "Shutters";
+                    return "Protection Works";
             }
             return null;
         }
