@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.OTDashboardAdapter;
@@ -48,7 +47,6 @@ import cgg.gov.in.icadworks.interfaces.OTView;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
 import cgg.gov.in.icadworks.model.response.checkdam.office.CDOfficeResponse;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.ot.AbstractReport;
 import cgg.gov.in.icadworks.model.response.ot.OTData;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
@@ -548,14 +546,10 @@ public class OTStructureFragment extends Fragment implements OTView {
             if (otResponse != null) {
                 if (otResponse.getStatusCode() != null && otResponse.getStatusCode() == 200) {
                     this.otResponse = otResponse;
+                    String str = new Gson().toJson(otResponse);
+                    editor.putString("OT_PIE_DATA", str);
+                    editor.commit();
                     if (otResponse.getAbstractReport() != null && otResponse.getAbstractReport().size() > 0) {
-
-                        Gson gson = new Gson();
-                        List<AbstractReport> abstractReports = otResponse.getAbstractReport();
-                        String abstractReport = gson.toJson(abstractReports);
-
-                        editor.putString("OT_ABSTRACT_PIE_DATA", abstractReport);
-                        editor.commit();
                         totalCount.setText(otResponse.getAbstractReport().get(0).getTotal());
                         notStCount.setText(otResponse.getAbstractReport().get(0).getNotStarted());
                         inProCount.setText(otResponse.getAbstractReport().get(0).getInProgress());

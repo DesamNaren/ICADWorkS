@@ -5,7 +5,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,24 +27,28 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import cgg.gov.in.icadworks.R;
+import cgg.gov.in.icadworks.fragment.FoundationPieFragment;
+import cgg.gov.in.icadworks.fragment.ShutterPieFragment;
+import cgg.gov.in.icadworks.fragment.SuperStrPieFragment;
 import cgg.gov.in.icadworks.model.response.ot.AbstractReport;
+import cgg.gov.in.icadworks.model.response.ot.OTResponse;
+import cgg.gov.in.icadworks.util.Utilities;
 
 public class StructureMasterOTPieActivity extends AppCompatActivity implements OnChartValueSelectedListener {
 
     PieChart pieChart;
-    PieData pieData;
     PieDataSet dataSet;
     ArrayList<PieEntry> pieEntries;
     private List<LegendEntry> legendEntries;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,21 +68,23 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
             e.printStackTrace();
         }
         pieChart = findViewById(R.id.pieChart);
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
+        tabLayout.setTabTextColors(Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"));
 
         sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        String pieChartData = sharedPreferences.getString("OT_ABSTRACT_PIE_DATA", "");
-        Type listType = new TypeToken<ArrayList<AbstractReport>>() {
-        }.getType();
-        List<AbstractReport> abstractReports = new Gson().fromJson(pieChartData, listType);
+        String pieChartData = sharedPreferences.getString("OT_PIE_DATA", "");
+        OTResponse otResponse = new Gson().fromJson(pieChartData, OTResponse.class);
 
-        if (abstractReports != null && abstractReports.size() > 0) {
-            setPieData(abstractReports);
+        if (otResponse != null && otResponse.getAbstractReport().size() > 0) {
+            setPieData(otResponse.getAbstractReport());
         } else {
             Toast.makeText(this, getString(R.string.something), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     private void setPieData(List<AbstractReport> abstractReports) {
@@ -119,10 +130,21 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
 
         }
 
-        final int[] MY_COLORS = {Color.parseColor("#ee3738"), Color.parseColor("#FF7F00"), Color.parseColor("#008000")};
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        if (Long.valueOf(abstractReports.get(0).getNotStarted()) > 0) {
+            arrayList.add(Color.parseColor("#EE3738"));
+        }
+        if (Long.valueOf(abstractReports.get(0).getInProgress()) > 0) {
+            arrayList.add(Color.parseColor("#FF7F00"));
+        }
+        if (Long.valueOf(abstractReports.get(0).getCompleted()) > 0) {
+            arrayList.add(Color.parseColor("#008000"));
+        }
+
 
         dataSet = new PieDataSet(pieEntries, "Abstract Report");
-        dataSet.setColors(MY_COLORS);
+        int[] col = Utilities.convertIntegers(arrayList);
+        dataSet.setColors(col);
         PieData pieData = new PieData(dataSet);
         pieData.setValueTextSize(18f);
         pieData.setValueTextColor(Color.WHITE);
@@ -135,8 +157,49 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
         pieChart.getDescription().setEnabled(false);
         pieChart.getLegend().setTextColor(Color.WHITE);
         //pieChart.setTransparentCircleRadius(10);
-        pieChart.animateXY(2000, 2000);
+        pieChart.animateXY(1000, 1000);
         pieChart.setOnChartValueSelectedListener(this);
+
+        viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
+
+    }
+
+    public class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        public ViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new FoundationPieFragment();
+                case 1:
+                    return new SuperStrPieFragment();
+                case 2:
+                    return new ShutterPieFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Foundation";
+                case 1:
+                    return "Super Structure";
+                case 2:
+                    return "Shutters";
+            }
+            return null;
+        }
     }
 
     @Override
@@ -176,7 +239,7 @@ public class StructureMasterOTPieActivity extends AppCompatActivity implements O
         clearData("");
     }
 
-    private void clearData(String label){
+    private void clearData(String label) {
         editor.putString("SEL_STAGE", label);
         editor.commit();
         finish();
