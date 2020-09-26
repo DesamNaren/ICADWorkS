@@ -22,22 +22,22 @@ public class CDAbstractReport implements Parcelable {
     private Double billsPaid;
     @SerializedName("check_dams")
     @Expose
-    private Integer checkDams;
+    private Long checkDams;
     @SerializedName("agreements")
     @Expose
-    private Integer agreements;
+    private Long agreements;
     @SerializedName("single_bill_notsent")
     @Expose
     private Double singleBillNotsent;
     @SerializedName("commenced")
     @Expose
-    private Integer commenced;
+    private Long commenced;
     @SerializedName("admin_amount")
     @Expose
     private Double adminAmount;
     @SerializedName("final_sent")
     @Expose
-    private Integer finalSent;
+    private Long finalSent;
     @SerializedName("agmt_amt")
     @Expose
     private Double agmtAmt;
@@ -49,16 +49,16 @@ public class CDAbstractReport implements Parcelable {
     private Double finalPaid;
     @SerializedName("tenders_award")
     @Expose
-    private Integer tendersAward;
+    private Long tendersAward;
     @SerializedName("tenders_publish")
     @Expose
-    private Integer tendersPublish;
+    private Long tendersPublish;
     @SerializedName("tech_sanctions")
     @Expose
-    private Integer techSanctions;
+    private Long techSanctions;
     @SerializedName("admin_sanctions")
     @Expose
-    private Integer adminSanctions;
+    private Long adminSanctions;
 
     public Double getBillssent() {
         return billssent;
@@ -92,19 +92,19 @@ public class CDAbstractReport implements Parcelable {
         this.billsPaid = billsPaid;
     }
 
-    public Integer getCheckDams() {
+    public Long getCheckDams() {
         return checkDams;
     }
 
-    public void setCheckDams(Integer checkDams) {
+    public void setCheckDams(Long checkDams) {
         this.checkDams = checkDams;
     }
 
-    public Integer getAgreements() {
+    public Long getAgreements() {
         return agreements;
     }
 
-    public void setAgreements(Integer agreements) {
+    public void setAgreements(Long agreements) {
         this.agreements = agreements;
     }
 
@@ -116,11 +116,11 @@ public class CDAbstractReport implements Parcelable {
         this.singleBillNotsent = singleBillNotsent;
     }
 
-    public Integer getCommenced() {
+    public Long getCommenced() {
         return commenced;
     }
 
-    public void setCommenced(Integer commenced) {
+    public void setCommenced(Long commenced) {
         this.commenced = commenced;
     }
 
@@ -132,11 +132,11 @@ public class CDAbstractReport implements Parcelable {
         this.adminAmount = adminAmount;
     }
 
-    public Integer getFinalSent() {
+    public Long getFinalSent() {
         return finalSent;
     }
 
-    public void setFinalSent(Integer finalSent) {
+    public void setFinalSent(Long finalSent) {
         this.finalSent = finalSent;
     }
 
@@ -164,35 +164,35 @@ public class CDAbstractReport implements Parcelable {
         this.finalPaid = finalPaid;
     }
 
-    public Integer getTendersAward() {
+    public Long getTendersAward() {
         return tendersAward;
     }
 
-    public void setTendersAward(Integer tendersAward) {
+    public void setTendersAward(Long tendersAward) {
         this.tendersAward = tendersAward;
     }
 
-    public Integer getTendersPublish() {
+    public Long getTendersPublish() {
         return tendersPublish;
     }
 
-    public void setTendersPublish(Integer tendersPublish) {
+    public void setTendersPublish(Long tendersPublish) {
         this.tendersPublish = tendersPublish;
     }
 
-    public Integer getTechSanctions() {
+    public Long getTechSanctions() {
         return techSanctions;
     }
 
-    public void setTechSanctions(Integer techSanctions) {
+    public void setTechSanctions(Long techSanctions) {
         this.techSanctions = techSanctions;
     }
 
-    public Integer getAdminSanctions() {
+    public Long getAdminSanctions() {
         return adminSanctions;
     }
 
-    public void setAdminSanctions(Integer adminSanctions) {
+    public void setAdminSanctions(Long adminSanctions) {
         this.adminSanctions = adminSanctions;
     }
 
@@ -230,19 +230,19 @@ public class CDAbstractReport implements Parcelable {
         this.billsPaidAmount = (Double) in.readValue(Double.class.getClassLoader());
         this.billsSentAmt = (Double) in.readValue(Double.class.getClassLoader());
         this.billsPaid = (Double) in.readValue(Double.class.getClassLoader());
-        this.checkDams = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.agreements = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.checkDams = (Long) in.readValue(Long.class.getClassLoader());
+        this.agreements = (Long) in.readValue(Long.class.getClassLoader());
         this.singleBillNotsent = (Double) in.readValue(Double.class.getClassLoader());
-        this.commenced = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.commenced = (Long) in.readValue(Long.class.getClassLoader());
         this.adminAmount = (Double) in.readValue(Double.class.getClassLoader());
-        this.finalSent = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.finalSent = (Long) in.readValue(Long.class.getClassLoader());
         this.agmtAmt = (Double) in.readValue(Double.class.getClassLoader());
         this.techAmount = (Double) in.readValue(Double.class.getClassLoader());
         this.finalPaid = (Double) in.readValue(Double.class.getClassLoader());
-        this.tendersAward = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.tendersPublish = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.techSanctions = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.adminSanctions = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tendersAward = (Long) in.readValue(Long.class.getClassLoader());
+        this.tendersPublish = (Long) in.readValue(Long.class.getClassLoader());
+        this.techSanctions = (Long) in.readValue(Long.class.getClassLoader());
+        this.adminSanctions = (Long) in.readValue(Long.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<CDAbstractReport> CREATOR = new Parcelable.Creator<CDAbstractReport>() {

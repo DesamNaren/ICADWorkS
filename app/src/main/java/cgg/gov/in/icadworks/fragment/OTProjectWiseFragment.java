@@ -142,8 +142,8 @@ public class OTProjectWiseFragment extends Fragment {
 
     private void setProjectData(ReportResponse reportResponse) {
         try {
-            int tanks = 0,tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations = 0, agreements = 0;
-            int notSta = 0, inPro = 0, completed = 0, total = 0;
+            long tanks = 0,tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations = 0, agreements = 0;
+            long notSta = 0, inPro = 0, completed = 0, total = 0;
 
             for (int x = 0; x < reportResponse.getData().size(); x++) {
                 tanks = tanks + reportResponse.getData().get(x).getTanks();
@@ -192,7 +192,7 @@ public class OTProjectWiseFragment extends Fragment {
     private void prepareAdapter(ReportResponse reportResponse) {
 
         try {
-            Set<Integer> hashSet = new HashSet<>();
+            Set<Long> hashSet = new HashSet<>();
             for (int x = 0; x < reportResponse.getData().size(); x++) {
                 hashSet.add(reportResponse.getData().get(x).getProjectId());
             }
@@ -200,12 +200,12 @@ public class OTProjectWiseFragment extends Fragment {
             if (reportResponse.getData().size() > 0) {
                 ArrayList<ProjectReportData> projectReportData = new ArrayList<>();
                 ProjectReportData reportData = null;
-                Iterator<Integer> iterator = hashSet.iterator();
+                Iterator<Long> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int tanks = 0, tanksTobeFed=0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations =0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
-                    int projectId = iterator.next();
+                    long tanks = 0, tanksTobeFed=0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations =0, agreements = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long projectId = iterator.next();
                     reportData = new ProjectReportData();
 
                     for (int z = 0; z < reportResponse.getData().size(); z++) {

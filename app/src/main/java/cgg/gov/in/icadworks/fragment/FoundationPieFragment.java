@@ -21,7 +21,6 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -95,19 +94,22 @@ public class FoundationPieFragment extends Fragment implements OnChartValueSelec
 
             for (int x = 0; x < otResponse.getData().size(); x++) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("1")) {
-                    notStrOtData.add(otResponse.getData().get(x));
-                }
+                if (otResponse.getData().get(x).getGetItemStatusData().size() > 0) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("2")) {
-                    inProOtData.add(otResponse.getData().get(x));
-                }
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("1")) {
+                        notStrOtData.add(otResponse.getData().get(x));
+                    }
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("3")) {
-                    comOtData.add(otResponse.getData().get(x));
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("2")) {
+                        inProOtData.add(otResponse.getData().get(x));
+                    }
+
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("3")) {
+                        comOtData.add(otResponse.getData().get(x));
+                    }
                 }
 
             }
@@ -182,7 +184,6 @@ public class FoundationPieFragment extends Fragment implements OnChartValueSelec
 
 
     }
-
 
 
     @Override

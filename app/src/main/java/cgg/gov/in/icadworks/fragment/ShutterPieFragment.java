@@ -93,26 +93,28 @@ public class ShutterPieFragment extends Fragment implements OnChartValueSelected
             comOtData = new ArrayList<>();
 
             for (int x = 0; x < otResponse.getData().size(); x++) {
+                if (otResponse.getData().get(x).getGetItemStatusData().size() > 2) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(2).
-                        getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("1")) {
-                    notStrOtData.add(otResponse.getData().get(x));
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(2).
+                            getIrrWorkId().equalsIgnoreCase("3")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("1")) {
+                        notStrOtData.add(otResponse.getData().get(x));
+                    }
+
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(2)
+                            .getIrrWorkId().equalsIgnoreCase("3")
+                            && otResponse.getData().get(x).getGetItemStatusData()
+                            .get(2).getStatusId().contains("2")) {
+                        inProOtData.add(otResponse.getData().get(x));
+                    }
+
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(2).
+                            getIrrWorkId().equalsIgnoreCase("3")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("3")) {
+                        comOtData.add(otResponse.getData().get(x));
+                    }
+
                 }
-
-                if (otResponse.getData().get(x).getGetItemStatusData().get(2)
-                        .getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getData().get(x).getGetItemStatusData()
-                        .get(2).getStatusId().contains("2")) {
-                    inProOtData.add(otResponse.getData().get(x));
-                }
-
-                if (otResponse.getData().get(x).getGetItemStatusData().get(2).
-                        getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("3")) {
-                    comOtData.add(otResponse.getData().get(x));
-                }
-
             }
 
             int index = 0;

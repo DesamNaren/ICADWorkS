@@ -18,7 +18,7 @@ public class  CheckDamData implements Parcelable {
     private String latitude;
     @SerializedName("tank_id")
     @Expose
-    private Integer tankId;
+    private Long tankId;
     @SerializedName("acode")
     @Expose
     private String acode;
@@ -27,28 +27,28 @@ public class  CheckDamData implements Parcelable {
     private String agmtMsg;
     @SerializedName("bundlength")
     @Expose
-    private Integer bundlength;
+    private Long bundlength;
     @SerializedName("vcode")
     @Expose
     private String vcode;
     @SerializedName("geo_id")
     @Expose
-    private Integer geoId;
+    private Long geoId;
     @SerializedName("division")
     @Expose
-    private Integer division;
+    private Long division;
     @SerializedName("getItemStatusData")
     @Expose
     private List<CheckDamItemStatusData> getItemStatusData = null;
     @SerializedName("section_id")
     @Expose
-    private Integer sectionId;
+    private Long sectionId;
     @SerializedName("assembly")
     @Expose
     private String assembly;
     @SerializedName("preworkcapacity")
     @Expose
-    private Integer preworkcapacity;
+    private Double preworkcapacity;
     @SerializedName("village")
     @Expose
     private String village;
@@ -57,10 +57,10 @@ public class  CheckDamData implements Parcelable {
     private String circleName;
     @SerializedName("sub_division")
     @Expose
-    private Integer subDivision;
+    private Long subDivision;
     @SerializedName("postworkcapacity")
     @Expose
-    private Integer postworkcapacity;
+    private Double postworkcapacity;
     @SerializedName("longitude")
     @Expose
     private String longitude;
@@ -72,7 +72,7 @@ public class  CheckDamData implements Parcelable {
     private String habitation;
     @SerializedName("ayacut")
     @Expose
-    private Integer ayacut;
+    private Long ayacut;
     @SerializedName("section_name")
     @Expose
     private String sectionName;
@@ -81,7 +81,7 @@ public class  CheckDamData implements Parcelable {
     private String unitName;
     @SerializedName("unit")
     @Expose
-    private Integer unit;
+    private Long unit;
     @SerializedName("mcode")
     @Expose
     private String mcode;
@@ -96,7 +96,7 @@ public class  CheckDamData implements Parcelable {
     private String divisionName;
     @SerializedName("circle")
     @Expose
-    private Integer circle;
+    private Long circle;
     @SerializedName("hcode")
     @Expose
     private String hcode;
@@ -167,11 +167,11 @@ public class  CheckDamData implements Parcelable {
         this.latitude = latitude;
     }
 
-    public Integer getTankId() {
+    public Long getTankId() {
         return tankId;
     }
 
-    public void setTankId(Integer tankId) {
+    public void setTankId(Long tankId) {
         this.tankId = tankId;
     }
 
@@ -183,11 +183,11 @@ public class  CheckDamData implements Parcelable {
         this.acode = acode;
     }
 
-    public Integer getBundlength() {
+    public Long getBundlength() {
         return bundlength;
     }
 
-    public void setBundlength(Integer bundlength) {
+    public void setBundlength(Long bundlength) {
         this.bundlength = bundlength;
     }
 
@@ -199,19 +199,19 @@ public class  CheckDamData implements Parcelable {
         this.vcode = vcode;
     }
 
-    public Integer getGeoId() {
+    public Long getGeoId() {
         return geoId;
     }
 
-    public void setGeoId(Integer geoId) {
+    public void setGeoId(Long geoId) {
         this.geoId = geoId;
     }
 
-    public Integer getDivision() {
+    public Long getDivision() {
         return division;
     }
 
-    public void setDivision(Integer division) {
+    public void setDivision(Long division) {
         this.division = division;
     }
 
@@ -223,11 +223,11 @@ public class  CheckDamData implements Parcelable {
         this.getItemStatusData = getItemStatusData;
     }
 
-    public Integer getSectionId() {
+    public Long getSectionId() {
         return sectionId;
     }
 
-    public void setSectionId(Integer sectionId) {
+    public void setSectionId(Long sectionId) {
         this.sectionId = sectionId;
     }
 
@@ -239,11 +239,11 @@ public class  CheckDamData implements Parcelable {
         this.assembly = assembly;
     }
 
-    public Integer getPreworkcapacity() {
+    public Double getPreworkcapacity() {
         return preworkcapacity;
     }
 
-    public void setPreworkcapacity(Integer preworkcapacity) {
+    public void setPreworkcapacity(Double preworkcapacity) {
         this.preworkcapacity = preworkcapacity;
     }
 
@@ -263,19 +263,19 @@ public class  CheckDamData implements Parcelable {
         this.circleName = circleName;
     }
 
-    public Integer getSubDivision() {
+    public Long getSubDivision() {
         return subDivision;
     }
 
-    public void setSubDivision(Integer subDivision) {
+    public void setSubDivision(Long subDivision) {
         this.subDivision = subDivision;
     }
 
-    public Integer getPostworkcapacity() {
+    public Double getPostworkcapacity() {
         return postworkcapacity;
     }
 
-    public void setPostworkcapacity(Integer postworkcapacity) {
+    public void setPostworkcapacity(Double postworkcapacity) {
         this.postworkcapacity = postworkcapacity;
     }
 
@@ -303,11 +303,11 @@ public class  CheckDamData implements Parcelable {
         this.habitation = habitation;
     }
 
-    public Integer getAyacut() {
+    public Long getAyacut() {
         return ayacut;
     }
 
-    public void setAyacut(Integer ayacut) {
+    public void setAyacut(Long ayacut) {
         this.ayacut = ayacut;
     }
 
@@ -327,11 +327,11 @@ public class  CheckDamData implements Parcelable {
         this.unitName = unitName;
     }
 
-    public Integer getUnit() {
+    public Long getUnit() {
         return unit;
     }
 
-    public void setUnit(Integer unit) {
+    public void setUnit(Long unit) {
         this.unit = unit;
     }
 
@@ -367,11 +367,11 @@ public class  CheckDamData implements Parcelable {
         this.divisionName = divisionName;
     }
 
-    public Integer getCircle() {
+    public Long getCircle() {
         return circle;
     }
 
-    public void setCircle(Integer circle) {
+    public void setCircle(Long circle) {
         this.circle = circle;
     }
 
@@ -450,33 +450,33 @@ public class  CheckDamData implements Parcelable {
     protected CheckDamData(Parcel in) {
         this.tankName = in.readString();
         this.latitude = in.readString();
-        this.tankId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tankId = (Long) in.readValue(Long.class.getClassLoader());
         this.acode = in.readString();
         this.agmtMsg = in.readString();
-        this.bundlength = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.bundlength = (Long) in.readValue(Long.class.getClassLoader());
         this.vcode = in.readString();
-        this.geoId = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.division = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.geoId = (Long) in.readValue(Long.class.getClassLoader());
+        this.division = (Long) in.readValue(Long.class.getClassLoader());
         this.getItemStatusData = in.createTypedArrayList(CheckDamItemStatusData.CREATOR);
-        this.sectionId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.sectionId = (Long) in.readValue(Long.class.getClassLoader());
         this.assembly = in.readString();
-        this.preworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.preworkcapacity = (Double) in.readValue(Long.class.getClassLoader());
         this.village = in.readString();
         this.circleName = in.readString();
-        this.subDivision = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.postworkcapacity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.subDivision = (Long) in.readValue(Long.class.getClassLoader());
+        this.postworkcapacity = (Double) in.readValue(Long.class.getClassLoader());
         this.longitude = in.readString();
         this.tankCode = in.readLong();
         this.habitation = in.readString();
-        this.ayacut = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.ayacut = (Long) in.readValue(Long.class.getClassLoader());
         this.sectionName = in.readString();
         this.unitName = in.readString();
-        this.unit = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.unit = (Long) in.readValue(Long.class.getClassLoader());
         this.mcode = in.readString();
         this.subDivisionName = in.readString();
         this.district = in.readString();
         this.divisionName = in.readString();
-        this.circle = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.circle = (Long) in.readValue(Long.class.getClassLoader());
         this.hcode = in.readString();
         this.dcode = in.readString();
         this.mandal = in.readString();

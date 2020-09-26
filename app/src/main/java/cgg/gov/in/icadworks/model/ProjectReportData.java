@@ -7,10 +7,10 @@ public class ProjectReportData {
 
     @SerializedName("agreements")
     @Expose
-    private Integer agreements;
+    private Long agreements;
     @SerializedName("completed")
     @Expose
-    private Integer completed;
+    private Long completed;
     @SerializedName("project_name")
     @Expose
     private String projectName;
@@ -19,60 +19,60 @@ public class ProjectReportData {
     private String unitName;
     @SerializedName("techsancots")
     @Expose
-    private Integer techsancots;
+    private Long techsancots;
     @SerializedName("ots")
     @Expose
-    private Integer ots;
+    private Long ots;
     @SerializedName("not_started")
     @Expose
-    private Integer notStarted;
+    private Long notStarted;
     @SerializedName("in_progress")
     @Expose
-    private Integer inProgress;
+    private Long inProgress;
     @SerializedName("project_id")
     @Expose
-    private Integer projectId;
+    private Long projectId;
     @SerializedName("tenders")
     @Expose
-    private Integer tenders;
+    private Long tenders;
     @SerializedName("tanks")
     @Expose
-    private Integer tanks;
+    private Long tanks;
     @SerializedName("tanks_to_be_fed_count")
     @Expose
-    private Integer tanksTobeFed;
+    private Long tanksTobeFed;
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private Long total;
     @SerializedName("nominations")
     @Expose
-    private Integer nominations;
+    private Long nominations;
     @SerializedName("techsanctions")
     @Expose
-    private Integer techsanctions;
+    private Long techsanctions;
     @SerializedName("dname")
     @Expose
     private String dname;
     @SerializedName("unit_id")
     @Expose
-    private Integer unitId;
+    private Long unitId;
     @SerializedName("dcode")
     @Expose
-    private Integer dcode;
+    private Long dcode;
 
-    public Integer getTanksTobeFed() {
+    public Long getTanksTobeFed() {
         return tanksTobeFed;
     }
 
-    public void setTanksTobeFed(Integer tanksTobeFed) {
+    public void setTanksTobeFed(Long tanksTobeFed) {
         this.tanksTobeFed = tanksTobeFed;
     }
 
-    public Integer getNominations() {
+    public Long getNominations() {
         return nominations;
     }
 
-    public void setNominations(Integer nominations) {
+    public void setNominations(Long nominations) {
         this.nominations = nominations;
     }
 
@@ -84,27 +84,27 @@ public class ProjectReportData {
         this.unitName = unitName;
     }
 
-    public Integer getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 
-    public Integer getAgreements() {
+    public Long getAgreements() {
         return agreements;
     }
 
-    public void setAgreements(Integer agreements) {
+    public void setAgreements(Long agreements) {
         this.agreements = agreements;
     }
 
-    public Integer getCompleted() {
+    public Long getCompleted() {
         return completed;
     }
 
-    public void setCompleted(Integer completed) {
+    public void setCompleted(Long completed) {
         this.completed = completed;
     }
 
@@ -116,67 +116,67 @@ public class ProjectReportData {
         this.projectName = projectName;
     }
 
-    public Integer getTechsancots() {
+    public Long getTechsancots() {
         return techsancots;
     }
 
-    public void setTechsancots(Integer techsancots) {
+    public void setTechsancots(Long techsancots) {
         this.techsancots = techsancots;
     }
 
-    public Integer getOts() {
+    public Long getOts() {
         return ots;
     }
 
-    public void setOts(Integer ots) {
+    public void setOts(Long ots) {
         this.ots = ots;
     }
 
-    public Integer getNotStarted() {
+    public Long getNotStarted() {
         return notStarted;
     }
 
-    public void setNotStarted(Integer notStarted) {
+    public void setNotStarted(Long notStarted) {
         this.notStarted = notStarted;
     }
 
-    public Integer getInProgress() {
+    public Long getInProgress() {
         return inProgress;
     }
 
-    public void setInProgress(Integer inProgress) {
+    public void setInProgress(Long inProgress) {
         this.inProgress = inProgress;
     }
 
-    public Integer getProjectId() {
+    public Long getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(Integer projectId) {
+    public void setProjectId(Long projectId) {
         this.projectId = projectId;
     }
 
-    public Integer getTenders() {
+    public Long getTenders() {
         return tenders;
     }
 
-    public void setTenders(Integer tenders) {
+    public void setTenders(Long tenders) {
         this.tenders = tenders;
     }
 
-    public Integer getTanks() {
+    public Long getTanks() {
         return tanks;
     }
 
-    public void setTanks(Integer tanks) {
+    public void setTanks(Long tanks) {
         this.tanks = tanks;
     }
 
-    public Integer getTechsanctions() {
+    public Long getTechsanctions() {
         return techsanctions;
     }
 
-    public void setTechsanctions(Integer techsanctions) {
+    public void setTechsanctions(Long techsanctions) {
         this.techsanctions = techsanctions;
     }
 
@@ -188,19 +188,19 @@ public class ProjectReportData {
         this.dname = dname;
     }
 
-    public Integer getUnitId() {
+    public Long getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(Integer unitId) {
+    public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
-    public Integer getDcode() {
+    public Long getDcode() {
         return dcode;
     }
 
-    public void setDcode(Integer dcode) {
+    public void setDcode(Long dcode) {
         this.dcode = dcode;
     }
 

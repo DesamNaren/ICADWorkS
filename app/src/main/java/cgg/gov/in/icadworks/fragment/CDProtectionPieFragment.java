@@ -29,8 +29,6 @@ import butterknife.Unbinder;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamData;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
-import cgg.gov.in.icadworks.model.response.ot.OTData;
-import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.util.Utilities;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -96,23 +94,26 @@ public class CDProtectionPieFragment extends Fragment implements OnChartValueSel
 
             for (int x = 0; x < otResponse.getData().size(); x++) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(2).
-                        getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("1")) {
-                    notStrOtData.add(otResponse.getData().get(x));
-                }
+                if (otResponse.getData().get(x).getGetItemStatusData().size() > 2) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(2)
-                        .getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getData().get(x).getGetItemStatusData()
-                        .get(2).getStatusId().contains("2")) {
-                    inProOtData.add(otResponse.getData().get(x));
-                }
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(2).
+                            getIrrWorkId().equalsIgnoreCase("3")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("1")) {
+                        notStrOtData.add(otResponse.getData().get(x));
+                    }
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(2).
-                        getIrrWorkId().equalsIgnoreCase("3")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("3")) {
-                    comOtData.add(otResponse.getData().get(x));
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(2)
+                            .getIrrWorkId().equalsIgnoreCase("3")
+                            && otResponse.getData().get(x).getGetItemStatusData()
+                            .get(2).getStatusId().contains("2")) {
+                        inProOtData.add(otResponse.getData().get(x));
+                    }
+
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(2).
+                            getIrrWorkId().equalsIgnoreCase("3")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(2).getStatusId().contains("3")) {
+                        comOtData.add(otResponse.getData().get(x));
+                    }
                 }
 
             }

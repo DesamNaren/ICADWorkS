@@ -25,10 +25,10 @@ public class CDOfficeData implements Parcelable {
     private String aname;
     @SerializedName("check_dams")
     @Expose
-    private Integer checkDams;
+    private Long checkDams;
     @SerializedName("agreements")
     @Expose
-    private Integer agreements;
+    private Long agreements;
     @SerializedName("acode")
     @Expose
     private String acode;
@@ -37,7 +37,7 @@ public class CDOfficeData implements Parcelable {
     private Double singleBillNotsent;
     @SerializedName("commenced")
     @Expose
-    private Integer commenced;
+    private Long commenced;
     @SerializedName("admin_amount")
     @Expose
     private Double adminAmount;
@@ -58,67 +58,67 @@ public class CDOfficeData implements Parcelable {
     private Double finalPaid;
     @SerializedName("tenders_award")
     @Expose
-    private Integer tendersAward;
+    private Long tendersAward;
     @SerializedName("dname")
     @Expose
     private String dname;
     @SerializedName("tenders_publish")
     @Expose
-    private Integer tendersPublish;
+    private Long tendersPublish;
     @SerializedName("tech_sanctions")
     @Expose
-    private Integer techSanctions;
+    private Long techSanctions;
     @SerializedName("unit_id")
     @Expose
-    private Integer unitId;
+    private Long unitId;
     @SerializedName("dcode")
     @Expose
     private String dcode;
     @SerializedName("admin_sanctions")
     @Expose
-    private Integer adminSanctions;
+    private Long adminSanctions;
     @SerializedName("not_started")
     @Expose
-    private Integer not_started;
+    private Long not_started;
     @SerializedName("in_progress")
     @Expose
-    private Integer in_progress;
+    private Long in_progress;
     @SerializedName("completed")
     @Expose
-    private Integer completed;
+    private Long completed;
     @SerializedName("total_cds")
     @Expose
-    private Integer total_cds;
+    private Long total_cds;
 
-    public Integer getNot_started() {
+    public Long getNot_started() {
         return not_started;
     }
 
-    public void setNot_started(Integer not_started) {
+    public void setNot_started(Long not_started) {
         this.not_started = not_started;
     }
 
-    public Integer getIn_progress() {
+    public Long getIn_progress() {
         return in_progress;
     }
 
-    public void setIn_progress(Integer in_progress) {
+    public void setIn_progress(Long in_progress) {
         this.in_progress = in_progress;
     }
 
-    public Integer getCompleted() {
+    public Long getCompleted() {
         return completed;
     }
 
-    public void setCompleted(Integer completed) {
+    public void setCompleted(Long completed) {
         this.completed = completed;
     }
 
-    public Integer getTotal_cds() {
+    public Long getTotal_cds() {
         return total_cds;
     }
 
-    public void setTotal_cds(Integer total_cds) {
+    public void setTotal_cds(Long total_cds) {
         this.total_cds = total_cds;
     }
 
@@ -162,19 +162,19 @@ public class CDOfficeData implements Parcelable {
         this.aname = aname;
     }
 
-    public Integer getCheckDams() {
+    public Long getCheckDams() {
         return checkDams;
     }
 
-    public void setCheckDams(Integer checkDams) {
+    public void setCheckDams(Long checkDams) {
         this.checkDams = checkDams;
     }
 
-    public Integer getAgreements() {
+    public Long getAgreements() {
         return agreements;
     }
 
-    public void setAgreements(Integer agreements) {
+    public void setAgreements(Long agreements) {
         this.agreements = agreements;
     }
 
@@ -194,11 +194,11 @@ public class CDOfficeData implements Parcelable {
         this.singleBillNotsent = singleBillNotsent;
     }
 
-    public Integer getCommenced() {
+    public Long getCommenced() {
         return commenced;
     }
 
-    public void setCommenced(Integer commenced) {
+    public void setCommenced(Long commenced) {
         this.commenced = commenced;
     }
 
@@ -250,11 +250,11 @@ public class CDOfficeData implements Parcelable {
         this.finalPaid = finalPaid;
     }
 
-    public Integer getTendersAward() {
+    public Long getTendersAward() {
         return tendersAward;
     }
 
-    public void setTendersAward(Integer tendersAward) {
+    public void setTendersAward(Long tendersAward) {
         this.tendersAward = tendersAward;
     }
 
@@ -266,27 +266,27 @@ public class CDOfficeData implements Parcelable {
         this.dname = dname;
     }
 
-    public Integer getTendersPublish() {
+    public Long getTendersPublish() {
         return tendersPublish;
     }
 
-    public void setTendersPublish(Integer tendersPublish) {
+    public void setTendersPublish(Long tendersPublish) {
         this.tendersPublish = tendersPublish;
     }
 
-    public Integer getTechSanctions() {
+    public Long getTechSanctions() {
         return techSanctions;
     }
 
-    public void setTechSanctions(Integer techSanctions) {
+    public void setTechSanctions(Long techSanctions) {
         this.techSanctions = techSanctions;
     }
 
-    public Integer getUnitId() {
+    public Long getUnitId() {
         return unitId;
     }
 
-    public void setUnitId(Integer unitId) {
+    public void setUnitId(Long unitId) {
         this.unitId = unitId;
     }
 
@@ -298,11 +298,11 @@ public class CDOfficeData implements Parcelable {
         this.dcode = dcode;
     }
 
-    public Integer getAdminSanctions() {
+    public Long getAdminSanctions() {
         return adminSanctions;
     }
 
-    public void setAdminSanctions(Integer adminSanctions) {
+    public void setAdminSanctions(Long adminSanctions) {
         this.adminSanctions = adminSanctions;
     }
 
@@ -352,28 +352,28 @@ public class CDOfficeData implements Parcelable {
         this.billsSentAmt = (Double) in.readValue(Double.class.getClassLoader());
         this.billsPaid = (Double) in.readValue(Double.class.getClassLoader());
         this.aname = in.readString();
-        this.checkDams = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.agreements = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.checkDams = (Long) in.readValue(Long.class.getClassLoader());
+        this.agreements = (Long) in.readValue(Long.class.getClassLoader());
         this.acode = in.readString();
         this.singleBillNotsent = (Double) in.readValue(Double.class.getClassLoader());
-        this.commenced = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.commenced = (Long) in.readValue(Long.class.getClassLoader());
         this.adminAmount = (Double) in.readValue(Double.class.getClassLoader());
         this.finalSent = (Double) in.readValue(Double.class.getClassLoader());
         this.officeName = in.readString();
         this.agmtAmt = (Double) in.readValue(Double.class.getClassLoader());
         this.techAmount = (Double) in.readValue(Double.class.getClassLoader());
         this.finalPaid = (Double) in.readValue(Double.class.getClassLoader());
-        this.tendersAward = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tendersAward = (Long) in.readValue(Long.class.getClassLoader());
         this.dname = in.readString();
-        this.tendersPublish = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.techSanctions = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.unitId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tendersPublish = (Long) in.readValue(Long.class.getClassLoader());
+        this.techSanctions = (Long) in.readValue(Long.class.getClassLoader());
+        this.unitId = (Long) in.readValue(Long.class.getClassLoader());
         this.dcode = in.readString();
-        this.adminSanctions = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.not_started = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.in_progress = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.completed = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.total_cds = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.adminSanctions = (Long) in.readValue(Long.class.getClassLoader());
+        this.not_started = (Long) in.readValue(Long.class.getClassLoader());
+        this.in_progress = (Long) in.readValue(Long.class.getClassLoader());
+        this.completed = (Long) in.readValue(Long.class.getClassLoader());
+        this.total_cds = (Long) in.readValue(Long.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<CDOfficeData> CREATOR = new Parcelable.Creator<CDOfficeData>() {

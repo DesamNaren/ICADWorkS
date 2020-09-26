@@ -52,6 +52,7 @@ import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 import cgg.gov.in.icadworks.view.CDMapsActivity;
 import cgg.gov.in.icadworks.view.DashboardActivity;
+import cgg.gov.in.icadworks.view.StructureMasterCDPieActivity;
 import cgg.gov.in.icadworks.view.StructureMasterOTPieActivity;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -237,7 +238,7 @@ public class CDStructureFragment extends Fragment implements OTView {
         pieChartIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), StructureMasterOTPieActivity.class));
+                startActivity(new Intent(getActivity(), StructureMasterCDPieActivity.class));
             }
         });
 
@@ -475,6 +476,7 @@ public class CDStructureFragment extends Fragment implements OTView {
                     emptyTV.setVisibility(View.GONE);
                     switchView.setVisibility(View.VISIBLE);
                     shareIV.setVisibility(View.VISIBLE);
+                    pieChartIv.setVisibility(View.VISIBLE);
                     if (mMenu != null)
                         mMenu.findItem(R.id.action_search).setVisible(true);
                     setDataAdapter(checkDamResponse);
@@ -488,6 +490,7 @@ public class CDStructureFragment extends Fragment implements OTView {
                         mMenu.findItem(R.id.action_search).setVisible(false);
                     switchView.setVisibility(View.GONE);
                     shareIV.setVisibility(View.GONE);
+                    pieChartIv.setVisibility(View.GONE);
                     Utilities.showCustomNetworkAlert(getActivity(), "No CD records found", false);
                 }
             } else {

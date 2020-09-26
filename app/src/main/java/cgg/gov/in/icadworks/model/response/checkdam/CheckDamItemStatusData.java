@@ -10,7 +10,7 @@ public class CheckDamItemStatusData implements Parcelable {
 
     @SerializedName("tank_id")
     @Expose
-    private Integer tankId;
+    private Long tankId;
     @SerializedName("irr_work_id")
     @Expose
     private String irrWorkId;
@@ -24,11 +24,11 @@ public class CheckDamItemStatusData implements Parcelable {
     @Expose
     private String statusName;
 
-    public Integer getTankId() {
+    public Long getTankId() {
         return tankId;
     }
 
-    public void setTankId(Integer tankId) {
+    public void setTankId(Long tankId) {
         this.tankId = tankId;
     }
 
@@ -82,7 +82,7 @@ public class CheckDamItemStatusData implements Parcelable {
     }
 
     protected CheckDamItemStatusData(Parcel in) {
-        this.tankId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.tankId = (Long) in.readValue(Long.class.getClassLoader());
         this.irrWorkId = in.readString();
         this.statusId = in.readString();
         this.irrWorkName = in.readString();

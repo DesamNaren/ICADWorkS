@@ -131,12 +131,11 @@ public class OTDistrictWiseFragment extends Fragment {
             public void onClick(View view) {
 
                 LinearLayout abstractView = getActivity().getWindow().getDecorView().findViewById(R.id.data_ll);
-                Utilities.takeSCImage(getActivity(), abstractView ,
+                Utilities.takeSCImage(getActivity(), abstractView,
                         employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName()
                                 + "( " + employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() + " )" + "_District Data");
             }
         });
-
 
 
         return view;
@@ -147,8 +146,8 @@ public class OTDistrictWiseFragment extends Fragment {
             if (reportResponse != null) {
                 if (reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
 
-                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nominations=0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nominations = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
 
                     for (int x = 0; x < reportResponse.getData().size(); x++) {
                         tanks = tanks + reportResponse.getData().get(x).getTanks();
@@ -172,10 +171,10 @@ public class OTDistrictWiseFragment extends Fragment {
                     inProCount.setText(String.valueOf(inPro));
                     comCount.setText(String.valueOf(completed));
 
-                    tanksCount.setText(String.valueOf(tanks) +"/"+String.valueOf(tanksTobeFed));
+                    tanksCount.setText(String.valueOf(tanks) + "/" + String.valueOf(tanksTobeFed));
                     tsCount.setText(String.valueOf(tsCnt) +
                             " [ " + String.valueOf(techSanOts) + " ]");
-                    tenCount.setText(String.valueOf(tenders)+ " [ " + String.valueOf(nominations) + " ]");
+                    tenCount.setText(String.valueOf(tenders) + " [ " + String.valueOf(nominations) + " ]");
                     aggCount.setText(String.valueOf(agreements));
 
 
@@ -196,10 +195,11 @@ public class OTDistrictWiseFragment extends Fragment {
     }
 
     OTDistrictReportAdapter OTDistrictReportAdapter;
+
     private void prepareAdapter(ReportResponse reportResponse) {
 
         try {
-            Set<Integer> hashSet = new HashSet<>();
+            Set<Long> hashSet = new HashSet<>();
             for (int x = 0; x < reportResponse.getData().size(); x++) {
                 hashSet.add(reportResponse.getData().get(x).getDcode());
             }
@@ -207,13 +207,13 @@ public class OTDistrictWiseFragment extends Fragment {
             if (reportResponse.getData().size() > 0) {
                 ArrayList<ProjectReportData> projectReportData = new ArrayList<>();
                 ProjectReportData reportData = null;
-                Iterator<Integer> iterator = hashSet.iterator();
+                Iterator<Long> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nomination=0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nomination = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
 
-                    int distID = iterator.next();
+                    long distID = iterator.next();
                     reportData = new ProjectReportData();
                     for (int z = 0; z < reportResponse.getData().size(); z++) {
                         if (distID == reportResponse.getData().get(z).getDcode()) {
@@ -239,7 +239,6 @@ public class OTDistrictWiseFragment extends Fragment {
                         }
 
 
-
                         reportData.setTanks(tanks);
                         reportData.setTanksTobeFed(tanksTobeFed);
                         reportData.setTechsanctions(tsCnt);
@@ -262,7 +261,7 @@ public class OTDistrictWiseFragment extends Fragment {
 
                     sortData(projectReportData);
 
-                    OTDistrictReportAdapter = new OTDistrictReportAdapter(reportResponse, projectReportData, getActivity(),getActivity());
+                    OTDistrictReportAdapter = new OTDistrictReportAdapter(reportResponse, projectReportData, getActivity(), getActivity());
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
                     projectRV.setLayoutManager(mLayoutManager);
                     projectRV.setAdapter(OTDistrictReportAdapter);
@@ -340,7 +339,6 @@ public class OTDistrictWiseFragment extends Fragment {
 //            }
 //        }
 //    }
-
 
 
     @Override

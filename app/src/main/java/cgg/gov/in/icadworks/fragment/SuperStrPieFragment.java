@@ -94,25 +94,27 @@ public class SuperStrPieFragment extends Fragment implements OnChartValueSelecte
 
             for (int x = 0; x < otResponse.getData().size(); x++) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(1).
-                        getIrrWorkId().equalsIgnoreCase("2")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(1).getStatusId().contains("1")) {
-                    notStrOtData.add(otResponse.getData().get(x));
-                }
+                if (otResponse.getData().get(x).getGetItemStatusData().size() > 1) {
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(1)
-                        .getIrrWorkId().equalsIgnoreCase("2")
-                        && otResponse.getData().get(x).getGetItemStatusData()
-                        .get(1).getStatusId().contains("2")) {
-                    inProOtData.add(otResponse.getData().get(x));
-                }
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(1).
+                            getIrrWorkId().equalsIgnoreCase("2")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(1).getStatusId().contains("1")) {
+                        notStrOtData.add(otResponse.getData().get(x));
+                    }
 
-                if (otResponse.getData().get(x).getGetItemStatusData().get(1).
-                        getIrrWorkId().equalsIgnoreCase("2")
-                        && otResponse.getData().get(x).getGetItemStatusData().get(1).getStatusId().contains("3")) {
-                    comOtData.add(otResponse.getData().get(x));
-                }
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(1)
+                            .getIrrWorkId().equalsIgnoreCase("2")
+                            && otResponse.getData().get(x).getGetItemStatusData()
+                            .get(1).getStatusId().contains("2")) {
+                        inProOtData.add(otResponse.getData().get(x));
+                    }
 
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(1).
+                            getIrrWorkId().equalsIgnoreCase("2")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(1).getStatusId().contains("3")) {
+                        comOtData.add(otResponse.getData().get(x));
+                    }
+                }
             }
 
             int index = 0;

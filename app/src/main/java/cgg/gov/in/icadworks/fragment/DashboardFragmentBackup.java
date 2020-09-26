@@ -362,7 +362,7 @@ public class DashboardFragmentBackup extends Fragment implements OTView {
         try {
             if (reportResponse != null) {
                 if (reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
-                    int tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nominations = 0;
+                    long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nominations = 0;
                     for (int x = 0; x < reportResponse.getData().size(); x++) {
                         tanks = tanks + reportResponse.getData().get(x).getTanks();
                         tanksTobeFed = tanksTobeFed + reportResponse.getData().get(x).getTanks_to_be_fed();

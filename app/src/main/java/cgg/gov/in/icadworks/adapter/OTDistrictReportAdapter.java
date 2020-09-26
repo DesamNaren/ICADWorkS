@@ -106,17 +106,17 @@ public class OTDistrictReportAdapter extends RecyclerView.Adapter<OTDistrictRepo
 
                             if (projectReportData.size() > 0) {
 
-                                Set<Integer> hashSet = new HashSet<>();
+                                Set<Long> hashSet = new HashSet<>();
                                 for (int x = 0; x < projectReportData.size(); x++) {
                                     hashSet.add(projectReportData.get(x).getProjectId());
                                 }
 
-                                Iterator<Integer> iterator = hashSet.iterator();
+                                Iterator<Long> iterator = hashSet.iterator();
 
                                 while (iterator.hasNext()) {
-                                    int tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nomination = 0;
-                                    int notSta = 0, inPro = 0, completed = 0, total = 0;
-                                    int projectId = iterator.next();
+                                    long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nomination = 0;
+                                    long notSta = 0, inPro = 0, completed = 0, total = 0;
+                                    long projectId = iterator.next();
                                     reportData = new ReportData();
 
 

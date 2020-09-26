@@ -9,46 +9,46 @@ import com.google.gson.annotations.SerializedName;
 public class CheckDamAbstractReport implements Parcelable {
     @SerializedName("total")
     @Expose
-    private Integer total;
+    private Long total;
     @SerializedName("in_progress")
     @Expose
-    private Integer inProgress;
+    private Long inProgress;
     @SerializedName("completed")
     @Expose
-    private Integer completed;
+    private Long completed;
     @SerializedName("not_started")
     @Expose
-    private Integer notStarted;
+    private Long notStarted;
 
-    public Integer getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 
-    public Integer getInProgress() {
+    public Long getInProgress() {
         return inProgress;
     }
 
-    public void setInProgress(Integer inProgress) {
+    public void setInProgress(Long inProgress) {
         this.inProgress = inProgress;
     }
 
-    public Integer getCompleted() {
+    public Long getCompleted() {
         return completed;
     }
 
-    public void setCompleted(Integer completed) {
+    public void setCompleted(Long completed) {
         this.completed = completed;
     }
 
-    public Integer getNotStarted() {
+    public Long getNotStarted() {
         return notStarted;
     }
 
-    public void setNotStarted(Integer notStarted) {
+    public void setNotStarted(Long notStarted) {
         this.notStarted = notStarted;
     }
 
@@ -69,10 +69,10 @@ public class CheckDamAbstractReport implements Parcelable {
     }
 
     protected CheckDamAbstractReport(Parcel in) {
-        this.total = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.inProgress = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.completed = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.notStarted = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.total = (Long) in.readValue(Long.class.getClassLoader());
+        this.inProgress = (Long) in.readValue(Long.class.getClassLoader());
+        this.completed = (Long) in.readValue(Long.class.getClassLoader());
+        this.notStarted = (Long) in.readValue(Long.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<CheckDamAbstractReport> CREATOR = new Parcelable.Creator<CheckDamAbstractReport>() {

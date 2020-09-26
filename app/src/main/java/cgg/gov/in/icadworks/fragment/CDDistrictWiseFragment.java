@@ -147,8 +147,8 @@ public class CDDistrictWiseFragment extends Fragment {
             if (cdOfficeResponse != null) {
                 if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null && cdOfficeResponse.getCdOfficeData().size() > 0) {
 
-                    int cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
 
                     for (int x = 0; x < cdOfficeResponse.getCdOfficeData().size(); x++) {
                         cds = cds + cdOfficeResponse.getCdOfficeData().get(x).getCheckDams();
@@ -205,8 +205,8 @@ public class CDDistrictWiseFragment extends Fragment {
                 Iterator<Integer> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
                     int dCode = iterator.next();
                     CDOfficeData cdOfficeData = new CDOfficeData();
                     for (int z = 0; z < cdOfficeResponse.getCdOfficeData().size(); z++) {

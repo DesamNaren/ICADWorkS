@@ -10,13 +10,13 @@ import java.util.List;
 
 public class OTData implements Parcelable {
 
-    private int statusId;
+    private long statusId;
 
-    public int getStatusId() {
+    public long getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(int statusId) {
+    public void setStatusId(long statusId) {
         this.statusId = statusId;
     }
 

@@ -147,9 +147,9 @@ public class OTCEWiseFragment extends Fragment {
             if (reportResponse != null) {
                 if (reportResponse.getStatusCode() == 200 && reportResponse.getData() != null && reportResponse.getData().size() > 0) {
 
-                    int tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,
+                    long tanks = 0,  tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,
                             nominations =0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
 
                     for (int x = 0; x < reportResponse.getData().size(); x++) {
                         tanks = tanks + reportResponse.getData().get(x).getTanks();
@@ -202,19 +202,19 @@ public class OTCEWiseFragment extends Fragment {
     private void prepareAdapter(ReportResponse reportResponse) {
 
         try {
-            Set<Integer> hashSet = new HashSet<>();
+            Set<Long> hashSet = new HashSet<>();
             for (int x = 0; x < reportResponse.getData().size(); x++) {
                 hashSet.add(reportResponse.getData().get(x).getUnitId());
             }
 
             if (reportResponse.getData().size() > 0) {
                 ArrayList<ProjectReportData> projectReportData = new ArrayList<>();
-                Iterator<Integer> iterator = hashSet.iterator();
+                Iterator<Long> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,nominations=0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
-                    int unitID = iterator.next();
+                    long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0,nominations=0, agreements = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long unitID = iterator.next();
                     ProjectReportData reportData = new ProjectReportData();
                     for (int z = 0; z < reportResponse.getData().size(); z++) {
 

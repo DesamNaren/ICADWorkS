@@ -38,7 +38,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by lenovo on 03-06-2019.
  */
 
-public class CDFoundationPieFragment extends Fragment implements OnChartValueSelectedListener {
+public class CDSupStrucuturePieFragment extends Fragment implements OnChartValueSelectedListener {
 
     @BindView(R.id.pieChart)
     PieChart pieChartIv;
@@ -63,10 +63,10 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
                 sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
                 editor = sharedPreferences.edit();
                 String pieChartData = sharedPreferences.getString("CD_PIE_DATA", "");
-                CheckDamResponse checkDamResponse = new Gson().fromJson(pieChartData, CheckDamResponse.class);
+                CheckDamResponse otResponse = new Gson().fromJson(pieChartData, CheckDamResponse.class);
 
-                if (checkDamResponse != null && checkDamResponse.getData().size() > 0) {
-                    setPieChartData(checkDamResponse);
+                if (otResponse != null && otResponse.getData().size() > 0) {
+                    setPieChartData(otResponse);
                 } else {
                     Toast.makeText(getActivity(), getString(R.string.something), Toast.LENGTH_SHORT).show();
                 }
@@ -79,7 +79,7 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
         return view;
     }
 
-    private void setPieChartData(CheckDamResponse checkDamResponse) {
+    private void setPieChartData(CheckDamResponse otResponse) {
         try {
             pieEntries = new ArrayList<>();
 
@@ -92,26 +92,34 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
             inProOtData = new ArrayList<>();
             comOtData = new ArrayList<>();
 
-            for (int x = 0; x < checkDamResponse.getData().size(); x++) {
+            for (int x = 0; x < otResponse.getData().size(); x++) {
 
-                if (checkDamResponse.getData().get(x).getGetItemStatusData().size() > 0) {
+                if (otResponse.getData().get(x).getGetItemStatusData().size() > 2) {
 
-                    if (checkDamResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
-                            && checkDamResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("1")) {
-                        notStrOtData.add(checkDamResponse.getData().get(x));
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(1).
+                            getIrrWorkId().equalsIgnoreCase("2")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(1).getStatusId().contains("1")) {
+                        notStrOtData.add(otResponse.getData().get(x));
                     }
 
-                    if (checkDamResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
-                            && checkDamResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("2")) {
-                        inProOtData.add(checkDamResponse.getData().get(x));
+
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(1)
+                            .getIrrWorkId().equalsIgnoreCase("2")
+                            && otResponse.getData().get(x).getGetItemStatusData()
+                            .get(1).getStatusId().contains("2")) {
+                        inProOtData.add(otResponse.getData().get(x));
                     }
 
-                    if (checkDamResponse.getData().get(x).getGetItemStatusData().get(0).getIrrWorkId().equalsIgnoreCase("1")
-                            && checkDamResponse.getData().get(x).getGetItemStatusData().get(0).getStatusId().contains("3")) {
-                        comOtData.add(checkDamResponse.getData().get(x));
+
+                    if (otResponse.getData().get(x).getGetItemStatusData().get(1).
+                            getIrrWorkId().equalsIgnoreCase("2")
+                            && otResponse.getData().get(x).getGetItemStatusData().get(1).getStatusId().contains("3")) {
+                        comOtData.add(otResponse.getData().get(x));
                     }
+
                 }
             }
+
             int index = 0;
             if (notStrOtData.size() > 0) {
                 pieEntries.add(new PieEntry(notStrOtData.size(), index++));
@@ -146,7 +154,6 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
 
             legend.setCustom(legendEntries);
 
-
             ArrayList<Integer> arrayList = new ArrayList<>();
             if (notStrOtData.size() > 0) {
                 arrayList.add(Color.parseColor("#EE3738"));
@@ -159,7 +166,10 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
             }
 
 
-            dataSet = new PieDataSet(pieEntries, "Foundation Report");
+            dataSet = new
+
+                    PieDataSet(pieEntries, "Shutters Report");
+
             int[] col = Utilities.convertIntegers(arrayList);
             dataSet.setColors(col);
             PieData pieData = new PieData(dataSet);
@@ -168,11 +178,19 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
             pieChart.setData(pieData);
             pieChart.setHoleColor(android.R.color.transparent);
             pieChart.setDrawCenterText(true);
-            pieChart.setCenterText("Total: " + checkDamResponse.getAbstractReport().get(0).getTotal());
+            pieChart.setCenterText("Total: " + otResponse.getAbstractReport().
+
+                    get(0).
+
+                    getTotal());
             pieChart.setCenterTextColor(Color.WHITE);
             pieChart.setCenterTextSize(18f);
-            pieChart.getDescription().setEnabled(false);
-            pieChart.getLegend().setTextColor(Color.WHITE);
+            pieChart.getDescription().
+
+                    setEnabled(false);
+            pieChart.getLegend().
+
+                    setTextColor(Color.WHITE);
             //pieChart.setTransparentCircleRadius(10);
             pieChart.animateXY(1000, 1000);
             pieChart.setOnChartValueSelectedListener(this);
@@ -182,7 +200,6 @@ public class CDFoundationPieFragment extends Fragment implements OnChartValueSel
 
 
     }
-
 
     @Override
     public void onDestroyView() {

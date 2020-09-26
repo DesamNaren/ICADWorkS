@@ -148,8 +148,8 @@ public class CDCEWiseFragment extends Fragment {
             if (cdOfficeResponse != null) {
                 if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null && cdOfficeResponse.getCdOfficeData().size() > 0) {
 
-                    int cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
 
                     for (int x = 0; x < cdOfficeResponse.getCdOfficeData().size(); x++) {
                         cds = cds + cdOfficeResponse.getCdOfficeData().get(x).getCheckDams();
@@ -196,19 +196,19 @@ public class CDCEWiseFragment extends Fragment {
     private void prepareAdapter(CDOfficeResponse cdOfficeResponse) {
 
         try {
-            Set<Integer> hashSet = new HashSet<>();
+            Set<Long> hashSet = new HashSet<>();
             for (int x = 0; x < cdOfficeResponse.getCdOfficeData().size(); x++) {
                 hashSet.add(cdOfficeResponse.getCdOfficeData().get(x).getUnitId());
             }
 
             if (cdOfficeResponse.getCdOfficeData().size() > 0) {
                 ArrayList<CDOfficeData> cdOfficeDataArrayList = new ArrayList<>();
-                Iterator<Integer> iterator = hashSet.iterator();
+                Iterator<Long> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    int cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
-                    int notSta = 0, inPro = 0, completed = 0, total = 0;
-                    int unitID = iterator.next();
+                    long cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
+                    long notSta = 0, inPro = 0, completed = 0, total = 0;
+                    long unitID = iterator.next();
                     CDOfficeData cdOfficeData = new CDOfficeData();
                     for (int z = 0; z < cdOfficeResponse.getCdOfficeData().size(); z++) {
 

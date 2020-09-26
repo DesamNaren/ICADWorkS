@@ -34,6 +34,7 @@ import java.util.List;
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.fragment.CDFoundationPieFragment;
 import cgg.gov.in.icadworks.fragment.CDProtectionPieFragment;
+import cgg.gov.in.icadworks.fragment.CDSupStrucuturePieFragment;
 import cgg.gov.in.icadworks.fragment.CDSuperStrPieFragment;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamAbstractReport;
 import cgg.gov.in.icadworks.model.response.checkdam.CheckDamResponse;
@@ -176,7 +177,7 @@ public class StructureMasterCDPieActivity extends AppCompatActivity implements O
                 case 0:
                     return new CDFoundationPieFragment();
                 case 1:
-                    return new CDSuperStrPieFragment();
+                    return new CDSupStrucuturePieFragment();
                 case 2:
                     return new CDProtectionPieFragment();
             }

@@ -94,6 +94,10 @@
             android:name=".view.UserManualActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".view.StructureMasterCDPieActivity"
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="cgg.gov.in.icadworks.provider"
