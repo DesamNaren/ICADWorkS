@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ICADWorkS.iml" filepath="$PROJECT_DIR$/ICADWorkS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ICADRepo.iml" filepath="$PROJECT_DIR$/ICADRepo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mobilelib/mobilelib.iml" filepath="$PROJECT_DIR$/mobilelib/mobilelib.iml" />
     </modules>
