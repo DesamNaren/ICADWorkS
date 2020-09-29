@@ -1,5 +1,6 @@
 package cgg.gov.in.icadworks.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ import cgg.gov.in.icadworks.model.ProjectReportData;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.util.Utilities;
+import cgg.gov.in.icadworks.view.OTUnitPieActivity;
+import cgg.gov.in.icadworks.view.StructureMasterOTPieActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -87,6 +90,8 @@ public class OTCEWiseFragment extends Fragment {
     RelativeLayout rlView;
     @BindView(R.id.shareIV)
     ImageView shareIV;
+    @BindView(R.id.pieChartIv)
+    ImageView pieChartIV;
     SharedPreferences sharedPreferences;
     ReportResponse reportResponse;
     private int defSelection;
@@ -137,6 +142,14 @@ public class OTCEWiseFragment extends Fragment {
             }
         });
 
+
+        pieChartIV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getActivity(), OTUnitPieActivity.class));
+            }
+        });
 
         return view;
     }

@@ -111,6 +111,8 @@
         <activity android:name=".view.LocalDBActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.StructureMasterOTPieActivity" />
+        <activity android:name=".view.OTUnitPieActivity" />
+        <activity android:name=".view.OTUnitProjectPieActivity" />
     </application>
 
 </manifest>

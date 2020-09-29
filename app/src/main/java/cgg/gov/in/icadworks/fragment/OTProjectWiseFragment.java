@@ -86,6 +86,8 @@ public class OTProjectWiseFragment extends Fragment {
     RelativeLayout rlView;
     @BindView(R.id.shareIV)
     ImageView shareIV;
+    @BindView(R.id.pieChartIv)
+    ImageView pieChartIv;
 
     SharedPreferences sharedPreferences;
     private String defUsername, defUserPwd;
@@ -126,7 +128,7 @@ public class OTProjectWiseFragment extends Fragment {
             e.printStackTrace();
         }
 
-
+        pieChartIv.setVisibility(View.GONE);
         shareIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

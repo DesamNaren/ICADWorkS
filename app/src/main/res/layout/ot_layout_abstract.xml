@@ -12,26 +12,36 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <cgg.gov.in.icadworks.custom.CustomFontTextView
-        android:padding="@dimen/dimen_4dp"
-        android:layout_gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/white_new"
-        android:id="@+id/title"
-        android:text="Abstract"
-        android:textStyle="bold"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="30dp" />
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:padding="@dimen/dimen_4dp"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:background="@color/white_new"
+            android:id="@+id/title"
+            android:text="Abstract"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="30dp" />
 
-    <ImageView
-        android:padding="@dimen/dimen_4dp"
-        android:background="@color/white_new"
-        android:src="@drawable/ic_menu_share"
-        android:layout_gravity="center"
-        android:id="@+id/shareIV"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        <ImageView
+            android:padding="@dimen/dimen_4dp"
+            android:background="@color/white_new"
+            android:src="@drawable/pie_chart_"
+            android:layout_gravity="center"
+            android:id="@+id/pieChartIv"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+
+
+        <ImageView
+            android:padding="@dimen/dimen_4dp"
+            android:background="@color/white_new"
+            android:src="@drawable/ic_menu_share"
+            android:layout_gravity="center"
+            android:id="@+id/shareIV"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
 
 
     </LinearLayout>
