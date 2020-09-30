@@ -113,6 +113,8 @@
         <activity android:name=".view.StructureMasterOTPieActivity" />
         <activity android:name=".view.OTUnitPieActivity" />
         <activity android:name=".view.OTUnitProjectPieActivity" />
+        <activity android:name=".view.OTDistrictPieActivity" />
+        <activity android:name=".view.OTDistrictProjectPieActivity" />
     </application>
 
 </manifest>
