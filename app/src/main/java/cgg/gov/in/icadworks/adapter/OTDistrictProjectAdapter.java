@@ -64,7 +64,7 @@ public class OTDistrictProjectAdapter extends RecyclerView.Adapter<OTDistrictPro
 
             if (currentPosition == position) {
                 //creating an animation
-                Animation slideDown = AnimationUtils.loadAnimation(context, android.R.anim.fade_out);
+                Animation slideDown = AnimationUtils.loadAnimation(context, R.anim.nav_default_enter_anim);
 
                 //toggling visibility
                 itemViewHolder.absrtractLl.setVisibility(View.VISIBLE);

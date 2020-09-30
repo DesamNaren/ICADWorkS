@@ -27,7 +27,8 @@ import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.view.OTDistrictProjectPieActivity;
 import cgg.gov.in.icadworks.view.OTUnitProjectPieActivity;
 
-public class OTDistrictPieReportAdapter extends RecyclerView.Adapter<OTDistrictPieReportAdapter.ItemViewHolder> implements Filterable {
+public class OTDistrictPieReportAdapter extends RecyclerView.Adapter<OTDistrictPieReportAdapter.ItemViewHolder>
+        implements Filterable {
 
 
     private ArrayList<ProjectReportData> t_projectReportData;

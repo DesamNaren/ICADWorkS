@@ -71,7 +71,7 @@ public class OTDistrictProjectPieActivity extends AppCompatActivity implements O
         try {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle("Project Wise Unit Abstract Report");
+                getSupportActionBar().setTitle("District Abstract Report");
                 ColorDrawable colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 getSupportActionBar().setBackgroundDrawable(colorDrawable);
 

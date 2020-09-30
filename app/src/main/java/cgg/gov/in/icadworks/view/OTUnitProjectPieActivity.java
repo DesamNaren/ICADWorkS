@@ -71,7 +71,7 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
         try {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle("Project Wise Unit Abstract Report");
+                getSupportActionBar().setTitle("Unit Abstract Report");
                 ColorDrawable colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
