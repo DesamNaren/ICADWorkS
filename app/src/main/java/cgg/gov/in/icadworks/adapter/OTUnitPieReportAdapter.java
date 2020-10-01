@@ -9,8 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 
@@ -67,7 +65,11 @@ public class OTUnitPieReportAdapter extends RecyclerView.Adapter<OTUnitPieReport
                     context.startActivity(new Intent(context, OTUnitProjectPieActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             .putExtra("UNIT_ID", mFilteredList.get(position).getUnitId())
-                            .putExtra("UNIT_NAME", mFilteredList.get(position).getUnitName()));
+                            .putExtra("UNIT_NAME", mFilteredList.get(position).getUnitName())
+                            .putExtra("NS", mFilteredList.get(position).getNotStarted())
+                            .putExtra("IP", mFilteredList.get(position).getInProgress())
+                            .putExtra("CO", mFilteredList.get(position).getCompleted())
+                            .putExtra("TO", mFilteredList.get(position).getTotal()));
                 }
             });
 
@@ -135,6 +137,7 @@ public class OTUnitPieReportAdapter extends RecyclerView.Adapter<OTUnitPieReport
         CustomFontTextView title;
         @BindView(R.id.absrtract_ll)
         CardView abstractLL;
+
         ItemViewHolder(@NonNull View view) {
             super(view);
             ButterKnife.bind(this, view);

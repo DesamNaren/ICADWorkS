@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -37,7 +38,6 @@ import java.util.List;
 import java.util.Set;
 
 import cgg.gov.in.icadworks.R;
-import cgg.gov.in.icadworks.adapter.OTUnitPieReportAdapter;
 import cgg.gov.in.icadworks.adapter.OTUnitProjectAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.fragment.FoundationPieFragment;
@@ -91,7 +91,15 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
         try {
             unitID = getIntent().getLongExtra("UNIT_ID", -1);
             unitName = getIntent().getStringExtra("UNIT_NAME");
-            textViewTile.setText(unitName);
+            int pieNotSta = (int) getIntent().getLongExtra("NS", -1);
+            int pieInPro = (int) getIntent().getLongExtra("IP", -1);
+            int pieCompleted = (int) getIntent().getLongExtra("CO", -1);
+            int pieTotal = (int) getIntent().getLongExtra("TO", -1);
+
+            pieChart.setVisibility(View.GONE);
+//            setPieData(pieNotSta, pieInPro, pieCompleted, pieTotal);
+
+            textViewTile.setText("Unit: " + unitName);
             if (reportResponse != null && reportResponse.getData().size() > 0 && unitID != -1) {
                 setCEProjectData(reportResponse);
             } else {
@@ -129,6 +137,7 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
 
                     Iterator<Long> iterator = hashSet.iterator();
 
+
                     while (iterator.hasNext()) {
                         long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, agreements = 0, nomination = 0;
                         long notSta = 0, inPro = 0, completed = 0, total = 0;
@@ -155,7 +164,6 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
                                 reportData.setUnitName(projectReportData.get(z).getUnitName());
                                 reportData.setProjectId(projectReportData.get(z).getProjectId());
                                 reportData.setProjectName(projectReportData.get(z).getProjectName());
-
                             }
 
                             reportData.setTanks(tanks);
@@ -172,8 +180,6 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
 
                         }
 
-                        setPieData(notSta, inPro, completed, total);
-
                         subReportData.add(reportData);
 
 
@@ -188,6 +194,8 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
                         }
 
                     }
+
+
                 }
             }
 
@@ -208,7 +216,6 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
             e.printStackTrace();
         }
     }
-
 
 
     private void sortData(ArrayList<ProjectReportData> projectReportData) {

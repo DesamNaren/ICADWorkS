@@ -84,8 +84,11 @@ public class OTUnitProjectAdapter extends RecyclerView.Adapter<OTUnitProjectAdap
                 }
 
             });
-            setPieData(otResponse.get(position).getNotStarted(), otResponse.get(position).getInProgress(),
-                    otResponse.get(position).getCompleted(), otResponse.get(position).getTotal(), itemViewHolder);
+            setPieData(otResponse.get(position).getNotStarted().intValue(),
+                    otResponse.get(position).getInProgress().intValue(),
+                    otResponse.get(position).getCompleted().intValue(),
+                    otResponse.get(position).getTotal().intValue(),
+                    itemViewHolder);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +96,7 @@ public class OTUnitProjectAdapter extends RecyclerView.Adapter<OTUnitProjectAdap
 
     }
 
-    private void setPieData(long notStarted, long inProgress, long completed, long total, ItemViewHolder itemViewHolder) {
+    private void setPieData(int notStarted, int inProgress, int completed, int total, ItemViewHolder itemViewHolder) {
         pieEntries = new ArrayList<>();
         int index = 0;
         LegendEntry legendEntryNs = new LegendEntry();

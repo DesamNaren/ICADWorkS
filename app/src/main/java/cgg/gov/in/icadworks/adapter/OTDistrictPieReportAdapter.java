@@ -67,7 +67,11 @@ public class OTDistrictPieReportAdapter extends RecyclerView.Adapter<OTDistrictP
                     context.startActivity(new Intent(context, OTDistrictProjectPieActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             .putExtra("DIST_ID", mFilteredList.get(position).getDcode())
-                            .putExtra("DIST_NAME", mFilteredList.get(position).getDname()));
+                            .putExtra("DIST_NAME", mFilteredList.get(position).getDname())
+                            .putExtra("NS", mFilteredList.get(position).getNotStarted())
+                            .putExtra("IP", mFilteredList.get(position).getInProgress())
+                            .putExtra("CO", mFilteredList.get(position).getCompleted())
+                            .putExtra("TO", mFilteredList.get(position).getTotal()));
                 }
             });
 

@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -38,7 +39,6 @@ import java.util.Set;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.OTDistrictProjectAdapter;
-import cgg.gov.in.icadworks.adapter.OTUnitProjectAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.fragment.FoundationPieFragment;
 import cgg.gov.in.icadworks.fragment.ShutterPieFragment;
@@ -91,7 +91,13 @@ public class OTDistrictProjectPieActivity extends AppCompatActivity implements O
         try {
             distId = getIntent().getLongExtra("DIST_ID", -1);
             distName = getIntent().getStringExtra("DIST_NAME");
-            textViewTile.setText(distName);
+            int pieNotSta = (int) getIntent().getLongExtra("NS", -1);
+            int pieInPro = (int) getIntent().getLongExtra("IP", -1);
+            int pieCompleted = (int) getIntent().getLongExtra("CO", -1);
+            int pieTotal = (int) getIntent().getLongExtra("TO", -1);
+            pieChart.setVisibility(View.GONE);
+//            setPieData(pieNotSta, pieInPro, pieCompleted, pieTotal);
+            textViewTile.setText("District: "+distName);
             if (reportResponse != null && reportResponse.getData().size() > 0 && distId != -1) {
                 setCEProjectData(reportResponse);
             } else {
@@ -172,8 +178,6 @@ public class OTDistrictProjectPieActivity extends AppCompatActivity implements O
 
                         }
 
-                        setPieData(notSta, inPro, completed, total);
-
                         subReportData.add(reportData);
 
 
@@ -208,7 +212,6 @@ public class OTDistrictProjectPieActivity extends AppCompatActivity implements O
             e.printStackTrace();
         }
     }
-
 
 
     private void sortData(ArrayList<ProjectReportData> projectReportData) {

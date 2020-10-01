@@ -199,7 +199,8 @@ public class OTDistrictPieActivity extends AppCompatActivity implements OnChartV
 
                 if (projectReportData.size() > 0) {
                     sortData(projectReportData);
-                    OTDistrictPieReportAdapter otDistrictPieReportAdapter = new OTDistrictPieReportAdapter(reportResponse,
+                    OTDistrictPieReportAdapter otDistrictPieReportAdapter =
+                            new OTDistrictPieReportAdapter(reportResponse,
                             projectReportData,
                             this, OTDistrictPieActivity.this);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,
@@ -216,7 +217,7 @@ public class OTDistrictPieActivity extends AppCompatActivity implements OnChartV
     private void sortData(ArrayList<ProjectReportData> projectReportData) {
         Collections.sort(projectReportData, new Comparator<ProjectReportData>() {
             public int compare(ProjectReportData lhs, ProjectReportData rhs) {
-                return (lhs.getUnitName().compareTo(rhs.getUnitName()));
+                return (lhs.getDname().compareTo(rhs.getDname()));
             }
         });
     }

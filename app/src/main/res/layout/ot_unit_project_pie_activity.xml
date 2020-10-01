@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dimen_8dp"
-            android:background="@color/white_new"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:padding="@dimen/dimen_8dp"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white_new"
             android:textStyle="bold" />
 
 
