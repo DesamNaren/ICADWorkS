@@ -90,7 +90,8 @@ public class OTDistrictWiseFragment extends Fragment {
     RelativeLayout rlView;
     @BindView(R.id.shareIV)
     ImageView shareIV;
-
+    @BindView(R.id.tsOts)
+    LinearLayout tsOts;
     @BindView(R.id.pieChartIv)
     ImageView pieChartIV;
     Unbinder unbinder;
@@ -147,6 +148,14 @@ public class OTDistrictWiseFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), OTDistrictPieActivity.class));
+            }
+        });
+
+        tsOts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), WorkDetailsActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
         return view;

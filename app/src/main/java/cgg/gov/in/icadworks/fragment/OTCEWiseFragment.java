@@ -92,6 +92,8 @@ public class OTCEWiseFragment extends Fragment {
     ImageView shareIV;
     @BindView(R.id.pieChartIv)
     ImageView pieChartIV;
+    @BindView(R.id.tsOts)
+    LinearLayout tsOts;
     SharedPreferences sharedPreferences;
     ReportResponse reportResponse;
     private int defSelection;
@@ -148,6 +150,14 @@ public class OTCEWiseFragment extends Fragment {
             public void onClick(View view) {
 
                 startActivity(new Intent(getActivity(), OTUnitPieActivity.class));
+            }
+        });
+
+        tsOts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), WorkDetailsActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
 

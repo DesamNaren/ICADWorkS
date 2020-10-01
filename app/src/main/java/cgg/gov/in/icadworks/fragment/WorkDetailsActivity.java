@@ -1,43 +1,34 @@
 package cgg.gov.in.icadworks.fragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
-
-import java.util.List;
 
 import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.adapter.WorkDetailsAdapter;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.interfaces.WorkDetailsView;
 import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
-import cgg.gov.in.icadworks.model.response.works.WorkDetailsData;
 import cgg.gov.in.icadworks.model.response.works.WorkDetailsResponse;
 import cgg.gov.in.icadworks.presenter.WorkDetailsPresenter;
 import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.Utilities;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
+public class WorkDetailsActivity extends AppCompatActivity implements WorkDetailsView {
 
     private RecyclerView workRv;
     private CustomFontTextView emptyTV;
@@ -50,20 +41,23 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
     private WorkDetailsAdapter workDetailsAdapter;
     private RelativeLayout mainRL;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.work_details_fragment, container, false);
-        setHasOptionsMenu(true);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.work_details_fragment);
+        workRv = findViewById(R.id.workRv);
+        emptyTV = findViewById(R.id.emptyTV);
+        progressBar = findViewById(R.id.progress);
+        mainRL = findViewById(R.id.mainRL);
 
-        workRv = view.findViewById(R.id.workRv);
-        emptyTV = view.findViewById(R.id.emptyTV);
-        progressBar = view.findViewById(R.id.progress);
-        mainRL = view.findViewById(R.id.mainRL);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("TS[OTs]");
+        }
 
         try {
             Gson gson = new Gson();
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("APP_PREF", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
             String string = sharedPreferences.getString("LOGIN_DATA", "");
             String userName = sharedPreferences.getString("USERNAME", "");
             String userPwd = sharedPreferences.getString("PWD", "");
@@ -72,14 +66,14 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
             defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
             employeeDetailss = gson.fromJson(string, EmployeeDetailss.class);
         } catch (Exception e) {
-            Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
             e.printStackTrace();
         }
 
 
         WorkDetailsPresenter workDetailsPresenter = new WorkDetailsPresenter();
         workDetailsPresenter.attachView(this);
-        if (ConnectionDetector.isConnectedToInternet(getActivity())) {
+        if (ConnectionDetector.isConnectedToInternet(this)) {
             if (employeeDetailss != null) {
                 progressBar.setVisibility(View.VISIBLE);
                 workDetailsPresenter.getWorkDetails(employeeDetailss.getEmployeeDetail().get(defSelection).getSectionId(),
@@ -91,13 +85,12 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
                         defUsername,
                         defUserPwd);
             } else {
-                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
             }
         } else {
-            Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.no_internet), false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.no_internet), false);
         }
 
-        return view;
     }
 
     private void search(SearchView searchView) {
@@ -112,8 +105,6 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
                 try {
                     if (workDetailsAdapter != null) {
                         workDetailsAdapter.getFilter().filter(newText);
-                        List<WorkDetailsData> checkDamData = workDetailsAdapter.getFilteredData();
-                        showItemCount(checkDamData.size());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -123,6 +114,11 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
         });
     }
 
+
+    @Override
+    public Context getContext() {
+        return this;
+    }
 
     @Override
     public void showMessage(int stringId) {
@@ -149,13 +145,13 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
                     emptyTV.setVisibility(View.VISIBLE);
                     if (mMenu != null)
                         mMenu.findItem(R.id.action_search).setVisible(false);
-                    Utilities.showCustomNetworkAlert(getActivity(), "No records found", false);
+                    Utilities.showCustomNetworkAlert(this, "No records found", false);
                 }
             } else {
-                Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.server), false);
+                Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.server), false);
             }
         } catch (Exception e) {
-            Utilities.showCustomNetworkAlert(getActivity(), getResources().getString(R.string.something), false);
+            Utilities.showCustomNetworkAlert(this, getResources().getString(R.string.something), false);
             e.printStackTrace();
         }
     }
@@ -171,38 +167,21 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
     }
 
     void setDataAdapter(WorkDetailsResponse workDetailsResponse) {
-        workDetailsAdapter = new WorkDetailsAdapter(workDetailsResponse.getData(), getActivity());
-        workRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        workDetailsAdapter = new WorkDetailsAdapter(workDetailsResponse.getData(), this);
+        workRv.setLayoutManager(new LinearLayoutManager(this));
         workRv.setAdapter(workDetailsAdapter);
-    }
-
-    private void showItemCount(int count) {
-        Snackbar snackbar;
-        snackbar = Snackbar.make(mainRL, "Found " + count + " Records", Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        TextView textView = snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(getResources().getColor(R.color.white_new));
-        snackbar.show();
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     private SearchView searchView = null;
 
-
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onPrepareOptionsMenu(menu);
-        inflater.inflate(R.menu.cd_search_menu, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.search_menu, menu);
         mMenu = menu;
 
         mMenu.findItem(R.id.action_view).setVisible(false);
-        mMenu.findItem(R.id.action_logout).setVisible(false);
+        mMenu.findItem(R.id.action_logout).setVisible(true);
         mMenu.findItem(R.id.action_search).setVisible(true);
 
         MenuItem menuItem = mMenu.findItem(R.id.action_search);
@@ -221,18 +200,19 @@ public class WorkDetailsFragment extends Fragment implements WorkDetailsView {
                 return true;
             }
         });
-
+        return true;
     }
 
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        menu.findItem(R.id.action_view).setVisible(false);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_logout) {
-            Utilities.showCustomNetworkAlertLogout(getActivity(), "Do you want logout from app?");
+            Utilities.showCustomNetworkAlertLogout(this, "Do you want logout from app?");
+            return true;
+        }
+
+        else if (item.getItemId() == android.R.id.home) {
+            finish();
             return true;
         }
 

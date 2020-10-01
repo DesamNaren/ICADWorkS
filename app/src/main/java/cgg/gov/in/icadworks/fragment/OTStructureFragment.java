@@ -98,6 +98,7 @@ public class OTStructureFragment extends Fragment implements OTView {
     private LinearLayout notStartedL, inProL, comL, totalLayout;
     private ImageView shareIV, pieChartIV;
     private SharedPreferences.Editor editor;
+    private LinearLayout tsOts;
 
     @Nullable
     @Override
@@ -129,6 +130,7 @@ public class OTStructureFragment extends Fragment implements OTView {
         mainRL = view.findViewById(R.id.mainRL);
         shareIV = view.findViewById(R.id.shareIV);
         pieChartIV = view.findViewById(R.id.pieChartIv);
+        tsOts = view.findViewById(R.id.tsOts);
 
         data_ll = view.findViewById(R.id.data_ll);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.simpleSwipeRefreshLayout);
@@ -256,6 +258,14 @@ public class OTStructureFragment extends Fragment implements OTView {
             }
         });
 
+
+        tsOts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), WorkDetailsActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
 
         notStartedL.setOnClickListener(new View.OnClickListener() {
             @Override

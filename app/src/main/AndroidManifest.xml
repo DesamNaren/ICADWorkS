@@ -115,6 +115,7 @@
         <activity android:name=".view.OTUnitProjectPieActivity" />
         <activity android:name=".view.OTDistrictPieActivity" />
         <activity android:name=".view.OTDistrictProjectPieActivity" />
+        <activity android:name=".fragment.WorkDetailsActivity" />
     </application>
 
 </manifest>

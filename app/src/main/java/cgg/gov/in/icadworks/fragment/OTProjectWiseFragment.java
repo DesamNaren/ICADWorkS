@@ -1,5 +1,6 @@
 package cgg.gov.in.icadworks.fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -147,25 +147,12 @@ public class OTProjectWiseFragment extends Fragment {
         tsOts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new WorkDetailsFragment();
-                String fragmentTag = "TS[OTs]";
-                displayFragment(fragment, fragmentTag);
+                startActivity(new Intent(getActivity(), WorkDetailsActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
 
         return view;
-    }
-
-    void displayFragment(Fragment fragment, String name) {
-        FragmentManager fragmentManager = getFragmentManager();
-        if (fragmentManager != null) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.content_frame, fragment, name);
-            transaction.addToBackStack(null);
-            transaction.commitAllowingStateLoss();
-        }else {
-            Toast.makeText(getContext(), R.string.something, Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void setProjectData(ReportResponse reportResponse) {

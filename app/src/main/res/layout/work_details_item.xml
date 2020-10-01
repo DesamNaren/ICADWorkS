@@ -67,9 +67,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/agency_name"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/agencyNameTv"
@@ -96,9 +96,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/technical_sanction_no"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_gravity="center"
@@ -126,9 +126,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/agreement_no"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/aggNumTv"
@@ -158,9 +158,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/agreement_amount"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_gravity="center"
@@ -190,9 +190,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/sent_amount"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/sentAmtTv"
@@ -220,9 +220,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/paid_amount"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/paidAmtTv"
@@ -248,9 +248,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/ot_count"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/otCountTv"
@@ -276,9 +276,9 @@
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
+                            android:layout_weight="0.8"
                             android:text="@string/bill_status"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
                             android:id="@+id/billStatusTv"
