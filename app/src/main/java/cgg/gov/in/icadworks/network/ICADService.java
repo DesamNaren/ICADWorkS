@@ -14,6 +14,7 @@ import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.model.response.ot.OTResponse;
 import cgg.gov.in.icadworks.model.response.report.ReportResponse;
 import cgg.gov.in.icadworks.model.response.version.VersionResponse;
+import cgg.gov.in.icadworks.model.response.works.WorkDetailsResponse;
 import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
@@ -114,6 +115,15 @@ public interface ICADService {
                                                      @Query("unitid") String unitID,
                                                      @Query("user") String user,
                                                      @Query("password") String password);
+    @GET("getWorkDetails")
+    Observable<WorkDetailsResponse> getWorkDetailsRes(@Query("user") String user,
+                                                          @Query("password") String password,
+                                                          @Query("secid") String secid,
+                                                          @Query("subdivid") String subdivid,
+                                                          @Query("divid") String divid,
+                                                          @Query("circid") String circid,
+                                                          @Query("unitid") String unitid,
+                                                          @Query("strtype") String strtype);
 }
 
 

@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -88,6 +91,8 @@ public class OTProjectWiseFragment extends Fragment {
     ImageView shareIV;
     @BindView(R.id.pieChartIv)
     ImageView pieChartIv;
+    @BindView(R.id.tsOts)
+    LinearLayout tsOts;
 
     SharedPreferences sharedPreferences;
     private String defUsername, defUserPwd;
@@ -133,18 +138,39 @@ public class OTProjectWiseFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 LinearLayout abstractView = getActivity().getWindow().getDecorView().findViewById(R.id.data_ll);
-                Utilities.takeSCImage(getActivity(), abstractView ,
+                Utilities.takeSCImage(getActivity(), abstractView,
                         employeeDetailss.getEmployeeDetail().get(defSelection).getEmpName()
                                 + "( " + employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation() + " )" + "_Project Data");
+            }
+        });
+
+        tsOts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new WorkDetailsFragment();
+                String fragmentTag = "TS[OTs]";
+                displayFragment(fragment, fragmentTag);
             }
         });
 
         return view;
     }
 
+    void displayFragment(Fragment fragment, String name) {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager != null) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.content_frame, fragment, name);
+            transaction.addToBackStack(null);
+            transaction.commitAllowingStateLoss();
+        }else {
+            Toast.makeText(getContext(), R.string.something, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void setProjectData(ReportResponse reportResponse) {
         try {
-            long tanks = 0,tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations = 0, agreements = 0;
+            long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations = 0, agreements = 0;
             long notSta = 0, inPro = 0, completed = 0, total = 0;
 
             for (int x = 0; x < reportResponse.getData().size(); x++) {
@@ -169,10 +195,10 @@ public class OTProjectWiseFragment extends Fragment {
             inProCount.setText(String.valueOf(inPro));
             comCount.setText(String.valueOf(completed));
 
-            tanksCount.setText(String.valueOf(tanks)+"/"+String.valueOf(tanksTobeFed));
+            tanksCount.setText(String.valueOf(tanks) + "/" + String.valueOf(tanksTobeFed));
             tsCount.setText(String.valueOf(tsCnt) +
                     " [ " + String.valueOf(techSanOts) + " ]");
-            tenCount.setText(String.valueOf(tenders) +" [ " + String.valueOf(nominations) + " ]");
+            tenCount.setText(String.valueOf(tenders) + " [ " + String.valueOf(nominations) + " ]");
             aggCount.setText(String.valueOf(agreements));
 
 
@@ -205,7 +231,7 @@ public class OTProjectWiseFragment extends Fragment {
                 Iterator<Long> iterator = hashSet.iterator();
 
                 while (iterator.hasNext()) {
-                    long tanks = 0, tanksTobeFed=0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations =0, agreements = 0;
+                    long tanks = 0, tanksTobeFed = 0, tsCnt = 0, techSanOts = 0, tenders = 0, nominations = 0, agreements = 0;
                     long notSta = 0, inPro = 0, completed = 0, total = 0;
                     long projectId = iterator.next();
                     reportData = new ProjectReportData();

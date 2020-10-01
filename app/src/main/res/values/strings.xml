@@ -37,5 +37,14 @@
 
     <string name="ot">OTs</string>
     <string name="cd">CDs</string>
+    <string name="no_records_found">No records found</string>
+    <string name="paid_amount">Paid Amount</string>
+    <string name="ot_count">OT Count</string>
+    <string name="bill_status">Bill Status</string>
+    <string name="sent_amount">Sent Amount</string>
+    <string name="agreement_amount">Agreement Amount</string>
+    <string name="agreement_no">Agreement No</string>
+    <string name="technical_sanction_no">Technical Sanction No</string>
+    <string name="agency_name">Agency Name</string>
 
 </resources>
