@@ -6,11 +6,14 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -31,9 +34,12 @@ import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.report.ReportData;
 import cgg.gov.in.icadworks.util.Utilities;
 
-public class OTDistrictProjectAdapter extends RecyclerView.Adapter<OTDistrictProjectAdapter.ItemViewHolder> {
+public class OTDistrictProjectAdapter extends
+        RecyclerView.Adapter<OTDistrictProjectAdapter.ItemViewHolder>
+        implements Filterable {
 
     private ArrayList<ReportData> otResponse;
+    private ArrayList<ReportData> mFilteredList;
     private Context context;
     private Activity activity;
     ArrayList<PieEntry> pieEntries;
@@ -43,6 +49,7 @@ public class OTDistrictProjectAdapter extends RecyclerView.Adapter<OTDistrictPro
 
     public OTDistrictProjectAdapter(ArrayList<ReportData> otResponse, Context context, Activity activity) {
         this.otResponse = otResponse;
+        mFilteredList = otResponse;
         this.context = context;
         this.activity = activity;
         currentPosition = 0;
@@ -59,7 +66,7 @@ public class OTDistrictProjectAdapter extends RecyclerView.Adapter<OTDistrictPro
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder itemViewHolder, final int position) {
         try {
-            itemViewHolder.title.setText(otResponse.get(position).getProjectName());
+            itemViewHolder.title.setText(mFilteredList.get(position).getProjectName());
             itemViewHolder.absrtractLl.setVisibility(View.GONE);
 
             if (currentPosition == position) {
@@ -85,10 +92,10 @@ public class OTDistrictProjectAdapter extends RecyclerView.Adapter<OTDistrictPro
 
             });
 
-            setPieData(otResponse.get(position).getNotStarted().intValue(),
-                    otResponse.get(position).getInProgress().intValue(),
-                    otResponse.get(position).getCompleted().intValue(),
-                    otResponse.get(position).getTotal().intValue(), itemViewHolder);
+            setPieData(mFilteredList.get(position).getNotStarted().intValue(),
+                    mFilteredList.get(position).getInProgress().intValue(),
+                    mFilteredList.get(position).getCompleted().intValue(),
+                    mFilteredList.get(position).getTotal().intValue(), itemViewHolder);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -172,8 +179,51 @@ public class OTDistrictProjectAdapter extends RecyclerView.Adapter<OTDistrictPro
 
 
     @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    mFilteredList = otResponse;
+                } else {
+                    try {
+                        ArrayList<ReportData> filteredList = new ArrayList<>();
+                        for (ReportData detailsData : otResponse) {
+                            if (!TextUtils.isEmpty(detailsData.getProjectName())
+                                    && detailsData.getProjectName().toLowerCase()
+                                    .contains(charString.toLowerCase())) {
+                                filteredList.add(detailsData);
+                            }
+                        }
+                        mFilteredList = filteredList;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mFilteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mFilteredList = (ArrayList<ReportData>) filterResults.values;
+                notifyDataSetChanged();
+
+                getFilteredData();
+            }
+        };
+    }
+
+    public List<ReportData> getFilteredData() {
+        return mFilteredList;
+    }
+
+
+    @Override
     public int getItemCount() {
-        return otResponse == null ? 0 : otResponse.size();
+        return mFilteredList == null ? 0 : mFilteredList.size();
     }
 
     @OnClick(R.id.cardItem)

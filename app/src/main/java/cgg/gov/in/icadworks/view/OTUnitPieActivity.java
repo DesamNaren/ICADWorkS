@@ -10,12 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -56,6 +58,7 @@ public class OTUnitPieActivity extends AppCompatActivity implements OnChartValue
     private SharedPreferences.Editor editor;
     private RecyclerView unitsRecyclerView;
     private ReportResponse reportResponse;
+    private OTUnitPieReportAdapter otUnitPieReportAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -194,13 +197,13 @@ public class OTUnitPieActivity extends AppCompatActivity implements OnChartValue
 
                 if (projectReportData.size() > 0) {
                     sortData(projectReportData);
-                    OTUnitPieReportAdapter OTCEReportAdapter = new OTUnitPieReportAdapter(reportResponse,
+                    otUnitPieReportAdapter = new OTUnitPieReportAdapter(reportResponse,
                             projectReportData,
                             this, OTUnitPieActivity.this);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this,
                             LinearLayoutManager.VERTICAL, false);
                     unitsRecyclerView.setLayoutManager(mLayoutManager);
-                    unitsRecyclerView.setAdapter(OTCEReportAdapter);
+                    unitsRecyclerView.setAdapter(otUnitPieReportAdapter);
                 }
 
             }
@@ -345,11 +348,58 @@ public class OTUnitPieActivity extends AppCompatActivity implements OnChartValue
         return super.onOptionsItemSelected(item);
     }
 
+    private SearchView searchView = null;
+    private Menu mMenu;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.pie_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+        mMenu = menu;
+
+        mMenu.findItem(R.id.action_view).setVisible(false);
+        mMenu.findItem(R.id.action_logout).setVisible(true);
+        mMenu.findItem(R.id.action_search).setVisible(true);
+
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setQueryHint("Search by Unit Name");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search(searchView);
+                return true;
+            }
+        });
         return true;
+    }
+
+
+    private void search(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                try {
+                    if (otUnitPieReportAdapter != null) {
+                        otUnitPieReportAdapter.getFilter().filter(newText);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
     }
 
     @Override

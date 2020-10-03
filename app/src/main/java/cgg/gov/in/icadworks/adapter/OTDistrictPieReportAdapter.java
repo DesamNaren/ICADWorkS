@@ -100,7 +100,7 @@ public class OTDistrictPieReportAdapter extends RecyclerView.Adapter<OTDistrictP
                 } else {
                     ArrayList<ProjectReportData> filteredList = new ArrayList<>();
                     for (ProjectReportData otData : t_projectReportData) {
-                        if (otData.getUnitName().toLowerCase().contains(charString.toLowerCase())) {
+                        if (otData.getDname().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(otData);
                         }
                     }

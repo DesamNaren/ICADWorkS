@@ -84,6 +84,10 @@ public class OTDetailActivityLoc extends LocBaseActivity {
     CustomFontTextView supStrTV;
     @BindView(R.id.shutterTV)
     CustomFontTextView shutterTV;
+    @BindView(R.id.aggNum)
+    CustomFontTextView aggNum;
+    @BindView(R.id.tecSanNum)
+    CustomFontTextView tecSanNum;
 
     private String foundationVal, superStrVal, shutterVal;
     private String foundationTextVal, superTextVal, shutterTextVal;
@@ -150,7 +154,6 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             latTv.setText(otData.getLatitude());
             lonTV.setText(otData.getLongitude());
 
-
             otIDTV.setText(otData.getStructureId());
             otNameTV.setText(otData.getStructurename());
             proTv.setText(otData.getProjectname());
@@ -160,6 +163,8 @@ public class OTDetailActivityLoc extends LocBaseActivity {
             dischargeTV.setText(otData.getDischargeInCusecs() + "cusecs");
             tanksTV.setText(otData.getTanksToBeFedCount());
             cumTV.setText(otData.getCumulativeCapacityOfTankInMcft() + "mcft");
+            aggNum.setText(otData.getAgmtNumber());
+            tecSanNum.setText(otData.getTsNumber());
 
             if (otData.getGetItemStatusData() != null && otData.getGetItemStatusData().size() > 0) {
                 for (int z = 0; z < otData.getGetItemStatusData().size(); z++) {

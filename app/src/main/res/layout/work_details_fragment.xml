@@ -7,10 +7,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/dimen_8dp"
+        android:id="@+id/tsOtsLl"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:gravity="end"
+            android:layout_weight="1"
+            android:text="TS[OTs]: "
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white_new" />
+
+        <cgg.gov.in.icadworks.custom.CustomFontTextView
+            android:layout_weight="1"
+            android:id="@+id/tsOts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/white_new" />
+
+
+    </LinearLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/workRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/tsOtsLl"
         android:background="@color/colorPrimary"
         android:visibility="visible"
         tools:listitem="@layout/local_dashboard_item" />

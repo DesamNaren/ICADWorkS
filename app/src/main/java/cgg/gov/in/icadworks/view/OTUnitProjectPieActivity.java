@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -62,6 +64,7 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
     private Long unitID;
     private String unitName;
     private CustomFontTextView textViewTile;
+    private OTUnitProjectAdapter otUnitProjectAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
         try {
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                getSupportActionBar().setTitle("Unit Abstract Report");
+                getSupportActionBar().setTitle("Unit Wise Report");
                 ColorDrawable colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimaryDark));
                 getSupportActionBar().setBackgroundDrawable(colorDrawable);
 
@@ -187,10 +190,10 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
 
                             sortDataUnitProjects(subReportData);
 
-                            OTUnitProjectAdapter dashboardSubAdapter = new OTUnitProjectAdapter(subReportData, this, this);
+                            otUnitProjectAdapter = new OTUnitProjectAdapter(subReportData, this, this);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                             unitsRecyclerView.setLayoutManager(mLayoutManager);
-                            unitsRecyclerView.setAdapter(dashboardSubAdapter);
+                            unitsRecyclerView.setAdapter(otUnitProjectAdapter);
                         }
 
                     }
@@ -198,19 +201,6 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
 
                 }
             }
-
-//            OTExpandedAdapter dashboardSubAdapter = new OTExpandedAdapter(subReportData, context, activity);
-//            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-//            itemViewHolder.extradetailsRv.setLayoutManager(mLayoutManager);
-//            itemViewHolder.extradetailsRv.setAdapter(dashboardSubAdapter);
-//
-//            if (itemViewHolder.extradetailsRv.getVisibility() == View.GONE) {
-//                itemViewHolder.extradetailsRv.setVisibility(View.VISIBLE);
-//                itemViewHolder.title.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.up_arrow, 0);
-//            } else {
-//                itemViewHolder.extradetailsRv.setVisibility(View.GONE);
-//                itemViewHolder.title.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.down_arrow, 0);
-//            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -361,11 +351,58 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
         return super.onOptionsItemSelected(item);
     }
 
+    private SearchView searchView = null;
+    private Menu mMenu;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.pie_menu, menu);
+        inflater.inflate(R.menu.search_menu, menu);
+        mMenu = menu;
+
+        mMenu.findItem(R.id.action_view).setVisible(false);
+        mMenu.findItem(R.id.action_logout).setVisible(true);
+        mMenu.findItem(R.id.action_search).setVisible(true);
+
+        MenuItem menuItem = mMenu.findItem(R.id.action_search);
+        searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setQueryHint("Search by Project Name");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchView.clearFocus();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search(searchView);
+                return true;
+            }
+        });
         return true;
+    }
+
+
+    private void search(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                try {
+                    if (otUnitProjectAdapter != null) {
+                        otUnitProjectAdapter.getFilter().filter(newText);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        });
     }
 
     @Override
@@ -390,4 +427,6 @@ public class OTUnitProjectPieActivity extends AppCompatActivity implements OnCha
         editor.commit();
         finish();
     }
+
+
 }

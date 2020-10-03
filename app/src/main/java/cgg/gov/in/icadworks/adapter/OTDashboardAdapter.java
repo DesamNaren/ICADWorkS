@@ -50,6 +50,8 @@ public class OTDashboardAdapter extends RecyclerView.Adapter<OTDashboardAdapter.
             itemViewHolder.canalData.setText(mFilteredList.get(position).getCanalname());
             itemViewHolder.otID.setText(mFilteredList.get(position).getStructureId());
             itemViewHolder.otName.setText(mFilteredList.get(position).getStructurename());
+            itemViewHolder.aggNum.setText(mFilteredList.get(position).getAgmtNumber());
+            itemViewHolder.tecSanNum.setText(mFilteredList.get(position).getTsNumber());
             itemViewHolder.otVillage.setText(mFilteredList.get(position).getVillagename()
                     + "(v),"
                     + mFilteredList.get(position).getMandalname()
@@ -161,6 +163,10 @@ public class OTDashboardAdapter extends RecyclerView.Adapter<OTDashboardAdapter.
         CustomFontTextView otName;
         @BindView(R.id.otVillage)
         CustomFontTextView otVillage;
+        @BindView(R.id.aggNum)
+        CustomFontTextView aggNum;
+        @BindView(R.id.tecSanNum)
+        CustomFontTextView tecSanNum;
         @BindView(R.id.cardItem)
         CardView cardItem;
         @BindView(R.id.extradetails_rv)

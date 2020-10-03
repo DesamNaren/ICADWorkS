@@ -32,6 +32,7 @@ public class WorkDetailsActivity extends AppCompatActivity implements WorkDetail
 
     private RecyclerView workRv;
     private CustomFontTextView emptyTV;
+    private CustomFontTextView tsOts;
     private ProgressBar progressBar;
     private Menu mMenu;
     EmployeeDetailss employeeDetailss = null;
@@ -47,12 +48,22 @@ public class WorkDetailsActivity extends AppCompatActivity implements WorkDetail
         setContentView(R.layout.work_details_fragment);
         workRv = findViewById(R.id.workRv);
         emptyTV = findViewById(R.id.emptyTV);
+        tsOts = findViewById(R.id.tsOts);
         progressBar = findViewById(R.id.progress);
         mainRL = findViewById(R.id.mainRL);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("TS[OTs]");
+        }
+
+        try {
+            if (getIntent() != null) {
+                String tsOtsText = getIntent().getStringExtra("Total_TS");
+                tsOts.setText(tsOtsText);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         try {
@@ -209,9 +220,7 @@ public class WorkDetailsActivity extends AppCompatActivity implements WorkDetail
         if (item.getItemId() == R.id.action_logout) {
             Utilities.showCustomNetworkAlertLogout(this, "Do you want logout from app?");
             return true;
-        }
-
-        else if (item.getItemId() == android.R.id.home) {
+        } else if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }

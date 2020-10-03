@@ -108,7 +108,31 @@ public class OTData implements Parcelable {
     @Expose
     private String radiusMsg;
 
+    @SerializedName("agmt_number")
+    @Expose
+    private String agmtNumber;
+
+    @SerializedName("ts_number")
+    @Expose
+    private String tsNumber;
+
     public OTData() {
+    }
+
+    public String getAgmtNumber() {
+        return agmtNumber;
+    }
+
+    public void setAgmtNumber(String agmtNumber) {
+        this.agmtNumber = agmtNumber;
+    }
+
+    public String getTsNumber() {
+        return tsNumber;
+    }
+
+    public void setTsNumber(String tsNumber) {
+        this.tsNumber = tsNumber;
     }
 
     public String getStructureNo() {
@@ -370,6 +394,8 @@ public class OTData implements Parcelable {
         dest.writeString(this.agmtMsg);
         dest.writeString(this.agmtStatus);
         dest.writeString(this.radiusMsg);
+        dest.writeString(this.agmtNumber);
+        dest.writeString(this.tsNumber);
     }
 
     protected OTData(Parcel in) {
@@ -401,6 +427,8 @@ public class OTData implements Parcelable {
         this.agmtMsg = in.readString();
         this.agmtStatus = in.readString();
         this.radiusMsg = in.readString();
+        this.agmtNumber = in.readString();
+        this.tsNumber = in.readString();
     }
 
     public static final Creator<OTData> CREATOR = new Creator<OTData>() {

@@ -20,7 +20,9 @@ import cgg.gov.in.icadworks.R;
 import cgg.gov.in.icadworks.custom.CustomFontTextView;
 import cgg.gov.in.icadworks.model.response.works.WorkDetailsData;
 
-public class WorkDetailsAdapter extends RecyclerView.Adapter<WorkDetailsAdapter.ItemViewHolder> implements Filterable {
+public class WorkDetailsAdapter extends
+        RecyclerView.Adapter<WorkDetailsAdapter.ItemViewHolder>
+        implements Filterable {
 
     private List<WorkDetailsData> workDetailsData;
     private List<WorkDetailsData> mFilteredList;
@@ -45,9 +47,9 @@ public class WorkDetailsAdapter extends RecyclerView.Adapter<WorkDetailsAdapter.
             itemViewHolder.agencyNameTv.setText(mFilteredList.get(position).getAgencyName());
             itemViewHolder.tecSanNumTv.setText(mFilteredList.get(position).getTechnicalSanctionNumber());
             itemViewHolder.aggNumTv.setText(mFilteredList.get(position).getAgreementNumber());
-            itemViewHolder.aggAmtTv.setText(String.valueOf(mFilteredList.get(position).getAgreementAmount()));
-            itemViewHolder.sentAmtTv.setText(String.valueOf(mFilteredList.get(position).getSentAmount()));
-            itemViewHolder.paidAmtTv.setText(String.valueOf(mFilteredList.get(position).getPaidAmount()));
+            itemViewHolder.aggAmtTv.setText(mFilteredList.get(position).getAgreementAmount() + " Rs");
+            itemViewHolder.sentAmtTv.setText(mFilteredList.get(position).getSentAmount() + " Rs");
+            itemViewHolder.paidAmtTv.setText(mFilteredList.get(position).getPaidAmount() + " Rs");
             itemViewHolder.otCountTv.setText(String.valueOf(mFilteredList.get(position).getOtCount()));
             itemViewHolder.billStatusTv.setText(mFilteredList.get(position).getBillStatus());
 

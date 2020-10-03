@@ -263,6 +263,7 @@ public class OTStructureFragment extends Fragment implements OTView {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), WorkDetailsActivity.class)
+                        .putExtra("Total_TS", tsCount.getText().toString())
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
