@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -32,7 +33,7 @@ import cgg.gov.in.icadworks.util.ConnectionDetector;
 import cgg.gov.in.icadworks.util.CustomProgressDialog;
 import cgg.gov.in.icadworks.util.Utilities;
 
-public class LoginActivity extends LocBaseActivity implements LoginView {
+public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @BindView(R.id.userNameET)
     CustomFontEditText userNameET;
@@ -228,26 +229,26 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+        /*  registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
 
-        mLocationCallback = new LocationCallback() {
+      mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 super.onLocationResult(locationResult);
 
                 mCurrentLocation = locationResult.getLastLocation();
             }
-        };
+        };*/
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mGpsSwitchStateReceiver);
+        /*unregisterReceiver(mGpsSwitchStateReceiver);*/
     }
 
 
-    private BroadcastReceiver mGpsSwitchStateReceiver = new BroadcastReceiver() {
+/*    private BroadcastReceiver mGpsSwitchStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             try {
@@ -258,5 +259,5 @@ public class LoginActivity extends LocBaseActivity implements LoginView {
                 e.printStackTrace();
             }
         }
-    };
+    };*/
 }

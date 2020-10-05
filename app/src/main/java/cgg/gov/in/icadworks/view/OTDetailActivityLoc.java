@@ -379,22 +379,36 @@ public class OTDetailActivityLoc extends LocBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
 
-        mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
+        if (defSelection >= 0 && employeeDetailss != null && employeeDetailss.getEmployeeDetail() != null
+                && !TextUtils.isEmpty(employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation())) {
 
-                mCurrentLocation = locationResult.getLastLocation();
+            if (employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AEE")
+                    || employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AE")) {
+                registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+
+                mLocationCallback = new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        super.onLocationResult(locationResult);
+
+                        mCurrentLocation = locationResult.getLastLocation();
+                    }
+                };
             }
-        };
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mGpsSwitchStateReceiver);
+        if (defSelection >= 0 && employeeDetailss != null && employeeDetailss.getEmployeeDetail() != null
+                && !TextUtils.isEmpty(employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation())) {
+            if (employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AEE")
+                    || employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AE")) {
+                unregisterReceiver(mGpsSwitchStateReceiver);
+            }
+        }
     }
 
     private BroadcastReceiver mGpsSwitchStateReceiver = new BroadcastReceiver() {

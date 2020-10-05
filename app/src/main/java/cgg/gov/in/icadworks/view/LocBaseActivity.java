@@ -5,9 +5,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
@@ -16,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -36,6 +40,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -49,6 +54,7 @@ import java.util.List;
 
 import cgg.gov.in.icadworks.BuildConfig;
 import cgg.gov.in.icadworks.R;
+import cgg.gov.in.icadworks.model.response.login.EmployeeDetailss;
 import cgg.gov.in.icadworks.util.Utilities;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -86,13 +92,35 @@ public class LocBaseActivity extends AppCompatActivity {
 
     String[] permissions = new String[]{
             ACCESS_FINE_LOCATION, WRITE_EXTERNAL_STORAGE};
-
+    private int defSelection;
+    private EmployeeDetailss employeeDetailss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        callPermissions();
+        SharedPreferences sharedPreferences = getSharedPreferences("APP_PREF", MODE_PRIVATE);
+        String string = sharedPreferences.getString("LOGIN_DATA", "");
+        defSelection = sharedPreferences.getInt("DEFAULT_SELECTION", -1);
+
+        employeeDetailss = new Gson().fromJson(string, EmployeeDetailss.class);
+
+
+        if (defSelection >= 0 && employeeDetailss != null && employeeDetailss.getEmployeeDetail() != null
+                && !TextUtils.isEmpty(employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation())) {
+            if (employeeDetailss.getEmployeeDetail
+
+
+
+
+
+
+                    ().get(defSelection).getDesignation().equalsIgnoreCase("AEE")
+                    || employeeDetailss.getEmployeeDetail().get(defSelection).getDesignation().equalsIgnoreCase("AE")) {
+                callPermissions();
+            }
+        }
+
     }
 
     public boolean callPermissions() {
@@ -107,13 +135,11 @@ public class LocBaseActivity extends AppCompatActivity {
                             mRequestingLocationUpdates = true;
                             init();
                             startLocationUpdates();
-                        }
-                        else if (report.isAnyPermissionPermanentlyDenied()) {
+                        } else if (report.isAnyPermissionPermanentlyDenied()) {
                             flag = false;
                             Utilities.showSettingsAlert(LocBaseActivity.this, getString(R.string.loc), true);
 
-                        }
-                        else if (report.getDeniedPermissionResponses().size() > 0) {
+                        } else if (report.getDeniedPermissionResponses().size() > 0) {
                             flag = false;
                             showPermissionsAlert(LocBaseActivity.this, getString(R.string.loc), true);
                         }
@@ -313,7 +339,7 @@ public class LocBaseActivity extends AppCompatActivity {
 
     }
 
-    private  boolean checkPermissions() {
+    private boolean checkPermissions() {
         int permissionSendMessage = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         int locationPermission = ContextCompat.checkSelfPermission(this,
