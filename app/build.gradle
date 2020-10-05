@@ -25,7 +25,6 @@ android {
 
     buildTypes {
         release{
-            debuggable true
             versionNameSuffix ".7"
             buildConfigField("String", "SERVER_SOAP_URL", "\"http://irrigationhrmstg.cgg.gov.in/hrmsserver/icadtg/\"")
             buildConfigField("String", "SERVER_REST_URL", "\"http://missionkakatiya.cgg.gov.in/OTRestServices/service/missionkakatiya/\"")
