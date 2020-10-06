@@ -8,7 +8,7 @@ android {
         applicationId "cgg.gov.in.icadworks"
         minSdkVersion 14
         targetSdkVersion 28
-        versionCode 8
+        versionCode 9
         versionName "1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -25,7 +25,7 @@ android {
 
     buildTypes {
         release{
-            versionNameSuffix ".7"
+            versionNameSuffix ".8"
             buildConfigField("String", "SERVER_SOAP_URL", "\"http://irrigationhrmstg.cgg.gov.in/hrmsserver/icadtg/\"")
             buildConfigField("String", "SERVER_REST_URL", "\"http://missionkakatiya.cgg.gov.in/OTRestServices/service/missionkakatiya/\"")
             buildConfigField("String", "USER_MANUAL_URL", "\"http://missionkakatiya.cgg.gov.in/IrrWorksWebApp/uploadedFiles/icadworks_usermanual/icadworks_usermanual/icad.html\"")

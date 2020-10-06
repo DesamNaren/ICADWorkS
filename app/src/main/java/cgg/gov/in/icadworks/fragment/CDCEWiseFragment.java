@@ -146,7 +146,8 @@ public class CDCEWiseFragment extends Fragment {
     private void setCEData(CDOfficeResponse cdOfficeResponse) {
         try {
             if (cdOfficeResponse != null) {
-                if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null && cdOfficeResponse.getCdOfficeData().size() > 0) {
+                if (cdOfficeResponse.getStatusCode() == 200 && cdOfficeResponse.getCdOfficeData() != null
+                        && cdOfficeResponse.getCdOfficeData().size() > 0) {
 
                     long cds = 0, tsCnt = 0, tenders = 0, agreements = 0;
                     long notSta = 0, inPro = 0, completed = 0, total = 0;

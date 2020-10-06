@@ -48,8 +48,6 @@ public class WorkDetailsAdapter extends
             itemViewHolder.tecSanNumTv.setText(mFilteredList.get(position).getTechnicalSanctionNumber());
             itemViewHolder.aggNumTv.setText(mFilteredList.get(position).getAgreementNumber());
             itemViewHolder.aggAmtTv.setText(mFilteredList.get(position).getAgreementAmount() + " Rs");
-            itemViewHolder.sentAmtTv.setText(mFilteredList.get(position).getSentAmount() + " Rs");
-            itemViewHolder.paidAmtTv.setText(mFilteredList.get(position).getPaidAmount() + " Rs");
             itemViewHolder.otCountTv.setText(String.valueOf(mFilteredList.get(position).getOtCount()));
             itemViewHolder.billStatusTv.setText(mFilteredList.get(position).getBillStatus());
 
@@ -123,10 +121,6 @@ public class WorkDetailsAdapter extends
         CustomFontTextView aggNumTv;
         @BindView(R.id.aggAmtTv)
         CustomFontTextView aggAmtTv;
-        @BindView(R.id.sentAmtTv)
-        CustomFontTextView sentAmtTv;
-        @BindView(R.id.paidAmtTv)
-        CustomFontTextView paidAmtTv;
         @BindView(R.id.otCountTv)
         CustomFontTextView otCountTv;
         @BindView(R.id.billStatusTv)

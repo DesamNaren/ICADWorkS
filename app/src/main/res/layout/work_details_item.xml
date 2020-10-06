@@ -86,6 +86,7 @@
                         android:layout_height="0.5dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/colorPrimary" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -101,10 +102,10 @@
                             android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:layout_gravity="center"
                             android:id="@+id/tecSanNumTv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="1.5"
                             android:textColor="@color/colorPrimary" />
 
@@ -116,6 +117,7 @@
                         android:layout_height="0.5dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/colorPrimary" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -147,7 +149,6 @@
                         android:background="@color/colorPrimary" />
 
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -163,10 +164,10 @@
                             android:textColor="@color/gray" />
 
                         <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:layout_gravity="center"
                             android:id="@+id/aggAmtTv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="1.5"
                             android:textColor="@color/colorPrimary" />
 
@@ -180,64 +181,6 @@
                         android:layout_marginTop="2dp"
                         android:background="@color/colorPrimary" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_8dp"
-                        android:orientation="horizontal">
-
-
-                        <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.8"
-                            android:text="@string/sent_amount"
-                            android:textColor="@color/gray" />
-
-                        <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:id="@+id/sentAmtTv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:textColor="@color/colorPrimary" />
-
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@color/colorPrimary" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_8dp"
-                        android:orientation="horizontal">
-
-
-                        <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.8"
-                            android:text="@string/paid_amount"
-                            android:textColor="@color/gray" />
-
-                        <cgg.gov.in.icadworks.custom.CustomFontTextView
-                            android:id="@+id/paidAmtTv"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:textColor="@color/colorPrimary" />
-
-
-                    </LinearLayout>
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="2dp"
-                        android:background="@color/colorPrimary" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -261,11 +204,13 @@
 
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/colorPrimary" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
