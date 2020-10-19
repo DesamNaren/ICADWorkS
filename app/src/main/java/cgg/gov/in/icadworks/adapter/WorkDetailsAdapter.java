@@ -47,7 +47,7 @@ public class WorkDetailsAdapter extends
             itemViewHolder.agencyNameTv.setText(mFilteredList.get(position).getAgencyName());
             itemViewHolder.tecSanNumTv.setText(mFilteredList.get(position).getTechnicalSanctionNumber());
             itemViewHolder.aggNumTv.setText(mFilteredList.get(position).getAgreementNumber());
-            itemViewHolder.aggAmtTv.setText(mFilteredList.get(position).getAgreementAmount() + " Rs");
+            itemViewHolder.aggAmtTv.setText("RS. "+mFilteredList.get(position).getAgreementAmount() + "/-");
             itemViewHolder.otCountTv.setText(String.valueOf(mFilteredList.get(position).getOtCount()));
             itemViewHolder.billStatusTv.setText(mFilteredList.get(position).getBillStatus());
 
