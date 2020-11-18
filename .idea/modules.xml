@@ -2,15 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Git Repos-ICADWorkS.iml" filepath="$PROJECT_DIR$/.idea/modules/Git Repos-ICADWorkS.iml" group="ICADWorkS" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Git Repos-ICADWorkS-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Git Repos-ICADWorkS-app.iml" group="ICADWorkS/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobilelib/Git Repos-ICADWorkS-mobilelib.iml" filepath="$PROJECT_DIR$/.idea/modules/mobilelib/Git Repos-ICADWorkS-mobilelib.iml" group="ICADWorkS/mobilelib" />
-      <module fileurl="file://$PROJECT_DIR$/ICADRepo.iml" filepath="$PROJECT_DIR$/ICADRepo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ICADWorkS.iml" filepath="$PROJECT_DIR$/.idea/modules/ICADWorkS.iml" group="ICADWorkS" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ICADWorkS-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ICADWorkS-app.iml" group="ICADWorkS/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobilelib/ICADWorkS-mobilelib.iml" filepath="$PROJECT_DIR$/.idea/modules/mobilelib/ICADWorkS-mobilelib.iml" group="ICADWorkS/mobilelib" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobilelib/mobilelib.iml" filepath="$PROJECT_DIR$/mobilelib/mobilelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Git Repos.ICADWorkS.iml" filepath="$PROJECT_DIR$/.idea/modules/Git Repos.ICADWorkS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ICADWorkS.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ICADWorkS.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobilelib/ICADWorkS.mobilelib.iml" filepath="$PROJECT_DIR$/.idea/modules/mobilelib/ICADWorkS.mobilelib.iml" />
     </modules>
   </component>
 </project>
