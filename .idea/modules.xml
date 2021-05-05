@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Git Repos.ICADWorkS.iml" filepath="$PROJECT_DIR$/.idea/modules/Git Repos.ICADWorkS.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ICADWorkS.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ICADWorkS.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobilelib/ICADWorkS.mobilelib.iml" filepath="$PROJECT_DIR$/.idea/modules/mobilelib/ICADWorkS.mobilelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ICAD.iml" filepath="$PROJECT_DIR$/.idea/modules/ICAD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ICAD.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ICAD.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mobilelib/ICAD.mobilelib.iml" filepath="$PROJECT_DIR$/.idea/modules/mobilelib/ICAD.mobilelib.iml" />
     </modules>
   </component>
 </project>
